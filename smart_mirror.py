@@ -13,7 +13,7 @@
 # Known issue on Linux: When typing url, mouse must be over url
 # entry widget otherwise keyboard focus is lost (Issue #255
 # and Issue #284).
-
+import os
 from cefpython3 import cefpython as cef
 try:
     import tkinter as tk
@@ -38,7 +38,9 @@ logger = _logging.getLogger("tkinter_.py")
 # Constants
 # Tk 8.5 doesn't support png images
 IMAGE_EXT = ".png" if tk.TkVersion > 8.5 else ".gif"
-URL = "file:///home/ak47tehaxor/Desktop/Smart_Mirror/HTML/smart_mirror.html"
+
+URL = "file://" + os.path.dirname(os.path.abspath(__file__)) +"/HTML/index.html"
+
 
 
 def main():
@@ -62,7 +64,7 @@ class MainFrame(tk.Frame):
 
 
         # Root
-        root.geometry("800x600")
+        root.geometry("1600x900")
         tk.Grid.rowconfigure(root, 0, weight=1)
         tk.Grid.columnconfigure(root, 0, weight=1)
 
