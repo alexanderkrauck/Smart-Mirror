@@ -16,17 +16,42 @@ p{
     margin: 0;
 }
 body{
-    margin:2.5%;
+    margin:0;
 }
-
+div{
+    
+}
 h1{
     color: #fff
 }
 
-#time p{
+#container_time p{
     font-size: 80px;
     text-align: right;
 }
 #container_right{
     float: right;
+}
+
+
+#text_animation{
+    width: 100%;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    /* Change font-weight to light probably*/
+    font-size: 60px;
+}
+#container2_text_animation{
+    display: table;
+    height: 100%;
+}
+#container1_text_animation{
+    height: 100%;
+    display: inline-flex;
+}
+#view_text_animation{
+    width: 100%;
+    height: 100%;
+    text-align: center;
 }

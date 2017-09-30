@@ -1,20 +1,34 @@
 var audioElement;
 
 $(document).ready(function () {
+    //call the clock function every second
     setInterval(timerFunction, 1000)
+
+    //-audioElement = document.createElement('audio');
+    //-audioElement.setAttribute('src', './Sounds/tick.wav');
+    //-audioElement.play();
     
-    audioElement = document.createElement('audio');
-    audioElement.setAttribute('src', './Sounds/tick.wav');
+    var height = $(document).height();
+    var width = $(document).width();
+    $("#body").css("height",height);
+    $("#body").css("width",width);
     
+    $("#view_text_animation").fadeOut(0,function(){
+        $("#view_text_animation").fadeIn(2000,function(){
+            $("#view_text_animation").fadeOut(4000,null);
+        });
+    });
+    
+
     $.simpleWeather({
         location: 'Linz',
         woeid: '',
         unit: 'c',
         success: function (weather) {
-            //alert(weather.temp);
+            //-alert(weather.temp);
         },
         error: function (error) {
-            //alert("Weather not avaiable!");
+            //-alert("Weather not avaiable!");
         }
     });
 });
@@ -22,14 +36,12 @@ $(document).ready(function () {
 function timerFunction() {
     var currentDate = new Date();
 
+    //set the optional '0' chars for the hour and the minute.
     var minutePuffer = currentDate.getMinutes() > 9 ? "" : "0";
     var secondPuffer = currentDate.getSeconds() > 9 ? "" : "0";
 
 
-    document.getElementById("current_time").innerHTML = currentDate.getHours() + ":" + minutePuffer + currentDate.getMinutes() + ":" + secondPuffer + currentDate.getSeconds();
-    
-    audioElement.play();
-    
+    //set the daytime text depended on the hour of the day.
     var text = "";
     switch (currentDate.getHours()) {
         case 23:
@@ -68,5 +80,8 @@ function timerFunction() {
             text = "In the evening"
     }
 
+
+    //set the elements
+    document.getElementById("current_time").innerHTML = currentDate.getHours() + ":" + minutePuffer + currentDate.getMinutes() + ":" + secondPuffer + currentDate.getSeconds();
     document.getElementById("current_time_text").innerHTML = text;
 }
