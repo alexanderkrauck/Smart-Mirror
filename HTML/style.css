@@ -1,7 +1,5 @@
- @import url('./Roboto/roboto.css');
+@import url('./Roboto/roboto.css');
 
-window{
-}
 
 html{
     background-color: #000;
@@ -32,6 +30,12 @@ h1{
 #container_right{
     float: right;
 }
+
+
+#view_default{
+    padding:2%;
+}
+
 
 
 #text_animation{
