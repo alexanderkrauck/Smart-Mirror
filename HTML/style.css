@@ -1,44 +1,92 @@
 @import url('./Roboto/roboto.css');
 
 
-html{
+html {
     background-color: #000;
-    margin:0;
+    margin: 0;
     width: 100%;
     height: 100%;
     font-family: 'Roboto';
     color: white
 }
-p{
-    padding:0;
+
+p {
+    padding: 0;
     margin: 0;
 }
-body{
-    margin:0;
+
+body {
+    margin: 0;
 }
-div{
-    
-}
-h1{
+
+div {}
+
+h1 {
     color: #fff
 }
 
-#container_time p{
-    font-size: 80px;
+#current_date{
+    
+}
+
+#current_seconds{
+    font-size: 25px;
+    font-weight: 300;
+    opacity: 0.5;
+    margin-top: 8px;
+}
+
+
+#view_default {
+    padding: 2%;
+}
+
+#container_datetime{
+    float:left;
+}
+#container_weather{
+    float: right;
     text-align: right;
 }
-#container_right{
+#weather_preview{
     float: right;
+    font-size: 18px;
+    clear: right;
+}
+#weather_preview td{
+    padding:0px 6px 0px 6px;
+}
+#weather_preview img{
+    width: 15px;
+    height: 15px;
+}
+.small_info{
+    font-size: 20px;
+    font-weight: bold;
+}
+.small_info img{
+    width:17px;
+    height: 17px;
+    padding: 0px 7px 0px 7px;
+}
+.big_info{
+}
+.big_info td{
+    vertical-align: top;
+}
+.big_info img{
+    padding: 0px 10px 0px 0px;
+    height: 40px;
+    width: 40px;
+}
+.big_info p{
+    font-size: 60px;
+    font-weight: 300;
 }
 
 
-#view_default{
-    padding:2%;
-}
 
-
-
-#text_animation{
+#text_animation {
     width: 100%;
     height: 100%;
     display: table-cell;
@@ -46,15 +94,18 @@ h1{
     /* Change font-weight to light probably*/
     font-size: 60px;
 }
-#container2_text_animation{
+
+#container2_text_animation {
     display: table;
     height: 100%;
 }
-#container1_text_animation{
+
+#container1_text_animation {
     height: 100%;
     display: inline-flex;
 }
-#view_text_animation{
+
+#view_text_animation {
     width: 100%;
     height: 100%;
     text-align: center;

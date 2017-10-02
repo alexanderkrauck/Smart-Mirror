@@ -11,15 +11,72 @@
 
 <body id="body">
     <div id="view_default">
-        <div id="container_right">
-            <div id="container_time">
-                <p id="current_time">time not avaiable</p>
-                <p id="current_time_text" style="font-size:40px">daytime not avaiable</p>
-            </div>
+        <div id="container_datetime">
+            <p class="small_info" id="current_date">Date not avaiable</p>
+            <table class="big_info">
+                <tr>
+                    <td>
+                        <p id="current_time">time not avaiable</p>
+                    </td>
+                    <td>
+                        <p id="current_seconds">seconds not avaiable</p>
+                    </td>
+                </tr>
+            </table>
+            <!--<p id="current_time_text" style="font-size:40px">daytime not avaiable</p>-->
+        </div>
+        <div id="container_weather">
+            <p id="weather_additional_info" class="small_info">bla</p>
+            <table class="big_info" style="float: right">
+                <tr>
+                    <td>
+                        <p id="current_temperature">23°C</p>
+                    </td>
+                </tr>
+            </table>
+            <table id="weather_preview">
+                <tr>
+                    <td>Today</td>
+                    <td><img src="Icons/weather_raining.svg" /></td>
+                    <td>15.1</td>
+                    <td style="padding-right: 0px">12.5</td>
+                </tr>
+                <tr>
+                    <td>Tomorrow</td>
+                    <td><img src="Icons/weather_raining.svg" /></td>
+                    <td>15.1</td>
+                    <td style="padding-right: 0px">12.5</td>
+                </tr>
+                <tr>
+                    <td>Mi.</td>
+                    <td><img src="Icons/weather_raining.svg" /></td>
+                    <td>15.1</td>
+                    <td style="padding-right: 0px">12.5</td>
+                </tr>
+                <tr>
+                    <td>Do.</td>
+                    <td><img src="Icons/weather_raining.svg" /></td>
+                    <td>15.1</td>
+                    <td style="padding-right: 0px">12.5</td>
+                </tr>
+                <tr>
+                    <td>Fr.</td>
+                    <td><img src="Icons/weather_raining.svg" /></td>
+                    <td>15.1</td>
+                    <td style="padding-right: 0px">12.5</td>
+                </tr>
+                <tr>
+                    <td>Sa.</td>
+                    <td><img src="Icons/weather_raining.svg" /></td>
+                    <td>15.1</td>
+                    <td style="padding-right: 0px">12.5</td>
+                </tr>
+
+            </table>
         </div>
     </div>
     <!--<div id="view_text_animation">
-        <div id="container1_text_animation">
+        <div id="container1_text_animation">l
             <div id="container2_text_animation">
                 <p id="text_animation">Loading...</p>
             </div>
