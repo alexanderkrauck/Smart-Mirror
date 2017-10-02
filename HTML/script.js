@@ -333,10 +333,14 @@ function weatherFunction() {
             }
             var windspeed = parseFloat(weather.wind.speed);
             var useIcon = getLocationForWeatherCode(parseInt(weather.code));
+                
+            //Set the optional '0' chars for the hour and minute.
+            var hourPuffer = closerEvent.getHours() < 10 ? "0" : "";
+            var minutePuffer = closerEvent.getMinutes() < 10 ? "0" : "";
 
             //Create HTML text.
             var currentTemperatureContent = "<img class='current_weather_image' src='" + useIcon + "'/>" + weather.temp + "°C";
-            var currentAdditionalWeatherInfo = "<img src='" + locationIconWindy + "'/>" + windspeed + "<img src='" + locationSunsetSunraise + "'/>" + closerEvent.getHours() + ":" + closerEvent.getMinutes();
+            var currentAdditionalWeatherInfo = "<img src='" + locationIconWindy + "'/>" + windspeed + "<img src='" + locationSunsetSunraise + "'/>" + hourPuffer + closerEvent.getHours() + ":" + minutePuffer + closerEvent.getMinutes();
 
             //The table content for the weather preview
             var weatherPreview = "";
@@ -404,16 +408,16 @@ function parseSpecialTimeToDate(specialTime) {
     var minute = parseInt(timeElements[1]);
     if (elements[1] == "pm")
         hour += 12;
-    
+
     //Set the newDate to the currentDate and set the right hours and minutes.
     var newDate;
-    if (hour >= currentDate.getHours()) 
+    if (hour >= currentDate.getHours())
         newDate = new Date(currentDate.getTime());
-    else 
+    else
         newDate = new Date(currentDate.getTime() + 86400000);
     newDate.setHours(hour);
     newDate.setMinutes(minute);
-    return date;
+    return newDate;
 }
 
 /*
@@ -430,69 +434,69 @@ The weather code is set by: https://developer.yahoo.com/weather/documentation.ht
 function getLocationForWeatherCode(code) {
     var useIcon;
     switch (code) {
-        case 0://tornado
-        case 1://tropical storm
-        case 2://hurricane
-        case 3://severe thunderstorms
-        case 4://thunderstorms
-        case 23://blustery
-        case 24://windy
-        case 37://isolated thunderstorms
-        case 38://scattered thunderstorms
-        case 39://scattered thunderstorms
+        case 0: //tornado
+        case 1: //tropical storm
+        case 2: //hurricane
+        case 3: //severe thunderstorms
+        case 4: //thunderstorms
+        case 23: //blustery
+        case 24: //windy
+        case 37: //isolated thunderstorms
+        case 38: //scattered thunderstorms
+        case 39: //scattered thunderstorms
             useIcon = locationIconWindy;
             break;
 
-        case 5://mixed rain and snow
-        case 7://mixed snow and sleet
-        case 13://snow flurries
-        case 14://light snow showers
-        case 15://blowing snow
-        case 16://snow
-        case 17://hail
-        case 25://cold
-        case 41://heavy snow
-        case 42://scattered snow showers
-        case 43://heavy snow
-        case 46://snow showers
+        case 5: //mixed rain and snow
+        case 7: //mixed snow and sleet
+        case 13: //snow flurries
+        case 14: //light snow showers
+        case 15: //blowing snow
+        case 16: //snow
+        case 17: //hail
+        case 25: //cold
+        case 41: //heavy snow
+        case 42: //scattered snow showers
+        case 43: //heavy snow
+        case 46: //snow showers
             useIcon = locationIconSnowing;
             break;
 
-        case 6://mixed rain and sleet
-        case 8://freezing drizzle
-        case 9://drizzle
-        case 10://freezing rain
-        case 11://showers
-        case 12://showers
-        case 18://sleet
-        case 35://mixed rain and hail
-        case 40://scattered showers
-        case 45://thundershowers
-        case 47://isolated thundershowers
+        case 6: //mixed rain and sleet
+        case 8: //freezing drizzle
+        case 9: //drizzle
+        case 10: //freezing rain
+        case 11: //showers
+        case 12: //showers
+        case 18: //sleet
+        case 35: //mixed rain and hail
+        case 40: //scattered showers
+        case 45: //thundershowers
+        case 47: //isolated thundershowers
             useIcon = locationIconRaining;
             break;
 
-        case 19://dust
-        case 20://foggy
-        case 21://haze
-        case 22://smoky
-        case 26://cloudy
-        case 27://mostly cloudy (night)
-        case 28://mostly cloudy (day)
-        case 29://partly cloudy (night)
-        case 30://partly cloudy (day)
-        case 44://partly cloudy
+        case 19: //dust
+        case 20: //foggy
+        case 21: //haze
+        case 22: //smoky
+        case 26: //cloudy
+        case 27: //mostly cloudy (night)
+        case 28: //mostly cloudy (day)
+        case 29: //partly cloudy (night)
+        case 30: //partly cloudy (day)
+        case 44: //partly cloudy
             useIcon = locationIconCloudy;
             break;
 
-        case 31://clear (night)
-        case 33://fair (night)
+        case 31: //clear (night)
+        case 33: //fair (night)
             useIcon = locationIconClearNight;
             break;
 
-        case 32://sunny
-        case 34://fair (day)
-        case 36://hot
+        case 32: //sunny
+        case 34: //fair (day)
+        case 36: //hot
             useIcon = locationIconSunny;
     }
     return useIcon;
@@ -505,11 +509,11 @@ function timerFunction() {
     //Set the currentDate variable to the current date.
     currentDate = new Date();
 
-    //Set the optional '0' chars for the hour and the minute.
+    //Set the optional '0' chars for the hour, minute and the second.
     var hourPuffer = currentDate.getHours() > 9 ? "" : "0";
     var minutePuffer = currentDate.getMinutes() > 9 ? "" : "0";
     var secondPuffer = currentDate.getSeconds() > 9 ? "" : "0";
-    
+
     var timeText = hourPuffer + currentDate.getHours() + ":" + minutePuffer + currentDate.getMinutes();
     var secondText = secondPuffer + currentDate.getSeconds();
 
@@ -565,10 +569,10 @@ function timerFunction() {
     dateText = dateText.replace("-M-", monthName);
     dateText = dateText.replace("-N-", currentDate.getDate());
     dateText = dateText.replace("-Y-", (currentDate.getYear() + 1900))
-    
+
     //Set the HTML.
     document.getElementById("current_date").innerHTML = dateText;
     document.getElementById("current_time").innerHTML = timeText;
-    document.getElementById("current_seconds").innerHTML = secondText;
+    $("#current_seconds").html(secondText);
     //-document.getElementById("current_time_text").innerHTML = text;
 }
