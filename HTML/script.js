@@ -1,19 +1,22 @@
+//Possible languages for internationalisation.
 Languages = {
     ENGLISH: 0,
     GERMAN: 1
 }
 
-
 //Other fields
 //region
 var audioElement;
+
 var defaultLanguage = Languages.ENGLISH;
 var setLanguage = 1;
 
-var delayWeather = 900000;
-var delayTime = 1000;
-var delayDimensions = 10000;
+//delays for different functions
+var delayWeather = 900000; //every 15 minutes
+var delayTime = 1000; //every second
+var delayDimensions = 10000; //every 10 seconds
 
+//icon locations
 var locationIconSunny = "./Icons/weather_sunny.svg";
 var locationIconWindy = "./Icons/weather_windy.svg";
 var locationIconCloudy = "./Icons/weather_cloudy.svg";
@@ -22,6 +25,7 @@ var locationIconSnowing = "./Icons/weather_snowing.svg";
 var locationIconRaining = "./Icons/weather_raining.svg";
 var locationSunsetSunraise = "./Icons/sunset_sunraise.svg";
 
+//the current date
 var currentDate;
 //endregion
 
@@ -164,13 +168,13 @@ var de_october = "Oktober";
 var de_november = "November";
 var de_december = "Dezember";
 
-var de_date_pattern="-D-, -N-. -M-, -Y-";
+var de_date_pattern = "-D-, -N-. -M-, -Y-";
 //endregion
 //endregion
 
 $(document).ready(function () {
     setLanguages();
-    setTimeout(main, 5000);
+    main();
 });
 
 function setLanguages() {
@@ -219,7 +223,7 @@ function setLanguages() {
             october = en_october;
             november = en_november;
             december = en_december;
-            
+
             date_pattern = en_date_pattern;
             break;
         case 1:
@@ -263,23 +267,23 @@ function setLanguages() {
             october = de_october;
             november = de_november;
             december = de_december;
-            
+
             date_pattern = de_date_pattern;
             break;
     }
 }
 
 function main() {
-    //call the clock function every second
+    //call periodic funtions the first time
     timerFunction();
     weatherFunction();
     dimensionsFunction();
 
+    //set regular intervals for periodic functions
     setInterval(timerFunction, delayTime)
-
     setInterval(weatherFunction, delayWeather);
-
     setInterval(dimensionsFunction, delayDimensions);
+
     //-audioElement = document.createElement('audio');
     //-audioElement.setAttribute('src', './Sounds/tick.wav');
     //-audioElement.play();
@@ -296,7 +300,10 @@ function main() {
 
 
 }
-
+/*
+This periodical function sets the dimensions of the body regulary to the width and height of the window.
+This is needed to improve the design.
+*/
 function dimensionsFunction() {
     width = $(window).width();
     height = $(window).height();
@@ -304,7 +311,9 @@ function dimensionsFunction() {
     $("#body").css("width", width);
 }
 
-
+/*
+This periodical function refreshes the weather data in requesting the data with the "simpleweather" libary.
+*/
 function weatherFunction() {
     $.simpleWeather({
         location: 'Linz',
@@ -312,30 +321,33 @@ function weatherFunction() {
         unit: 'c',
         success: function (weather) {
 
-            var windspeed = parseFloat(weather.wind.speed);
-            var sunrise = weather.sunrise;
-            var sunset = weather.sunset;
-            var suntime;
-            if (parseInt(sunrise.split(" ")[0].split(":")[0]) > currentDate.getHours()) {
-                suntime = sunrise.split(" ")[0];
+            var sunrise = parseSpecialTimeToDate(weather.sunrise);
+            var sunset = parseSpecialTimeToDate(weather.sunset);
+
+
+            var closerEvent;
+            if (getTimeTo(sunrise) < getTimeTo(sunset)) {
+                closerEvent = sunrise;
             } else {
-                suntime = parseInt(sunset.split(" ")[0].split(":")[0]) + 12 + ":" + sunset.split(" ")[0].split(":")[1];
+                closerEvent = sunset;
             }
+            var windspeed = parseFloat(weather.wind.speed);
+            var useIcon = getLocationForWeatherCode(parseInt(weather.code));
 
-            var code = parseInt(weather.code);
-            var useIcon = getLocationForWeatherCode(code);
+            //Create HTML text.
+            var currentTemperatureContent = "<img class='current_weather_image' src='" + useIcon + "'/>" + weather.temp + "°C";
+            var currentAdditionalWeatherInfo = "<img src='" + locationIconWindy + "'/>" + windspeed + "<img src='" + locationSunsetSunraise + "'/>" + closerEvent.getHours() + ":" + closerEvent.getMinutes();
 
-
-            document.getElementById("current_temperature").innerHTML = "<img class='current_weather_image' src='" + useIcon + "'/>" + weather.temp + "°C";
-            var additionalInfoToday = "<img src='" + locationIconWindy + "'/>" + windspeed + "<img src='" + locationSunsetSunraise + "'/>" + suntime;
-            document.getElementById("weather_additional_info").innerHTML = additionalInfoToday;
-
+            //The table content for the weather preview
             var weatherPreview = "";
             var count = 0;
+            var days = [abbreviation_sunday, abbreviation_monday, abbreviation_tuesday, abbreviation_wednesday, abbreviation_thursday, abbreviation_friday, abbreviation_saturday];
+
             weather.forecast.forEach(function (element) {
-
-
+                //Get the right image for the weather situation
                 var iconLocation = getLocationForWeatherCode(parseInt(element.code));
+
+                //The opacity is reduced the later the date is.
                 if (count < 5)
                     weatherPreview += "<tr><td>";
                 else if (count == 5)
@@ -349,20 +361,19 @@ function weatherFunction() {
                 else if (count == 9)
                     weatherPreview += "<tr style='opacity:0.2'><td>";
 
-
+                //For today and tomorrow special text, for the other days get the abbrevation.
                 if (count == 0)
                     weatherPreview += "Today";
                 else if (count == 1)
                     weatherPreview += "Tomorrow";
                 else {
                     var weekday;
-                    if (currentDate.getDay() + count-1 > 5)
-                        weekday = currentDate.getDay() + count-1 - 6;
+                    if (currentDate.getDay() + count - 1 > 5)
+                        weekday = currentDate.getDay() + count - 1 - 6;
                     else
-                        weekday = currentDate.getDate() + count-1;
+                        weekday = currentDate.getDate() + count - 1;
 
-                    var days = [abbreviation_sunday, abbreviation_monday, abbreviation_tuesday, abbreviation_wednesday, abbreviation_thursday, abbreviation_friday, abbreviation_saturday];
-                    weatherPreview+=days[weekday];
+                    weatherPreview += days[weekday];
                 }
                 weatherPreview += "</td>";
                 weatherPreview += "<td><img src='" + iconLocation + "'/></td>";
@@ -371,97 +382,138 @@ function weatherFunction() {
                 count++;
 
             });
+            //Set Data in HTML.
+            document.getElementById("current_temperature").innerHTML = currentTemperatureContent;
+            document.getElementById("weather_additional_info").innerHTML = currentAdditionalWeatherInfo;
             document.getElementById("weather_preview").innerHTML = weatherPreview;
         },
         error: function (error) {
-
             //-alert("Weather not avaiable!");
         }
     });
 }
 
+/*
+This function can parse Date in Format "10:2 PM" to Date format and calcualtes it from the current Date.
+*/
+function parseSpecialTimeToDate(specialTime) {
+    //Split the Time elements and calculate the PM or AM.
+    var elements = specialTime.split(" ");
+    var timeElements = elements[0].split(":");
+    var hour = parseInt(timeElements[0]);
+    var minute = parseInt(timeElements[1]);
+    if (elements[1] == "pm")
+        hour += 12;
+    
+    //Set the newDate to the currentDate and set the right hours and minutes.
+    var newDate;
+    if (hour >= currentDate.getHours()) 
+        newDate = new Date(currentDate.getTime());
+    else 
+        newDate = new Date(currentDate.getTime() + 86400000);
+    newDate.setHours(hour);
+    newDate.setMinutes(minute);
+    return date;
+}
+
+/*
+Calculates how much time is between now and the given time.
+*/
+function getTimeTo(date) {
+    return date.getTime() - currentDate.getTime();
+}
+
+/*
+This function returns the image location for the weather code.
+The weather code is set by: https://developer.yahoo.com/weather/documentation.html#codes
+*/
 function getLocationForWeatherCode(code) {
     var useIcon;
     switch (code) {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 23:
-        case 24:
-        case 37:
-        case 38:
-        case 39:
+        case 0://tornado
+        case 1://tropical storm
+        case 2://hurricane
+        case 3://severe thunderstorms
+        case 4://thunderstorms
+        case 23://blustery
+        case 24://windy
+        case 37://isolated thunderstorms
+        case 38://scattered thunderstorms
+        case 39://scattered thunderstorms
             useIcon = locationIconWindy;
             break;
 
-        case 5:
-        case 7:
-        case 13:
-        case 14:
-        case 15:
-        case 16:
-        case 17:
-        case 41:
-        case 42:
-        case 43:
-        case 46:
-        case 25:
+        case 5://mixed rain and snow
+        case 7://mixed snow and sleet
+        case 13://snow flurries
+        case 14://light snow showers
+        case 15://blowing snow
+        case 16://snow
+        case 17://hail
+        case 25://cold
+        case 41://heavy snow
+        case 42://scattered snow showers
+        case 43://heavy snow
+        case 46://snow showers
             useIcon = locationIconSnowing;
             break;
 
-        case 6:
-        case 8:
-        case 9:
-        case 10:
-        case 11:
-        case 12:
-        case 18:
-        case 35:
-        case 40:
-        case 45:
-        case 47:
+        case 6://mixed rain and sleet
+        case 8://freezing drizzle
+        case 9://drizzle
+        case 10://freezing rain
+        case 11://showers
+        case 12://showers
+        case 18://sleet
+        case 35://mixed rain and hail
+        case 40://scattered showers
+        case 45://thundershowers
+        case 47://isolated thundershowers
             useIcon = locationIconRaining;
             break;
 
-        case 19:
-        case 20:
-        case 21:
-        case 22:
-        case 26:
-        case 27:
-        case 28:
-        case 29:
-        case 30:
-        case 44:
+        case 19://dust
+        case 20://foggy
+        case 21://haze
+        case 22://smoky
+        case 26://cloudy
+        case 27://mostly cloudy (night)
+        case 28://mostly cloudy (day)
+        case 29://partly cloudy (night)
+        case 30://partly cloudy (day)
+        case 44://partly cloudy
             useIcon = locationIconCloudy;
             break;
 
-        case 31:
-        case 33:
+        case 31://clear (night)
+        case 33://fair (night)
             useIcon = locationIconClearNight;
             break;
 
-        case 32:
-        case 34:
-        case 36:
+        case 32://sunny
+        case 34://fair (day)
+        case 36://hot
             useIcon = locationIconSunny;
     }
     return useIcon;
 }
 
-
+/*
+This periodical function refreshes the clock and the date.
+*/
 function timerFunction() {
+    //Set the currentDate variable to the current date.
     currentDate = new Date();
 
-    //set the optional '0' chars for the hour and the minute.
+    //Set the optional '0' chars for the hour and the minute.
     var hourPuffer = currentDate.getHours() > 9 ? "" : "0";
     var minutePuffer = currentDate.getMinutes() > 9 ? "" : "0";
     var secondPuffer = currentDate.getSeconds() > 9 ? "" : "0";
+    
+    var timeText = hourPuffer + currentDate.getHours() + ":" + minutePuffer + currentDate.getMinutes();
+    var secondText = secondPuffer + currentDate.getSeconds();
 
-
-    //set the daytime text depended on the hour of the day.
+    //Set the daytime text depended on the hour of the day.
     var text = "";
     switch (currentDate.getHours()) {
         case 23:
@@ -506,17 +558,17 @@ function timerFunction() {
     var dayName = days[currentDate.getDay()];
     var months = [january, february, march, apil, may, june, july, august, september, october, november, december];
     var monthName = months[currentDate.getMonth()];
-    
+
+    //Inject the data into the language specific date pattern.
     var dateText = date_pattern;
     dateText = dateText.replace("-D-", dayName);
     dateText = dateText.replace("-M-", monthName);
-    dateText = dateText.replace("-N-",currentDate.getDate());
-    dateText = dateText.replace("-Y-",(currentDate.getYear() + 1900))
+    dateText = dateText.replace("-N-", currentDate.getDate());
+    dateText = dateText.replace("-Y-", (currentDate.getYear() + 1900))
     
-    document.getElementById("current_date").innerHTML = dayName + ", " + monthName + " " + currentDate.getDate() + ", " + (currentDate.getYear() + 1900);
-    document.getElementById("current_date").innerHTML =dateText;
-    
-    document.getElementById("current_time").innerHTML = hourPuffer + currentDate.getHours() + ":" + minutePuffer + currentDate.getMinutes();
-    document.getElementById("current_seconds").innerHTML = secondPuffer + currentDate.getSeconds();
-    //document.getElementById("current_time_text").innerHTML = text;
+    //Set the HTML.
+    document.getElementById("current_date").innerHTML = dateText;
+    document.getElementById("current_time").innerHTML = timeText;
+    document.getElementById("current_seconds").innerHTML = secondText;
+    //-document.getElementById("current_time_text").innerHTML = text;
 }
