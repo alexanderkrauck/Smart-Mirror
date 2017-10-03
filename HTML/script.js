@@ -3,10 +3,16 @@ Languages = {
     ENGLISH: 0,
     GERMAN: 1
 }
+Views = {
+    TEXT_ANIMATED: 0,
+    DEFAULT: 1
+}
 
 //Other fields
 //region
 var audioElement;
+
+var activeView = Views.DEFAULT;
 
 var defaultLanguage = Languages.ENGLISH;
 var setLanguage = 1;
@@ -29,7 +35,11 @@ var locationSunsetSunraise = "./Icons/sunset_sunraise.svg";
 var currentDate;
 //endregion
 
-
+//Views in HTML format
+//region
+var viewAnimatedText;
+var viewDefault;
+//endregion
 
 
 //Fields for using the smart-mirror in multiple languages:
@@ -274,6 +284,14 @@ function setLanguages() {
 }
 
 function main() {
+    viewTextAnimated = $("#view_text_animation");
+    viewDefault = $("#view_default");
+
+    viewTextAnimated.fadeOut(0, null);
+    viewDefault.fadeOut(0, null);
+
+    switchView(Views.DEFAULT);
+
     //call periodic funtions the first time
     timerFunction();
     weatherFunction();
@@ -289,16 +307,9 @@ function main() {
     //-audioElement.play();
 
 
-
-    /*
-    $("#view_text_animation").fadeOut(0, function () {
-        $("#view_text_animation").fadeIn(2000, function () {
-            $("#view_text_animation").fadeOut(4000, null);
-        });
-    });*/
-
-
-
+    viewDefault.click(function () {
+        showViewTextAnimated(["gawgaw", "nigaga", "Loading"]);
+    });
 }
 /*
 This periodical function sets the dimensions of the body regulary to the width and height of the window.
@@ -333,7 +344,7 @@ function weatherFunction() {
             }
             var windspeed = parseFloat(weather.wind.speed);
             var useIcon = getLocationForWeatherCode(parseInt(weather.code));
-                
+
             //Set the optional '0' chars for the hour and minute.
             var hourPuffer = closerEvent.getHours() < 10 ? "0" : "";
             var minutePuffer = closerEvent.getMinutes() < 10 ? "0" : "";
@@ -556,7 +567,6 @@ function timerFunction() {
             text = daytime_evening;
     }
 
-
     //set the elements
     var days = [sunday, monday, tuesday, wednesday, thursday, friday, saturday];
     var dayName = days[currentDate.getDay()];
@@ -575,4 +585,44 @@ function timerFunction() {
     document.getElementById("current_time").innerHTML = timeText;
     $("#current_seconds").html(secondText);
     //-document.getElementById("current_time_text").innerHTML = text;
+}
+
+/*
+This function shows all elements in a string-array with animations on the viewTextAnimated
+*/
+function showViewTextAnimated(text) {
+    getViewForViewId(activeView).fadeOut(0, null);
+    if (text.length == 0) {
+        getViewForViewId(activeView).fadeIn(0, null);
+    } else {
+        var word = text[0];
+        $("#text_animation").html(word);
+        viewTextAnimated.fadeIn(2000, function () {
+            viewTextAnimated.fadeOut(4000, function () {
+                showViewTextAnimated(text.slice(1, text.length));
+            });
+        });
+    }
+}
+
+function showOneText(text) {
+
+}
+
+function switchView(view) {
+    switch (view) {
+        case Views.DEFAULT:
+            getViewForViewId(activeView).fadeOut(0, null);
+            activeView = view;
+            viewDefault.fadeIn(0, null);
+            break;
+    }
+}
+
+function getViewForViewId(id) {
+    switch (id) {
+        case Views.DEFAULT:
+            return viewDefault;
+            break;
+    }
 }

@@ -1,95 +1,106 @@
 @import url('./Roboto/roboto.css');
 
-
+/*The formatting for the default html elements*/
+/*region*/
 html {
     background-color: #000;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    font-family: 'Roboto';
-    color: white
+    font-family: Roboto;
+    color: #FFF;
 }
-
+body {
+    margin: 0;
+}
 p {
     padding: 0;
     margin: 0;
 }
+/*endregion*/
 
-body {
-    margin: 0;
+/*The formatting of the default view*/
+/*region*/
+#view_default {
+    padding: 2%;
 }
 
-div {}
-
-h1 {
-    color: #fff
-}
-
-#current_date{
-    
-}
-
-#current_seconds{
+/*The formatting of the time of the default view*/
+/*region*/
+#current_seconds {
     font-size: 25px;
     font-weight: 300;
     opacity: 0.5;
     margin-top: 8px;
 }
-
-
-#view_default {
-    padding: 2%;
+#container_datetime {
+    float: left;
 }
+/*endregion*/
 
-#container_datetime{
-    float:left;
-}
-#container_weather{
+/*The formatting of the weather of the default view*/
+/*region*/
+#container_weather {
     float: right;
     text-align: right;
 }
-#weather_preview{
+
+/*The formatting of the weather preview of the default view*/
+/*region*/
+#weather_preview {
     float: right;
     font-size: 18px;
     clear: right;
 }
-#weather_preview td{
-    padding:0px 6px 0px 6px;
+
+#weather_preview td {
+    padding: 0px 6px 0px 6px;
 }
-#weather_preview img{
+
+#weather_preview img {
     width: 15px;
     height: 15px;
 }
-.small_info{
+/*endregion*/
+/*endregion*/
+
+/*The formatting of the small info of the default view*/
+/*region*/
+.small_info {
     font-size: 20px;
     font-weight: bold;
 }
-.small_info img{
-    width:17px;
+
+.small_info img {
+    width: 17px;
     height: 17px;
     padding: 0px 7px 0px 7px;
 }
-.big_info{
-}
-.big_info td{
+/*endregion*/
+
+/*The formatting of the big info of the default view*/
+/*region*/
+.big_info td {
     vertical-align: top;
 }
-.big_info img{
+
+.big_info img {
     padding: 0px 10px 0px 0px;
     height: 40px;
     width: 40px;
 }
-.big_info p{
+
+.big_info p {
     font-size: 60px;
     font-weight: 300;
 }
+/*endregion*/
+/*endregion*/
 
-
-
+/*The formatting of the animated text view*/
+/*region*/
 #text_animation {
     width: 100%;
     height: 100%;
     display: table-cell;
+    color: white;
     vertical-align: middle;
     /* Change font-weight to light probably*/
     font-size: 60px;
@@ -110,3 +121,4 @@ h1 {
     height: 100%;
     text-align: center;
 }
+/*endregion*/
