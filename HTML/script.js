@@ -22,7 +22,7 @@ var setLanguage = 1;
 //delays for different functions
 var delayWeather = 900000; //every 15 minutes
 var delayTime = 1000; //every second
-var delayDimensions = 10000; //every 10 seconds
+var delayDimensions = 1000; //every second
 
 //icon locations
 var locationIconSunny = "./Icons/weather_sunny.svg";
@@ -89,6 +89,8 @@ var october;
 var november;
 var december;
 
+var greeting_startup;
+
 var date_pattern;
 //endregion
 
@@ -135,6 +137,8 @@ var en_october = "October";
 var en_november = "November";
 var en_december = "December";
 
+var en_greeting_startup = "Welcome to Smart-Mirror!";
+
 var en_date_pattern = "-D-, -M- -N-, -Y-";
 //endregion
 //GERMAN: prefix is "de":
@@ -179,6 +183,8 @@ var de_september = "September";
 var de_october = "Oktober";
 var de_november = "November";
 var de_december = "Dezember";
+
+var de_greeting_startup = "Willkommen zu Smart-Mirror!";
 
 var de_date_pattern = "-D-, -N-. -M-, -Y-";
 //endregion
@@ -236,6 +242,8 @@ function setLanguages() {
             november = en_november;
             december = en_december;
 
+            greeting_startup = en_greeting_startup;
+            
             date_pattern = en_date_pattern;
             break;
         case 1:
@@ -279,6 +287,8 @@ function setLanguages() {
             october = de_october;
             november = de_november;
             december = de_december;
+            
+            greeting_startup = de_greeting_startup;
 
             date_pattern = de_date_pattern;
             break;
@@ -305,14 +315,11 @@ function main() {
     setInterval(weatherFunction, delayWeather);
     setInterval(dimensionsFunction, delayDimensions);
 
-    //-audioElement = document.createElement('audio');
-    //-audioElement.setAttribute('src', './Sounds/tick.wav');
-    //-audioElement.play();
-
-
-    viewDefault.click(function () {
-        showViewTextAnimated(["gawgaw", "nigaga", "Loading"]);
-    });
+    //Startup procedure
+    showViewTextAnimated([greeting_startup]);
+    var audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', './Sounds/startup.ogg');
+    audioElement.play();
 }
 /*
 This periodical function sets the dimensions of the body regulary to the width and height of the window.
