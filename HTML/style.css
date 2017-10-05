@@ -33,6 +33,19 @@ p {
 #container_datetime {
     float: left;
 }
+
+/*The formatting of the upcoming events of the default view*/
+/*region*/
+#upcoming_events {
+    float: left;
+    font-size: 18px;
+    clear: left;
+}
+
+#upcoming_events td {
+    padding: 0px 6px 0px 6px;
+}
+/*endregion*/
 /*endregion*/
 
 /*The formatting of the weather of the default view*/

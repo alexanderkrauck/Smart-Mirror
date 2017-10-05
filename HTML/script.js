@@ -10,6 +10,8 @@ Views = {
 
 //Other fields
 //region
+
+
 var audioElement;
 
 var activeView = Views.DEFAULT;
@@ -289,6 +291,7 @@ function main() {
 
     viewTextAnimated.fadeOut(0, null);
     viewDefault.fadeOut(0, null);
+
 
     switchView(Views.DEFAULT);
 
@@ -626,3 +629,113 @@ function getViewForViewId(id) {
             break;
     }
 }
+
+//Connect to GoogleApis
+//region
+var CLIENT_ID = "1094965716521-t47je6shvn0la4s3h57e2vflaflodgul.apps.googleusercontent.com";
+var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+var SCOPES = "https://www.googleapis.com/auth/calendar";
+
+var calendarEntries = [];
+
+
+function initAuthentication() {
+
+    gapi.client.init({
+        discoveryDocs: DISCOVERY_DOCS,
+        clientId: CLIENT_ID,
+        scope: SCOPES
+    }).then(function () {
+        // Listen for sign-in state changes.
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+        // Handle the initial sign-in state.
+        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    });
+
+}
+
+function updateSigninStatus(isSignedIn) {
+    if (isSignedIn) {
+        //gapi.auth2.getAuthInstance().signOut();
+        loadCalendarEntries();
+    } else {
+        gapi.auth2.getAuthInstance().signIn();
+    }
+}
+
+function handleClientLoad() {
+    gapi.load('client:auth2', initAuthentication);
+}
+
+function loadCalendarEntries() {
+
+    gapi.client.calendar.events.list({
+        'calendarId': 'primary',
+        'timeMin': (new Date()).toISOString(),
+        'showDeleted': false,
+        'singleEvents': true,
+        'maxResults': 10,
+        'orderBy': 'startTime'
+    }).then(function (response) {
+        var events = response.result.items;
+
+        events.forEach(function (event) {
+            var datetime = event.start.dateTime;
+            if (!datetime)
+                datetime = event.start.date;
+            var title = event.summary;
+            calendarEntries.push(new CalendarEntry(title, datetime))
+        });
+
+
+        var upcomingEvents = "";
+        var count = 0;
+
+        calendarEntries.forEach(function (element) {
+            //The opacity is reduced the later the event is.
+            if (count < 5)
+                upcomingEvents += "<tr><td>";
+            else if (count == 5)
+                upcomingEvents += "<tr style='opacity:0.9'><td>";
+            else if (count == 6)
+                upcomingEvents += "<tr style='opacity:0.7'><td>";
+            else if (count == 7)
+                upcomingEvents += "<tr style='opacity:0.6'><td>";
+            else if (count == 8)
+                upcomingEvents += "<tr style='opacity:0.4'><td>";
+            else if (count == 9)
+                upcomingEvents += "<tr style='opacity:0.2'><td>";
+
+            if(element.title.length>=25)
+                upcomingEvents += element.title.substr(0,25)+"...";
+            else
+                upcomingEvents+=element.title;
+
+            upcomingEvents += "</td>";
+            upcomingEvents += "<td>" + element.datetime + ".0</td></tr>"
+            count++;
+
+        });
+        $("#upcoming_events").html(upcomingEvents);
+    });
+
+}
+
+function alertAll() {
+    var str = "";
+    calendarEntries.forEach(function (element) {
+        str = str + element.title + ":" + element.datetime + "\n";
+    });
+    alert(str);
+}
+
+class CalendarEntry {
+    
+    constructor(title, datetime) {
+        this.title = title;
+        this.datetime = datetime;
+    }
+}
+
+//endregion
