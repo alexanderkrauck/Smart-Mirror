@@ -653,8 +653,9 @@ function getViewForViewId(id) {
 //Connect to GoogleApis
 //region
 var CLIENT_ID = "1094965716521-t47je6shvn0la4s3h57e2vflaflodgul.apps.googleusercontent.com";
-var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
-var SCOPES = "https://www.googleapis.com/auth/calendar";
+var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest", "https://people.googleapis.com/$discovery/rest"];
+var SCOPES = "https://www.googleapis.com/auth/calendar profile";
+var API_KEY = "v6HdY29LPWqZLQEtkwjGU48b";
 
 var calendarEntries = [];
 
@@ -679,6 +680,7 @@ function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
         signedIn = true;
         loadCalendarEntries();
+        loadProfileData();
     } else {
         signedIn = false;
     }
@@ -686,6 +688,16 @@ function updateSigninStatus(isSignedIn) {
 
 function handleClientLoad() {
     gapi.load('client:auth2', initAuthentication);
+}
+
+function loadProfileData() {
+    gapi.client.people.people.get({
+        'resourceName': 'people/me',
+        'requestMask.includeField': ['person.names','person.photos']
+    }).then(function (resp) {
+        alert(resp.result.names[0].givenName);
+        $("#google_account").css("background-image","URL("+resp.result.photos[0].url+")");
+    });
 }
 
 function loadCalendarEntries() {
@@ -738,7 +750,7 @@ function loadCalendarEntries() {
             if (daysTo == 0)
                 upcomingEvents += "Today";
             else if (daysTo <= 7)
-                upcomingEvents += upcoming_events_soon_pattern.replace("-A-",daysTo);
+                upcomingEvents += upcoming_events_soon_pattern.replace("-A-", daysTo);
             else {
                 var datetime = element.datetime;
 
@@ -754,9 +766,9 @@ function loadCalendarEntries() {
                     month = datetime.getMonth();
 
 
-                upcomingEvents += date + "." + month + "."+(1900+datetime.getYear());
+                upcomingEvents += date + "." + month + "." + (1900 + datetime.getYear());
             }
-            upcomingEvents+="</td></tr>";
+            upcomingEvents += "</td></tr>";
             count++;
 
         });
