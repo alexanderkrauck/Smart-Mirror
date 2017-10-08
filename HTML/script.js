@@ -95,6 +95,7 @@ var december;
 var greeting_startup;
 
 var date_pattern;
+var upcoming_events_soon_pattern;
 //endregion
 
 //ENGLISH: prefix is "en":
@@ -143,6 +144,7 @@ var en_december = "December";
 var en_greeting_startup = "Welcome to Smart-Mirror!";
 
 var en_date_pattern = "-D-, -M- -N-, -Y-";
+var en_upcoming_events_soon_pattern = "in -A- days";
 //endregion
 //GERMAN: prefix is "de":
 //region
@@ -190,6 +192,8 @@ var de_december = "Dezember";
 var de_greeting_startup = "Willkommen zu Smart-Mirror!";
 
 var de_date_pattern = "-D-, -N-. -M-, -Y-";
+var de_upcoming_events_soon_pattern = "in -A- Tagen";
+
 //endregion
 //endregion
 
@@ -248,6 +252,7 @@ function setLanguages() {
             greeting_startup = en_greeting_startup;
 
             date_pattern = en_date_pattern;
+            upcoming_events_soon_pattern = en_upcoming_events_soon_pattern;
             break;
         case 1:
             daytime_night = de_daytime_night;
@@ -294,6 +299,7 @@ function setLanguages() {
             greeting_startup = de_greeting_startup;
 
             date_pattern = de_date_pattern;
+            upcoming_events_soon_pattern = de_upcoming_events_soon_pattern;
             break;
     }
 }
@@ -305,8 +311,8 @@ function main() {
     viewTextAnimated.fadeOut(0, null);
     viewDefault.fadeOut(0, null);
 
-    
-    
+
+
     switchView(Views.DEFAULT);
 
     //call periodic funtions the first time
@@ -325,9 +331,9 @@ function main() {
     var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', './Sounds/startup.ogg');
     audioElement.play();
-    
-    $("#google_account").click(function(){
-        if(signedIn)
+
+    $("#google_account").click(function () {
+        if (signedIn)
             gapi.auth2.getAuthInstance().signOut();
         gapi.auth2.getAuthInstance().signIn();
     });
@@ -398,15 +404,15 @@ function weatherFunction() {
                     weatherPreview += "<tr style='opacity:0.2'><td>";
 
                 //For today and tomorrow special text, for the other days get the abbrevation.
-                if (count == 0)
+                /*if (count == 0)
                     weatherPreview += "Today";
                 else if (count == 1)
                     weatherPreview += "Tomorrow";
-                else {
-                    var weekday;
-                    weekday = (currentDate.getDay() + count - 7) % 7;
-                    weatherPreview += days[weekday];
-                }
+                else {*/
+                var weekday;
+                weekday = (currentDate.getDay() + count) % 7;
+                weatherPreview += days[weekday];
+                //}
                 weatherPreview += "</td>";
                 weatherPreview += "<td><img src='" + iconLocation + "'/></td>";
                 weatherPreview += "<td>" + element.high + ".0</td>"
@@ -661,8 +667,8 @@ function initAuthentication() {
     }).then(function () {
         // Listen for sign-in state changes.
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-        
-        
+
+
         // Handle the initial sign-in state.
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
     });
@@ -726,8 +732,31 @@ function loadCalendarEntries() {
             else
                 upcomingEvents += element.title;
 
-            upcomingEvents += "</td>";
-            upcomingEvents += "<td>" + element.datetime + ".0</td></tr>"
+            upcomingEvents += "</td><td>";
+
+            var daysTo = Math.round(getTimeTo(element.datetime) / (1000 * 60 * 60 * 24));
+            if (daysTo == 0)
+                upcomingEvents += "Today";
+            else if (daysTo <= 7)
+                upcomingEvents += upcoming_events_soon_pattern.replace("-A-",daysTo);
+            else {
+                var datetime = element.datetime;
+
+                var date;
+                var month;
+                if (datetime.getDate() <= 9)
+                    date = "0" + datetime.getDate();
+                else
+                    date = datetime.getDate();
+                if (datetime.getMonth() <= 9)
+                    month = "0" + datetime.getMonth();
+                else
+                    month = datetime.getMonth();
+
+
+                upcomingEvents += date + "." + month + "."+(1900+datetime.getYear());
+            }
+            upcomingEvents+="</td></tr>";
             count++;
 
         });
@@ -748,7 +777,7 @@ class CalendarEntry {
 
     constructor(title, datetime) {
         this.title = title;
-        this.datetime = datetime;
+        this.datetime = new Date(datetime);
     }
 }
 
