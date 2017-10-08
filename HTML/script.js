@@ -335,7 +335,7 @@ function main() {
     $("#google_account").click(function () {
         if (signedIn)
             gapi.auth2.getAuthInstance().signOut();
-        gapi.auth2.getAuthInstance().signIn();
+        gapi.auth2.getAuthInstance().signIn({ux_mode: "popup", prompt: "select_account"});
     });
 }
 /*
@@ -664,7 +664,8 @@ function initAuthentication() {
     gapi.client.init({
         discoveryDocs: DISCOVERY_DOCS,
         clientId: CLIENT_ID,
-        scope: SCOPES
+        scope: SCOPES,
+        immidate: false
     }).then(function () {
         // Listen for sign-in state changes.
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
@@ -695,7 +696,7 @@ function loadProfileData() {
         'resourceName': 'people/me',
         'requestMask.includeField': ['person.names','person.photos']
     }).then(function (resp) {
-        alert(resp.result.names[0].givenName);
+        $("#google_account_name").html(resp.result.names[0].displayName);
         $("#google_account").css("background-image","URL("+resp.result.photos[0].url+")");
     });
 }
