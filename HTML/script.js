@@ -19,8 +19,11 @@ var activeView = Views.DEFAULT;
 var defaultLanguage = Languages.ENGLISH;
 var setLanguage = 1;
 
+var signedIn = false;
+
 //delays for different functions
 var delayWeather = 900000; //every 15 minutes
+var delayGoogleRefresh = 900000; //every 15 minutes
 var delayTime = 1000; //every second
 var delayDimensions = 1000; //every second
 
@@ -243,7 +246,7 @@ function setLanguages() {
             december = en_december;
 
             greeting_startup = en_greeting_startup;
-            
+
             date_pattern = en_date_pattern;
             break;
         case 1:
@@ -287,7 +290,7 @@ function setLanguages() {
             october = de_october;
             november = de_november;
             december = de_december;
-            
+
             greeting_startup = de_greeting_startup;
 
             date_pattern = de_date_pattern;
@@ -302,13 +305,15 @@ function main() {
     viewTextAnimated.fadeOut(0, null);
     viewDefault.fadeOut(0, null);
 
-
+    
+    
     switchView(Views.DEFAULT);
 
     //call periodic funtions the first time
     timerFunction();
     weatherFunction();
     dimensionsFunction();
+
 
     //set regular intervals for periodic functions
     setInterval(timerFunction, delayTime)
@@ -320,6 +325,12 @@ function main() {
     var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', './Sounds/startup.ogg');
     audioElement.play();
+    
+    $("#google_account").click(function(){
+        if(signedIn)
+            gapi.auth2.getAuthInstance().signOut();
+        gapi.auth2.getAuthInstance().signIn();
+    });
 }
 /*
 This periodical function sets the dimensions of the body regulary to the width and height of the window.
@@ -393,11 +404,7 @@ function weatherFunction() {
                     weatherPreview += "Tomorrow";
                 else {
                     var weekday;
-                    if (currentDate.getDay() + count - 1 > 5)
-                        weekday = currentDate.getDay() + count - 1 - 6;
-                    else
-                        weekday = currentDate.getDate() + count - 1;
-
+                    weekday = (currentDate.getDay() + count - 7) % 7;
                     weatherPreview += days[weekday];
                 }
                 weatherPreview += "</td>";
@@ -647,7 +654,6 @@ var calendarEntries = [];
 
 
 function initAuthentication() {
-
     gapi.client.init({
         discoveryDocs: DISCOVERY_DOCS,
         clientId: CLIENT_ID,
@@ -655,7 +661,8 @@ function initAuthentication() {
     }).then(function () {
         // Listen for sign-in state changes.
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
+        
+        
         // Handle the initial sign-in state.
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
     });
@@ -664,10 +671,10 @@ function initAuthentication() {
 
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
-        //gapi.auth2.getAuthInstance().signOut();
+        signedIn = true;
         loadCalendarEntries();
     } else {
-        gapi.auth2.getAuthInstance().signIn();
+        signedIn = false;
     }
 }
 
@@ -676,7 +683,7 @@ function handleClientLoad() {
 }
 
 function loadCalendarEntries() {
-
+    calendarEntries = [];
     gapi.client.calendar.events.list({
         'calendarId': 'primary',
         'timeMin': (new Date()).toISOString(),
@@ -714,10 +721,10 @@ function loadCalendarEntries() {
             else if (count == 9)
                 upcomingEvents += "<tr style='opacity:0.2'><td>";
 
-            if(element.title.length>=25)
-                upcomingEvents += element.title.substr(0,25)+"...";
+            if (element.title.length >= 25)
+                upcomingEvents += element.title.substr(0, 25) + "...";
             else
-                upcomingEvents+=element.title;
+                upcomingEvents += element.title;
 
             upcomingEvents += "</td>";
             upcomingEvents += "<td>" + element.datetime + ".0</td></tr>"
@@ -738,7 +745,7 @@ function alertAll() {
 }
 
 class CalendarEntry {
-    
+
     constructor(title, datetime) {
         this.title = title;
         this.datetime = datetime;
