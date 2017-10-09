@@ -433,9 +433,9 @@ function weatherFunction() {
 
             });
             //Set Data in HTML.
-            document.getElementById("current_temperature").innerHTML = currentTemperatureContent;
-            document.getElementById("weather_additional_info").innerHTML = currentAdditionalWeatherInfo;
-            document.getElementById("weather_preview").innerHTML = weatherPreview;
+            $("#current_temperature").html(currentTemperatureContent);
+            $("#weather_additional_info").html(currentAdditionalWeatherInfo);
+            $("#weather_preview").html(weatherPreview);
         },
         error: function (error) {
             //-alert("Weather not avaiable!");
@@ -616,10 +616,9 @@ function timerFunction() {
     dateText = dateText.replace("-Y-", (currentDate.getYear() + 1900))
 
     //Set the HTML.
-    document.getElementById("current_date").innerHTML = dateText;
-    document.getElementById("current_time").innerHTML = timeText;
+    $("#current_date").html(dateText);
+    $("#current_time").html(timeText);
     $("#current_seconds").html(secondText);
-    //-document.getElementById("current_time_text").innerHTML = text;
 }
 
 
