@@ -1,207 +1,215 @@
-//Possible languages for internationalisation.
+//region ENUMS
+/**
+ * Possible languages for internationalisation.
+ * @type {{ENGLISH: number, GERMAN: number}}
+ */
 Languages = {
     ENGLISH: 0,
     GERMAN: 1
 }
+
+/**
+ * The existing views for switching views.
+ * @type {{TEXT_ANIMATED: number, DEFAULT: number}}
+ */
 Views = {
     TEXT_ANIMATED: 0,
     DEFAULT: 1
 }
+//endregion
 
-//Other fields
-//region
+//region Other fields
 
 
-var audioElement;
+let audioElement;
 
-var activeView = Views.DEFAULT;
+let activeView = Views.DEFAULT;
 
-var defaultLanguage = Languages.ENGLISH;
-var setLanguage = 1;
+let defaultLanguage = Languages.ENGLISH;
+let setLanguage = 1;
 
-var signedIn = false;
+let signedIn = false;
 
 //delays for different functions
-var delayWeather = 900000; //every 15 minutes
-var delayGoogleRefresh = 900000; //every 15 minutes
-var delayTime = 1000; //every second
-var delayDimensions = 1000; //every second
+let delayWeather = 900000; //every 15 minutes
+let delayGoogleRefresh = 900000; //every 15 minutes
+let delayTime = 1000; //every second
+let delayDimensions = 1000; //every second
 
 //icon locations
-var locationIconSunny = "./Icons/weather_sunny.svg";
-var locationIconWindy = "./Icons/weather_windy.svg";
-var locationIconCloudy = "./Icons/weather_cloudy.svg";
-var locationIconClearNight = "./Icons/weather_clear_night.svg";
-var locationIconSnowing = "./Icons/weather_snowing.svg";
-var locationIconRaining = "./Icons/weather_raining.svg";
-var locationSunsetSunraise = "./Icons/sunset_sunraise.svg";
+let locationIconSunny = "./Icons/weather_sunny.svg";
+let locationIconWindy = "./Icons/weather_windy.svg";
+let locationIconCloudy = "./Icons/weather_cloudy.svg";
+let locationIconClearNight = "./Icons/weather_clear_night.svg";
+let locationIconSnowing = "./Icons/weather_snowing.svg";
+let locationIconRaining = "./Icons/weather_raining.svg";
+let locationSunsetSunrise = "./Icons/sunset_sunrise.svg";
 
 //the current date
-var currentDate;
+let currentDate;
 //endregion
 
-//Views in HTML format
-//region
-var viewAnimatedText;
-var viewDefault;
+//region Views in HTML format
+let viewTextAnimated;
+let viewDefault;
 //endregion
 
+//region Fields for using the smart-mirror in multiple languages
+//region The fields which are actually used in the code
+let daytime_night;
+let daytime_morning;
+let daytime_noon;
+let daytime_afternoon;
+let daytime_evening;
 
-//Fields for using the smart-mirror in multiple languages:
-//region
-//The fields which are actually used in the code:
-//region
-var daytime_night;
-var daytime_morning;
-var daytime_noon;
-var daytime_afternoon;
-var daytime_evening;
+let greeting_night;
+let greeting_morning;
+let greeting_noon;
+let greeting_afternoon;
+let greeting_evening;
 
-var greeting_night;
-var greeting_morning;
-var greeting_noon;
-var greeting_afternoon;
-var greeting_evening;
+let sunday;
+let monday;
+let tuesday;
+let wednesday;
+let thursday;
+let friday;
+let saturday;
 
-var sunday;
-var monday;
-var tuesday;
-var wednesday;
-var thursday;
-var friday;
-var saturday;
+let abbreviation_sunday;
+let abbreviation_monday;
+let abbreviation_tuesday;
+let abbreviation_wednesday;
+let abbreviation_thursday;
+let abbreviation_friday;
+let abbreviation_saturday;
 
-var abbreviation_sunday;
-var abbreviation_monday;
-var abbreviation_tuesday;
-var abbreviation_wednesday;
-var abbreviation_thursday;
-var abbreviation_friday;
-var abbreviation_saturday;
+let january;
+let february;
+let march;
+let apil;
+let may;
+let june;
+let july;
+let august;
+let september;
+let october;
+let november;
+let december;
 
-var january;
-var february;
-var march;
-var apil;
-var may;
-var june;
-var july;
-var august;
-var september;
-var october;
-var november;
-var december;
+let greeting_startup;
 
-var greeting_startup;
-
-var date_pattern;
-var upcoming_events_soon_pattern;
+let date_pattern;
+let upcoming_events_soon_pattern;
 //endregion
 
-//ENGLISH: prefix is "en":
-//region
-var en_daytime_night = "In the night";
-var en_daytime_morning = "In the morning";
-var en_daytime_noon = "In the noon";
-var en_daytime_afternoon = "In the afternoon";
-var en_daytime_evening = "In the evening";
+//region ENGLISH: prefix is "en"
+let en_daytime_night = "In the night";
+let en_daytime_morning = "In the morning";
+let en_daytime_noon = "In the noon";
+let en_daytime_afternoon = "In the afternoon";
+let en_daytime_evening = "In the evening";
 
-var en_greeting_night = "Good night!";
-var en_greeting_morning = "Good morning!";
-var en_greeting_noon = "Good noon!";
-var en_greeting_afternoon = "Good afternoon!";
-var en_greeting_evening = "Good evening!";
+let en_greeting_night = "Good night!";
+let en_greeting_morning = "Good morning!";
+let en_greeting_noon = "Good noon!";
+let en_greeting_afternoon = "Good afternoon!";
+let en_greeting_evening = "Good evening!";
 
-var en_sunday = "Sunday";
-var en_monday = "Monday";
-var en_tuesday = "Tuesday";
-var en_wednesday = "Wednesday";
-var en_thursday = "Thursday";
-var en_friday = "Friday";
-var en_saturday = "Saturday";
+let en_sunday = "Sunday";
+let en_monday = "Monday";
+let en_tuesday = "Tuesday";
+let en_wednesday = "Wednesday";
+let en_thursday = "Thursday";
+let en_friday = "Friday";
+let en_saturday = "Saturday";
 
-var en_abbreviation_sunday = "Sun";
-var en_abbreviation_monday = "Mon";
-var en_abbreviation_tuesday = "Tue";
-var en_abbreviation_wednesday = "Wed";
-var en_abbreviation_thursday = "Thu";
-var en_abbreviation_friday = "Fri";
-var en_abbreviation_saturday = "Sat";
+let en_abbreviation_sunday = "Sun";
+let en_abbreviation_monday = "Mon";
+let en_abbreviation_tuesday = "Tue";
+let en_abbreviation_wednesday = "Wed";
+let en_abbreviation_thursday = "Thu";
+let en_abbreviation_friday = "Fri";
+let en_abbreviation_saturday = "Sat";
 
-var en_january = "January";
-var en_february = "February";
-var en_march = "March";
-var en_april = "April";
-var en_may = "May";
-var en_june = "June";
-var en_july = "July";
-var en_august = "August";
-var en_september = "September";
-var en_october = "October";
-var en_november = "November";
-var en_december = "December";
+let en_january = "January";
+let en_february = "February";
+let en_march = "March";
+let en_april = "April";
+let en_may = "May";
+let en_june = "June";
+let en_july = "July";
+let en_august = "August";
+let en_september = "September";
+let en_october = "October";
+let en_november = "November";
+let en_december = "December";
 
-var en_greeting_startup = "Welcome to Smart-Mirror!";
+let en_greeting_startup = "Welcome to Smart-Mirror!";
 
-var en_date_pattern = "-D-, -M- -N-, -Y-";
-var en_upcoming_events_soon_pattern = "in -A- days";
+let en_date_pattern = "-D-, -M- -N-, -Y-";
+let en_upcoming_events_soon_pattern = "in -A- days";
 //endregion
-//GERMAN: prefix is "de":
-//region
-var de_daytime_night = "In der Nacht";
-var de_daytime_morning = "Am Morgen";
-var de_daytime_noon = "Zu Mittag";
-var de_daytime_afternoon = "Am Nachmittag";
-var de_daytime_evening = "Am Abend";
 
-var de_greeting_night = "Gute Nacht!"
-var de_greeting_morning = "Guten Morgen!";
-var de_greeting_noon = "Schönen Mittag!";
-var de_greeting_afternoon = "Schönen Nachmittag!";
-var de_greeting_evening = "Guten Abend!";
+//region GERMAN: prefix is "de"
+let de_daytime_night = "In der Nacht";
+let de_daytime_morning = "Am Morgen";
+let de_daytime_noon = "Zu Mittag";
+let de_daytime_afternoon = "Am Nachmittag";
+let de_daytime_evening = "Am Abend";
 
-var de_sunday = "Sonntag";
-var de_monday = "Montag";
-var de_tuesday = "Dienstag";
-var de_wednesday = "Mittwoch";
-var de_thursday = "Donnerstag";
-var de_friday = "Freitag";
-var de_saturday = "Samstag";
+let de_greeting_night = "Gute Nacht!"
+let de_greeting_morning = "Guten Morgen!";
+let de_greeting_noon = "Schönen Mittag!";
+let de_greeting_afternoon = "Schönen Nachmittag!";
+let de_greeting_evening = "Guten Abend!";
 
-var de_abbreviation_sunday = "So.";
-var de_abbreviation_monday = "Mo.";
-var de_abbreviation_tuesday = "Di.";
-var de_abbreviation_wednesday = "Mi.";
-var de_abbreviation_thursday = "Do.";
-var de_abbreviation_friday = "Fr.";
-var de_abbreviation_saturday = "Sa.";
+let de_sunday = "Sonntag";
+let de_monday = "Montag";
+let de_tuesday = "Dienstag";
+let de_wednesday = "Mittwoch";
+let de_thursday = "Donnerstag";
+let de_friday = "Freitag";
+let de_saturday = "Samstag";
 
-var de_january = "Jänner";
-var de_february = "Februar";
-var de_march = "März";
-var de_april = "April";
-var de_may = "Mai";
-var de_june = "Juni";
-var de_july = "July";
-var de_august = "August";
-var de_september = "September";
-var de_october = "Oktober";
-var de_november = "November";
-var de_december = "Dezember";
+let de_abbreviation_sunday = "So.";
+let de_abbreviation_monday = "Mo.";
+let de_abbreviation_tuesday = "Di.";
+let de_abbreviation_wednesday = "Mi.";
+let de_abbreviation_thursday = "Do.";
+let de_abbreviation_friday = "Fr.";
+let de_abbreviation_saturday = "Sa.";
 
-var de_greeting_startup = "Willkommen zu Smart-Mirror!";
+let de_january = "Jänner";
+let de_february = "Februar";
+let de_march = "März";
+let de_april = "April";
+let de_may = "Mai";
+let de_june = "Juni";
+let de_july = "July";
+let de_august = "August";
+let de_september = "September";
+let de_october = "Oktober";
+let de_november = "November";
+let de_december = "Dezember";
 
-var de_date_pattern = "-D-, -N-. -M-, -Y-";
-var de_upcoming_events_soon_pattern = "in -A- Tagen";
+let de_greeting_startup = "Willkommen zu Smart-Mirror!";
+
+let de_date_pattern = "-D-, -N-. -M-, -Y-";
+let de_upcoming_events_soon_pattern = "in -A- Tagen";
 
 //endregion
 //endregion
 
+//region Startup components
 $(document).ready(function () {
     setLanguages();
     main();
 });
 
+/**
+ * Sets the used language letiables to the active language letiables.
+ */
 function setLanguages() {
     if (setLanguage == null)
         setLanguage = defaultLanguage;
@@ -304,6 +312,10 @@ function setLanguages() {
     }
 }
 
+/**
+ * The initializing function which is called when the document is ready.
+ * The function sets up the periodical function and sets events.
+ */
 function main() {
     viewTextAnimated = $("#view_text_animation");
     viewDefault = $("#view_default");
@@ -311,37 +323,44 @@ function main() {
     viewTextAnimated.fadeOut(0, null);
     viewDefault.fadeOut(0, null);
 
-
+    loadNews();
+    loadQuote();
 
     switchView(Views.DEFAULT);
 
-    //call periodic funtions the first time
+    //call periodic functions the first time
     timerFunction();
     weatherFunction();
     dimensionsFunction();
 
 
     //set regular intervals for periodic functions
-    setInterval(timerFunction, delayTime)
+    setInterval(timerFunction, delayTime);
     setInterval(weatherFunction, delayWeather);
     setInterval(dimensionsFunction, delayDimensions);
 
     //Startup procedure
     showViewTextAnimated([greeting_startup]);
-    var audioElement = document.createElement('audio');
+    let audioElement = document.createElement('audio');
     audioElement.setAttribute('src', './Sounds/startup.ogg');
     audioElement.play();
 
+    //The click event when the google button is clicked.
     $("#google_account").click(function () {
         if (signedIn)
             gapi.auth2.getAuthInstance().signOut();
-        gapi.auth2.getAuthInstance().signIn({ux_mode: "popup", prompt: "select_account"});
+        gapi.auth2.getAuthInstance().signIn({
+            ux_mode: "popup",
+            prompt: "select_account"
+        });
     });
 }
-/*
-This periodical function sets the dimensions of the body regulary to the width and height of the window.
-This is needed to improve the design.
-*/
+//endregion
+
+/**
+ * This periodical function sets the dimensions of the body regulary to the width and height of the window.
+ * This is needed to improve the design.
+ */
 function dimensionsFunction() {
     width = $(window).width();
     height = $(window).height();
@@ -349,9 +368,9 @@ function dimensionsFunction() {
     $("#body").css("width", width);
 }
 
-/*
-This periodical function refreshes the weather data in requesting the data with the "simpleweather" libary.
-*/
+/**
+ * This periodical function refreshes the weather data in requesting the data with the "simpleweather" libary.
+ */
 function weatherFunction() {
     $.simpleWeather({
         location: 'Linz',
@@ -359,57 +378,50 @@ function weatherFunction() {
         unit: 'c',
         success: function (weather) {
 
-            var sunrise = parseSpecialTimeToDate(weather.sunrise);
-            var sunset = parseSpecialTimeToDate(weather.sunset);
+            let sunrise = parseSpecialTimeToDate(weather.sunrise);
+            let sunset = parseSpecialTimeToDate(weather.sunset);
 
 
-            var closerEvent;
+            let closerEvent;
             if (getTimeTo(sunrise) < getTimeTo(sunset)) {
                 closerEvent = sunrise;
             } else {
                 closerEvent = sunset;
             }
-            var windspeed = parseFloat(weather.wind.speed);
-            var useIcon = getLocationForWeatherCode(parseInt(weather.code));
+            let windspeed = parseFloat(weather.wind.speed);
+            let useIcon = getLocationForWeatherCode(parseInt(weather.code));
 
             //Set the optional '0' chars for the hour and minute.
-            var hourPuffer = closerEvent.getHours() < 10 ? "0" : "";
-            var minutePuffer = closerEvent.getMinutes() < 10 ? "0" : "";
+            let hourPuffer = closerEvent.getHours() < 10 ? "0" : "";
+            let minutePuffer = closerEvent.getMinutes() < 10 ? "0" : "";
 
             //Create HTML text.
-            var currentTemperatureContent = "<img class='current_weather_image' src='" + useIcon + "'/>" + weather.temp + "°C";
-            var currentAdditionalWeatherInfo = "<img src='" + locationIconWindy + "'/>" + windspeed + "<img src='" + locationSunsetSunraise + "'/>" + hourPuffer + closerEvent.getHours() + ":" + minutePuffer + closerEvent.getMinutes();
+            let currentTemperatureContent = "<img class='current_weather_image' src='" + useIcon + "'/>" + weather.temp + "°C";
+            let currentAdditionalWeatherInfo = "<img src='" + locationIconWindy + "'/>" + windspeed + "<img src='" + locationSunsetSunrise + "'/>" + hourPuffer + closerEvent.getHours() + ":" + minutePuffer + closerEvent.getMinutes();
 
             //The table content for the weather preview
-            var weatherPreview = "";
-            var count = 0;
-            var days = [abbreviation_sunday, abbreviation_monday, abbreviation_tuesday, abbreviation_wednesday, abbreviation_thursday, abbreviation_friday, abbreviation_saturday];
+            let weatherPreview = "";
+            let count = 0;
+            let days = [abbreviation_sunday, abbreviation_monday, abbreviation_tuesday, abbreviation_wednesday, abbreviation_thursday, abbreviation_friday, abbreviation_saturday];
 
             weather.forecast.forEach(function (element) {
                 //Get the right image for the weather situation
-                var iconLocation = getLocationForWeatherCode(parseInt(element.code));
+                let iconLocation = getLocationForWeatherCode(parseInt(element.code));
 
                 //The opacity is reduced the later the date is.
                 if (count < 5)
                     weatherPreview += "<tr><td>";
-                else if (count == 5)
+                else if (count === 5)
                     weatherPreview += "<tr style='opacity:0.9'><td>";
-                else if (count == 6)
+                else if (count === 6)
                     weatherPreview += "<tr style='opacity:0.7'><td>";
-                else if (count == 7)
+                else if (count === 7)
                     weatherPreview += "<tr style='opacity:0.6'><td>";
-                else if (count == 8)
+                else if (count === 8)
                     weatherPreview += "<tr style='opacity:0.4'><td>";
-                else if (count == 9)
+                else if (count === 9)
                     weatherPreview += "<tr style='opacity:0.2'><td>";
-
-                //For today and tomorrow special text, for the other days get the abbrevation.
-                /*if (count == 0)
-                    weatherPreview += "Today";
-                else if (count == 1)
-                    weatherPreview += "Tomorrow";
-                else {*/
-                var weekday;
+                let weekday;
                 weekday = (currentDate.getDay() + count) % 7;
                 weatherPreview += days[weekday];
                 //}
@@ -431,20 +443,20 @@ function weatherFunction() {
     });
 }
 
-/*
-This function can parse Date in Format "10:2 PM" to Date format and calcualtes it from the current Date.
-*/
+/**
+ * This function can parse Date in Format "10:2 PM" to Date format and calcualtes it from the current Date.
+ */
 function parseSpecialTimeToDate(specialTime) {
     //Split the Time elements and calculate the PM or AM.
-    var elements = specialTime.split(" ");
-    var timeElements = elements[0].split(":");
-    var hour = parseInt(timeElements[0]);
-    var minute = parseInt(timeElements[1]);
-    if (elements[1] == "pm")
+    let elements = specialTime.split(" ");
+    let timeElements = elements[0].split(":");
+    let hour = parseInt(timeElements[0]);
+    let minute = parseInt(timeElements[1]);
+    if (elements[1] === "pm")
         hour += 12;
 
     //Set the newDate to the currentDate and set the right hours and minutes.
-    var newDate;
+    let newDate;
     if (hour >= currentDate.getHours())
         newDate = new Date(currentDate.getTime());
     else
@@ -454,19 +466,19 @@ function parseSpecialTimeToDate(specialTime) {
     return newDate;
 }
 
-/*
-Calculates how much time is between now and the given time.
-*/
+/**
+ * Calculates how much time is between now and the given time.
+ */
 function getTimeTo(date) {
     return date.getTime() - currentDate.getTime();
 }
 
-/*
-This function returns the image location for the weather code.
-The weather code is set by: https://developer.yahoo.com/weather/documentation.html#codes
-*/
+/**
+ * This function returns the image location for the weather code.
+ * The weather code is set by: https://developer.yahoo.com/weather/documentation.html#codes
+ */
 function getLocationForWeatherCode(code) {
-    var useIcon;
+    let useIcon;
     switch (code) {
         case 0: //tornado
         case 1: //tropical storm
@@ -536,23 +548,23 @@ function getLocationForWeatherCode(code) {
     return useIcon;
 }
 
-/*
-This periodical function refreshes the clock and the date.
-*/
+/**
+ * This periodical function refreshes the clock and the date.
+ */
 function timerFunction() {
     //Set the currentDate variable to the current date.
     currentDate = new Date();
 
     //Set the optional '0' chars for the hour, minute and the second.
-    var hourPuffer = currentDate.getHours() > 9 ? "" : "0";
-    var minutePuffer = currentDate.getMinutes() > 9 ? "" : "0";
-    var secondPuffer = currentDate.getSeconds() > 9 ? "" : "0";
+    let hourPuffer = currentDate.getHours() > 9 ? "" : "0";
+    let minutePuffer = currentDate.getMinutes() > 9 ? "" : "0";
+    let secondPuffer = currentDate.getSeconds() > 9 ? "" : "0";
 
-    var timeText = hourPuffer + currentDate.getHours() + ":" + minutePuffer + currentDate.getMinutes();
-    var secondText = secondPuffer + currentDate.getSeconds();
+    let timeText = hourPuffer + currentDate.getHours() + ":" + minutePuffer + currentDate.getMinutes();
+    let secondText = secondPuffer + currentDate.getSeconds();
 
     //Set the daytime text depended on the hour of the day.
-    var text = "";
+    let text = "";
     switch (currentDate.getHours()) {
         case 23:
         case 0:
@@ -591,13 +603,13 @@ function timerFunction() {
     }
 
     //set the elements
-    var days = [sunday, monday, tuesday, wednesday, thursday, friday, saturday];
-    var dayName = days[currentDate.getDay()];
-    var months = [january, february, march, apil, may, june, july, august, september, october, november, december];
-    var monthName = months[currentDate.getMonth()];
+    let days = [sunday, monday, tuesday, wednesday, thursday, friday, saturday];
+    let dayName = days[currentDate.getDay()];
+    let months = [january, february, march, apil, may, june, july, august, september, october, november, december];
+    let monthName = months[currentDate.getMonth()];
 
     //Inject the data into the language specific date pattern.
-    var dateText = date_pattern;
+    let dateText = date_pattern;
     dateText = dateText.replace("-D-", dayName);
     dateText = dateText.replace("-M-", monthName);
     dateText = dateText.replace("-N-", currentDate.getDate());
@@ -610,15 +622,18 @@ function timerFunction() {
     //-document.getElementById("current_time_text").innerHTML = text;
 }
 
-/*
-This function shows all elements in a string-array with animations on the viewTextAnimated
-*/
+
+//region Switch views in HTML
+
+/**
+ * This function shows all elements in a string-array with animations on the viewTextAnimated and is recursive.
+ */
 function showViewTextAnimated(text) {
     getViewForViewId(activeView).fadeOut(0, null);
-    if (text.length == 0) {
+    if (text.length === 0) {
         getViewForViewId(activeView).fadeIn(0, null);
     } else {
-        var word = text[0];
+        let word = text[0];
         $("#text_animation").html(word);
         viewTextAnimated.fadeIn(2000, function () {
             viewTextAnimated.fadeOut(4000, function () {
@@ -628,10 +643,10 @@ function showViewTextAnimated(text) {
     }
 }
 
-function showOneText(text) {
-
-}
-
+/**
+ * Changes the active view to the give view.
+ * @param view
+ */
 function switchView(view) {
     switch (view) {
         case Views.DEFAULT:
@@ -642,6 +657,11 @@ function switchView(view) {
     }
 }
 
+/**
+ * Determines the view for the view id.
+ * @param id
+ * @returns {*}
+ */
 function getViewForViewId(id) {
     switch (id) {
         case Views.DEFAULT:
@@ -650,22 +670,158 @@ function getViewForViewId(id) {
     }
 }
 
-//Connect to GoogleApis
-//region
-var CLIENT_ID = "1094965716521-t47je6shvn0la4s3h57e2vflaflodgul.apps.googleusercontent.com";
-var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest", "https://people.googleapis.com/$discovery/rest"];
-var SCOPES = "https://www.googleapis.com/auth/calendar profile";
-var API_KEY = "v6HdY29LPWqZLQEtkwjGU48b";
-
-var calendarEntries = [];
+//endregion
 
 
+//Objects for the loaded data from the APIs
+let quote;
+
+//Lists for the loaded data from the APIs
+let calendarEntries = [];
+let eMails = [];
+let news = [];
+
+//region Refresh HTML elements in the UI
+function refreshGMailData() {
+
+}
+
+/**
+ * Builds a string in HTML format and sets the content of the table specified in the HTML code to this string.
+ * The string contains the last 10 calendar entries.
+ */
+function refreshCalendarEntryData() {
+    let upcomingEvents = "";
+    let count = 0;
+
+    calendarEntries.forEach(function (element) {
+        //The opacity is reduced the later the event is.
+        if (count < 5)
+            upcomingEvents += "<tr><td>";
+        else if (count === 5)
+            upcomingEvents += "<tr style='opacity:0.9'><td>";
+        else if (count === 6)
+            upcomingEvents += "<tr style='opacity:0.7'><td>";
+        else if (count === 7)
+            upcomingEvents += "<tr style='opacity:0.6'><td>";
+        else if (count === 8)
+            upcomingEvents += "<tr style='opacity:0.4'><td>";
+        else if (count === 9)
+            upcomingEvents += "<tr style='opacity:0.2'><td>";
+
+        if (element.title.length >= 25)
+            upcomingEvents += element.title.substr(0, 25) + "...";
+        else
+            upcomingEvents += element.title;
+
+        upcomingEvents += "</td><td>";
+
+        let daysTo = Math.round(getTimeTo(element.datetime) / (1000 * 60 * 60 * 24));
+        if (daysTo === 0)
+            upcomingEvents += "Today";
+        else if (daysTo <= 7)
+            upcomingEvents += upcoming_events_soon_pattern.replace("-A-", daysTo);
+        else {
+            let datetime = element.datetime;
+
+            let date;
+            let month;
+            if (datetime.getDate() <= 9)
+                date = "0" + datetime.getDate();
+            else
+                date = datetime.getDate();
+            //month + 1 because January is 0 and not 1 (array)
+            if ((datetime.getMonth() + 1) <= 9)
+                month = "0" + (datetime.getMonth() + 1);
+            else
+                month = datetime.getMonth() + 1;
+
+            //year + 1900 because it counts from 0 as 1900.
+            upcomingEvents += date + "." + month + "." + (1900 + datetime.getYear());
+        }
+        upcomingEvents += "</td></tr>";
+        count++;
+
+    });
+    $("#upcoming_events").html(upcomingEvents);
+}
+
+function refreshNews() {
+
+}
+
+//endregion
+
+//region Load Data from APIs
+
+//region The API calls to quotesondesign.com for quotes
+/**
+ * Load a random quote and save it.
+ */
+function loadQuote() {
+    $.ajax({
+        url: "https://quotesondesign.com/wp-json/posts?filter[orderby]=rand",
+        function (data) {
+            quote = new Quote(data[0].content, data[0].title);
+        }
+    });
+}
+
+//endregion
+
+//region The API calls to newsapi.org for news
+let NEWS_API_KEY = "7690807f99fc4759b17f8c6d404c2867";
+
+/**
+ * First load the types of sources for german language.
+ * Then load articles for the loaded sources and add them to the news list.
+ */
+function loadNews() {
+    news = [];
+    $.ajax({
+        url: "https://newsapi.org/v1/sources?language=DE&apiKey=" + NEWS_API_KEY,
+        success: function (data) {
+            data.sources.forEach(function (source) {
+                $.ajax({
+                    url: "https://newsapi.org/v1/articles?source=" + source.id + "&sortBy=latest&apiKey=" + NEWS_API_KEY,
+                    success: function (data) {
+                        data.articles.forEach(function (article) {
+                            news.push(new News(article.title, article.description, article.author, article.publishedAt, article.url, source.id));
+                        });
+                    }
+                });
+            });
+        }
+    });
+}
+
+//endregion
+
+//region The API calls to google APIs for google account-data
+
+/**
+ * Gets called as soon as the page is ready and initializes the google api connections.
+ */
+function handleClientLoad() {
+    gapi.load('client:auth2', initAuthentication);
+}
+
+//The CLIENT_ID is needed to connect to the google APIs. Visit at console.cloud.google.com.
+let CLIENT_ID = "1094965716521-t47je6shvn0la4s3h57e2vflaflodgul.apps.googleusercontent.com";
+//Array of API discovery doc URLs for APIs used in this script.
+let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest", "https://people.googleapis.com/$discovery/rest", "https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"];
+//Authorization scopes required by the API.
+let SCOPES = "https://www.googleapis.com/auth/calendar profile https://www.googleapis.com/auth/gmail.readonly";
+
+
+/**
+ * Gets called to initialize the connection with the google CLIENT_ID.
+ */
 function initAuthentication() {
     gapi.client.init({
         discoveryDocs: DISCOVERY_DOCS,
         clientId: CLIENT_ID,
-        scope: SCOPES,
-        immidate: false
+        scope: SCOPES
     }).then(function () {
         // Listen for sign-in state changes.
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
@@ -674,33 +830,60 @@ function initAuthentication() {
         // Handle the initial sign-in state.
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
     });
-
 }
 
+/**
+ * Get called when the sign in status of the google account changes.
+ * @param isSignedIn
+ */
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
         signedIn = true;
         loadCalendarEntries();
         loadProfileData();
+        loadGMailData();
     } else {
+        calendarEntries = [];
+        eMails = [];
         signedIn = false;
     }
 }
 
-function handleClientLoad() {
-    gapi.load('client:auth2', initAuthentication);
-}
-
-function loadProfileData() {
-    gapi.client.people.people.get({
-        'resourceName': 'people/me',
-        'requestMask.includeField': ['person.names','person.photos']
-    }).then(function (resp) {
-        $("#google_account_name").html(resp.result.names[0].displayName);
-        $("#google_account").css("background-image","URL("+resp.result.photos[0].url+")");
+/**
+ * Load the 10 closest emails from the active google account and add them to the eMails list.
+ */
+function loadGMailData() {
+    gapi.client.gmail.users.messages.list({
+        'userId': "me",
+        'maxResults': 10
+    }).then(function (response) {
+        response.result.messages.forEach(function (message) {
+            gapi.client.gmail.users.messages.get({
+                'userId': "me",
+                'id': message.id
+            }).then(function (resp) {
+                eMails.push(new EMail(message.id, resp.result.snippet, resp.result.internalDate));
+            });
+        });
     });
 }
 
+/**
+ * Load The profile data of the current google account.
+ */
+function loadProfileData() {
+    gapi.client.people.people.get({
+        'resourceName': 'people/me',
+        'requestMask.includeField': ['person.names', 'person.photos']
+    }).then(function (response) {
+        $("#google_account_name").html(response.result.names[0].displayName);
+        $("#google_account_image").css("background-image", "URL(" + response.result.photos[0].url + ")");
+    });
+}
+
+/**
+ *Load the 10 closest calendar entry from the active google account and add them to the calendarEntries list.
+ */
 function loadCalendarEntries() {
     calendarEntries = [];
     gapi.client.calendar.events.list({
@@ -711,86 +894,68 @@ function loadCalendarEntries() {
         'maxResults': 10,
         'orderBy': 'startTime'
     }).then(function (response) {
-        var events = response.result.items;
+        let events = response.result.items;
 
         events.forEach(function (event) {
-            var datetime = event.start.dateTime;
+            let datetime = event.start.dateTime;
             if (!datetime)
                 datetime = event.start.date;
-            var title = event.summary;
+            let title = event.summary;
             calendarEntries.push(new CalendarEntry(title, datetime))
         });
 
-
-        var upcomingEvents = "";
-        var count = 0;
-
-        calendarEntries.forEach(function (element) {
-            //The opacity is reduced the later the event is.
-            if (count < 5)
-                upcomingEvents += "<tr><td>";
-            else if (count == 5)
-                upcomingEvents += "<tr style='opacity:0.9'><td>";
-            else if (count == 6)
-                upcomingEvents += "<tr style='opacity:0.7'><td>";
-            else if (count == 7)
-                upcomingEvents += "<tr style='opacity:0.6'><td>";
-            else if (count == 8)
-                upcomingEvents += "<tr style='opacity:0.4'><td>";
-            else if (count == 9)
-                upcomingEvents += "<tr style='opacity:0.2'><td>";
-
-            if (element.title.length >= 25)
-                upcomingEvents += element.title.substr(0, 25) + "...";
-            else
-                upcomingEvents += element.title;
-
-            upcomingEvents += "</td><td>";
-
-            var daysTo = Math.round(getTimeTo(element.datetime) / (1000 * 60 * 60 * 24));
-            if (daysTo == 0)
-                upcomingEvents += "Today";
-            else if (daysTo <= 7)
-                upcomingEvents += upcoming_events_soon_pattern.replace("-A-", daysTo);
-            else {
-                var datetime = element.datetime;
-
-                var date;
-                var month;
-                if (datetime.getDate() <= 9)
-                    date = "0" + datetime.getDate();
-                else
-                    date = datetime.getDate();
-                if (datetime.getMonth() <= 9)
-                    month = "0" + datetime.getMonth();
-                else
-                    month = datetime.getMonth();
-
-
-                upcomingEvents += date + "." + month + "." + (1900 + datetime.getYear());
-            }
-            upcomingEvents += "</td></tr>";
-            count++;
-
-        });
-        $("#upcoming_events").html(upcomingEvents);
+        refreshCalendarEntryData();
     });
-
 }
 
-function alertAll() {
-    var str = "";
-    calendarEntries.forEach(function (element) {
-        str = str + element.title + ":" + element.datetime + "\n";
-    });
-    alert(str);
-}
+//endregion
+//endregion
 
+//region Classes for API elements
+/**
+ * One calendar entry with the needed data.
+ */
 class CalendarEntry {
-
     constructor(title, datetime) {
         this.title = title;
         this.datetime = new Date(datetime);
+    }
+}
+
+/**
+ * One email with the needed data.
+ */
+class EMail {
+    constructor(id, subject, utcTime) {
+        this.id = id;
+        this.subject = subject;
+        let date = new Date(0);
+        date.setUTCSeconds(utcTime / 1000);
+        this.datetime = date;
+    }
+}
+
+/**
+ * One News with the needed data. The url is the URL to the official site.
+ */
+class News {
+    constructor(title, description, author, releaseDate, url, source) {
+        this.title = title;
+        this.description = description;
+        this.author = author;
+        this.releaseDate = new Date(releaseDate);
+        this.url = url;
+        this.source = source;
+    }
+}
+
+/**
+ * The quote with the needed data.
+ */
+class Quote {
+    constructor(quote, author) {
+        this.quote = quote;
+        this.author = author;
     }
 }
 

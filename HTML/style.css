@@ -65,6 +65,7 @@ p {
 
 #weather_preview td {
     padding: 0px 6px 0px 6px;
+    text-align: right;
 }
 
 #weather_preview img {
