@@ -444,7 +444,7 @@ function weatherFunction() {
 }
 
 /**
- * This function can parse Date in Format "10:2 PM" to Date format and calcualtes it from the current Date.
+ * This function can parse Date in Format "10:2 PM" to Date format and calculates it from the current Date.
  */
 function parseSpecialTimeToDate(specialTime) {
     //Split the Time elements and calculate the PM or AM.
@@ -760,8 +760,11 @@ function refreshNews() {
 function loadQuote() {
     $.ajax({
         url: "https://quotesondesign.com/wp-json/posts?filter[orderby]=rand",
-        function (data) {
+        success: function (data) {
             quote = new Quote(data[0].content, data[0].title);
+        },
+        error: function(data){
+            
         }
     });
 }
@@ -782,11 +785,14 @@ function loadNews() {
         success: function (data) {
             data.sources.forEach(function (source) {
                 $.ajax({
-                    url: "https://newsapi.org/v1/articles?source=" + source.id + "&sortBy=latest&apiKey=" + NEWS_API_KEY,
+                    url: "https://newsapi.org/v1/articles?source=" + source.id + "&sortBy=top&apiKey=" + NEWS_API_KEY,
                     success: function (data) {
                         data.articles.forEach(function (article) {
                             news.push(new News(article.title, article.description, article.author, article.publishedAt, article.url, source.id));
                         });
+                    },
+                    error:function(data){
+
                     }
                 });
             });
