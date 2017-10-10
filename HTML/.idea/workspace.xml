@@ -17,7 +17,7 @@
       <file leaf-file-name="script.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6246">
+            <state relative-caret-position="712">
               <caret line="766" column="12" lean-forward="false" selection-start-line="766" selection-start-column="12" selection-end-line="766" selection-end-column="12" />
               <folding>
                 <element signature="n#!!doc" expanded="false" />
@@ -143,11 +143,12 @@
       <updated>1507550336219</updated>
       <workItem from="1507550338371" duration="9083000" />
       <workItem from="1507577072165" duration="1036000" />
+      <workItem from="1507618964656" duration="185000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10119000" />
+    <option name="totallyTimeSpent" value="10304000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1546" y="-911" width="1547" height="912" extended-state="6" />
@@ -216,11 +217,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/script.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#328#349#0" expanded="false" />
+            <element signature="e#1166#1195#0" expanded="false" />
+            <element signature="e#1248#1312#0" expanded="false" />
+            <element signature="e#4887#4914#0" expanded="false" />
+            <element signature="n#!!block;n#weatherFunction#0" expanded="false" />
+            <element signature="e#10456#13640#0" expanded="false" />
+            <element signature="e#10558#13542#0" expanded="false" />
+            <marker date="1507577764785" expanded="true" signature="12379:12390" ph="..." />
+            <marker date="1507577764785" expanded="true" signature="12487:12498" ph="..." />
+            <marker date="1507577764785" expanded="true" signature="12595:12606" ph="..." />
+            <marker date="1507577764785" expanded="true" signature="12703:12714" ph="..." />
+            <marker date="1507577764785" expanded="true" signature="12811:12822" ph="..." />
+            <marker date="1507577764785" expanded="true" signature="20832:20843" ph="..." />
+            <marker date="1507577764785" expanded="true" signature="20924:20935" ph="..." />
+            <marker date="1507577764785" expanded="true" signature="21016:21027" ph="..." />
+            <marker date="1507577764785" expanded="true" signature="21108:21119" ph="..." />
+            <marker date="1507577764785" expanded="true" signature="21200:21211" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1206">
           <caret line="67" column="21" lean-forward="false" selection-start-line="67" selection-start-column="21" selection-end-line="67" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -246,7 +273,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1206">
           <caret line="67" column="21" lean-forward="false" selection-start-line="67" selection-start-column="21" selection-end-line="67" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -262,7 +288,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6246">
+        <state relative-caret-position="712">
           <caret line="766" column="12" lean-forward="false" selection-start-line="766" selection-start-column="12" selection-end-line="766" selection-end-column="12" />
           <folding>
             <element signature="n#!!doc" expanded="false" />
