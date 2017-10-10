@@ -27,7 +27,7 @@ let audioElement;
 let activeView = Views.DEFAULT;
 
 let defaultLanguage = Languages.ENGLISH;
-let setLanguage = 1;
+let setLanguage = 0;
 
 let signedIn = false;
 
@@ -56,15 +56,14 @@ let viewDefault;
 let viewOff;
 
 let appEmailText;
-let appSettingsText;
 let appSearchText;
-let appTitle;
 
 let googleAccountTitle;
 let googleAccountName;
 let googleAccountImage;
 
 let hideSmartMirrorText;
+let settingsText;
 //endregion
 
 //region Fields for using the smart-mirror in multiple languages
@@ -116,10 +115,9 @@ let date_pattern;
 let upcoming_events_soon_pattern;
 
 let google_account;
-let app;
 let app_search;
 let app_email;
-let app_settings;
+let settings;
 let hide_smart_mirror;
 //endregion
 
@@ -170,12 +168,12 @@ let en_greeting_startup = "Welcome to Smart-Mirror!";
 let en_date_pattern = "-D-, -M- -N-, -Y-";
 let en_upcoming_events_soon_pattern = "in -A- days";
 
-let de_google_account = "Google Account"
-let en_app = "Apps";
+let de_google_account = "Google Account";
 let en_app_search = "Search";
 let en_app_email = "EMail";
-let en_app_settings = "Settings";
-let en_hide_smart_mirror = "Suspend Smart Mirror";
+
+let en_settings = "Settings";
+let en_hide_smart_mirror = "Only Mirror";
 //endregion
 
 //region GERMAN: prefix is "de"
@@ -185,7 +183,7 @@ let de_daytime_noon = "Zu Mittag";
 let de_daytime_afternoon = "Am Nachmittag";
 let de_daytime_evening = "Am Abend";
 
-let de_greeting_night = "Gute Nacht!"
+let de_greeting_night = "Gute Nacht!";
 let de_greeting_morning = "Guten Morgen!";
 let de_greeting_noon = "Schönen Mittag!";
 let de_greeting_afternoon = "Schönen Nachmittag!";
@@ -225,12 +223,12 @@ let de_greeting_startup = "Willkommen zu Smart-Mirror!";
 let de_date_pattern = "-D-, -N-. -M-, -Y-";
 let de_upcoming_events_soon_pattern = "in -A- Tagen";
 
-let en_google_account = "Google Account"
-let de_app = "Applikationen";
+let en_google_account = "Google Account";
 let de_app_search = "Suche";
 let de_app_email = "EMail";
-let de_app_settings = "Einstellungen";
-let de_hide_smart_mirror = "Smart Mirror beenden";
+
+let de_settings = "Einstellungen";
+let de_hide_smart_mirror = "Nur Spiegel";
 //endregion
 //endregion
 
@@ -244,7 +242,7 @@ $(document).ready(function () {
  * Sets the used language letiables to the active language letiables.
  */
 function setLanguages() {
-    if (setLanguage == null)
+    if (setLanguage === null)
         setLanguage = defaultLanguage;
 
     switch (setLanguage) {
@@ -296,10 +294,9 @@ function setLanguages() {
             upcoming_events_soon_pattern = en_upcoming_events_soon_pattern;
 
             google_account = en_google_account;
-            app = en_app;
             app_search = en_app_search;
             app_email = en_app_email;
-            app_settings = en_app_settings;
+            settings = en_settings;
             hide_smart_mirror = en_hide_smart_mirror;
             break;
         case 1:
@@ -350,10 +347,9 @@ function setLanguages() {
             upcoming_events_soon_pattern = de_upcoming_events_soon_pattern;
 
             google_account = de_google_account;
-            app = de_app;
             app_search = de_app_search;
             app_email = de_app_email;
-            app_settings = de_app_settings;
+            settings = de_settings;
             hide_smart_mirror = de_hide_smart_mirror;
             break;
     }
@@ -365,8 +361,6 @@ function loadHTMLElements(){
     viewDefault = $("#view_default");
     viewOff = $("#view_off");
     
-    appTitle = $("#app_title");
-    appSettingsText = $("#app_settings_text");
     appEmailText = $("#app_email_text");
     appSearchText = $("#app_search_text");
     
@@ -375,17 +369,17 @@ function loadHTMLElements(){
     googleAccountTitle = $("#google_account_title");
 
     hideSmartMirrorText = $("#hide_smart_mirror_text");
+    settingsText = $("#settings_text");
 }
 
 function setTextToHTML(){
     hideSmartMirrorText.html(hide_smart_mirror);
+    settingsText.html(settings);
 
     googleAccountTitle.html(google_account);
 
     appSearchText.html(app_search);
     appEmailText.html(app_email);
-    appSettingsText.html(app_settings);
-    appTitle.html(app);
 }
 
 /**
@@ -435,6 +429,9 @@ function main() {
     $("#button_hide_smart_mirror").click(function () {
         switchView(Views.OFF);
         showViewTextAnimated(["Bye bye"]);
+    });
+    viewOff.click(function(){
+        switchView(Views.DEFAULT);
     });
 }
 //endregion

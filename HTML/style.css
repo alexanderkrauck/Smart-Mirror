@@ -16,6 +16,17 @@ p {
 }
 /*endregion*/
 
+/*Other formatting*/
+/*region*/
+.view{
+    display: none;
+}
+.title_text{
+    font-weight: bold;
+    text-align: left;
+}
+/*endregion*/
+
 /*The formatting of the default view*/
 /*region*/
 #view_default {
@@ -108,6 +119,73 @@ p {
 /*endregion*/
 /*endregion*/
 
+/*The formatting of the functions container*/
+/*region*/
+#container_functions{
+    width: calc( 98% - 40px );
+    bottom:20px;
+    position:absolute
+}
+
+#apps{
+    float: right;
+    margin-bottom: 20px;
+}
+
+#base_functions{
+    clear: both;
+}
+
+.functions_table tr td{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.functions_table tr td table{
+    display: inline;
+}
+.functions_table tr td table img{
+    width: 50px;
+    height: 50px;
+}
+
+#apps_table tr td{
+    width: 100px
+}
+
+#basic_functions_table tr td{
+        padding: 0px 20px 0px 20px;
+}
+#button_hide_smart_mirror{
+    padding: 0px 20px 0px 0px;
+}
+#functions_line{
+    color: white;
+    margin-bottom: 20px
+}
+#google_functions{
+    float:right;
+    margin-top: 10px
+}
+#system_functions{
+    float:left
+}
+#google_account_name{
+    display: inline-block;
+    font-size: 22px;
+    font-weight: 300
+}
+#google_account_image{
+    display: inline-block;
+    border-radius: 100%;
+    background-image: url(Icons/add_outline.svg);
+    background-size: cover;
+    height: 45px;
+    width: 45px;
+    margin-left: 5px;
+}
+/*endregion*/
+
 /*The formatting of the animated text view*/
 /*region*/
 #text_animation {
@@ -135,5 +213,13 @@ p {
     height: 100%;
     text-align: center;
     position: absolute;
+}
+/*endregion*/
+
+/*The formatting of the off view*/
+/*region*/
+#view_off{
+    width: 100%;
+    height: 100%;
 }
 /*endregion*/

@@ -20,10 +20,10 @@
 
 
     <!--The smart mirror off view-->
-    <div id="view_off"></div>
-    
+    <div class="view" id="view_off"></div>
+
     <!--The text animation view-->
-    <div id="view_text_animation">
+    <div class="view" id="view_text_animation">
         <div id="container1_text_animation">
             <div id="container2_text_animation">
                 <p id="text_animation"></p>
@@ -32,7 +32,7 @@
     </div>
 
     <!--The default view-->
-    <div id="view_default">
+    <div class="view" id="view_default">
         <!--The datetime container-->
         <div id="container_datetime">
             <p class="small_info" id="current_date"></p>
@@ -59,80 +59,81 @@
             </table>
         </div>
 
-
-        <div style="width: calc( 98% - 40px );bottom:20px;position:absolute">
-            <div style="float: right;clear: right">
-                <div id="app_title" style="text-align: left;font-weight: bold">Apps</div>
-
-                <table style="margin-bottom: 100px;width: 100%" ;>
+        <!--The content with the apps, app views etc...-->
+        <div id="container_functions">
+            <div id="apps">
+                <table class="functions_table" id="apps_table">
                     <tr>
-                        <td style="text-align: center;height: 100px;width: 100px;vertical-align: middle">
-                            <table style="display: inline">
+                        <td>
+                            <table>
                                 <tr>
-                                    <td><img style="width: 50px;height: 50px;" src="Icons/search.svg" /></td>
+                                    <td><img src="Icons/youtube.svg" /></td>
                                 </tr>
                                 <tr>
-                                    <td id="app_search_text">Suche</td>
+                                    <td >YouTube</td>
                                 </tr>
                             </table>
                         </td>
-                        <td style="text-align: center;height: 100px;width: 100px;vertical-align: middle">
-                            <table style="display: inline">
+                        <td>
+                            <table>
                                 <tr>
-                                    <td><img style="width: 50px;height: 50px;" src="Icons/email.svg" /></td>
+                                    <td><img src="Icons/search.svg" /></td>
                                 </tr>
                                 <tr>
-                                    <td id="app_email_text">EMail</td>
+                                    <td id="app_search_text"/>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td><img src="Icons/email.svg" /></td>
+                                </tr>
+                                <tr>
+                                    <td id="app_email_text"/>
                                 </tr>
                             </table>
                         </td>
                     </tr>
-                    <tr>
-                        <td style="text-align: center;height: 100px;width: 100px;vertical-align: middle">
-                            <table style="display: inline">
-                                <tr>
-                                    <td><img style="width: 50px;height: 50px;" src="Icons/settings.svg" /></td>
-                                </tr>
-                                <tr>
-                                    <td id="app_settings_text">Einstellungen</td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td style="text-align: center;height: 100px;width: 100px;vertical-align: middle">
-                            <table style="display: inline">
-                                <tr>
-                                    <td><img style="width: 50px;height: 50px;" src="Icons/weather_clear_night.svg" /></td>
-                                </tr>
-                                <tr>
-                                    <td>IWAS</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
                 </table>
             </div>
-            <div style="clear: both">
-                <hr style="color: white" />
-                <div style="float:left">
-                    <table id="button_hide_smart_mirror" style="display: inline">
+            <div id="base_functions">
+                <hr id="functions_line" />
+                <div id="system_functions">
+                    <table class="functions_table" id="base_functions_table">
                         <tr>
-                            <td style="text-align: center"><img style="width: 50px;height: 50px;" src="Icons/hide.svg" /></td>
-                        </tr>
-                        <tr>
-                            <td id="hide_smart_mirror_text" style="text-align: center"></td>
+                            <td id="button_hide_smart_mirror">
+                                <table>
+                                    <tr>
+                                        <td><img src="Icons/hide.svg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td id="hide_smart_mirror_text"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td><img src="Icons/settings.svg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td id="settings_text"></td>
+                                    </tr>
+                                </table>
+                            </td>
                         </tr>
                     </table>
                 </div>
-                <div style="float:right">
-                    <div id="google_account_title" style="width: 100%; text-align: left;font-weight: bold">Google Account</div>
+                <div id="google_functions">
+                    <p id="google_account_title" class="title_text" />
                     <table>
                         <tr id="google_account">
                             <td>
-                                <div id="google_account_name" style="display: inline-block; font-size: 22px; font-weight: 300">Alexander Krauck</div>
+                                <p id="google_account_name"/>
                             </td>
                             <td>
-                                <div id="google_account_image" style="display: inline-block;border-radius: 100%;background-image: url(Icons/add_outline.svg); background-size: cover;height: 45px;width: 45px"></div>
+                                <div id="google_account_image"></div>
                             </td>
                         </tr>
                     </table>
@@ -142,11 +143,7 @@
 
         <table id="upcoming_events"></table>
         <table id="weather_preview"></table>
-
-
-
     </div>
-
 </body>
 
 </html>
