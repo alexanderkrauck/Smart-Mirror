@@ -126,16 +126,6 @@ p {
     bottom:20px;
     position:absolute
 }
-
-#apps{
-    float: right;
-    margin-bottom: 20px;
-}
-
-#base_functions{
-    clear: both;
-}
-
 .functions_table tr td{
     text-align: center;
     vertical-align: middle;
@@ -149,10 +139,23 @@ p {
     height: 50px;
 }
 
+/*The formatting for the applications*/
+/*region*/
+#apps{
+    float: right;
+    margin-bottom: 20px;
+}
+
 #apps_table tr td{
     width: 100px
 }
+/*endregion*/
 
+/*The formatting of the base functions*/
+/*region*/
+#base_functions{
+    clear: both;
+}
 #basic_functions_table tr td{
         padding: 0px 20px 0px 20px;
 }
@@ -184,6 +187,7 @@ p {
     width: 45px;
     margin-left: 5px;
 }
+/*endregion*/
 /*endregion*/
 
 /*The formatting of the animated text view*/
