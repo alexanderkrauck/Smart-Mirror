@@ -17,27 +17,25 @@
       <file leaf-file-name="script.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="712">
-              <caret line="766" column="12" lean-forward="false" selection-start-line="766" selection-start-column="12" selection-end-line="766" selection-end-column="12" />
+            <state relative-caret-position="-3474">
+              <caret line="29" column="19" lean-forward="false" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
               <folding>
-                <element signature="n#!!doc" expanded="false" />
-                <element signature="e#328#349#0" expanded="false" />
-                <element signature="e#1166#1195#0" expanded="false" />
-                <element signature="e#1248#1312#0" expanded="false" />
-                <element signature="e#4887#4914#0" expanded="false" />
-                <element signature="n#!!block;n#weatherFunction#0" expanded="false" />
-                <element signature="e#10456#13640#0" expanded="false" />
-                <element signature="e#10558#13542#0" expanded="false" />
-                <marker date="1507577764785" expanded="true" signature="12379:12390" ph="..." />
-                <marker date="1507577764785" expanded="true" signature="12487:12498" ph="..." />
-                <marker date="1507577764785" expanded="true" signature="12595:12606" ph="..." />
-                <marker date="1507577764785" expanded="true" signature="12703:12714" ph="..." />
-                <marker date="1507577764785" expanded="true" signature="12811:12822" ph="..." />
-                <marker date="1507577764785" expanded="true" signature="20832:20843" ph="..." />
-                <marker date="1507577764785" expanded="true" signature="20924:20935" ph="..." />
-                <marker date="1507577764785" expanded="true" signature="21016:21027" ph="..." />
-                <marker date="1507577764785" expanded="true" signature="21108:21119" ph="..." />
-                <marker date="1507577764785" expanded="true" signature="21200:21211" ph="..." />
+                <marker date="1507645887653" expanded="false" signature="12600:15810" ph="{...}" />
+                <marker date="1507645887653" expanded="false" signature="12622:15806" ph="{&quot;location&quot;: 'Linz'...}" />
+                <marker date="1507645887653" expanded="false" signature="12724:15708" ph="{...}" />
+                <marker date="1507645887653" expanded="true" signature="14545:14556" ph="..." />
+                <marker date="1507645887653" expanded="true" signature="14653:14664" ph="..." />
+                <marker date="1507645887653" expanded="true" signature="14761:14772" ph="..." />
+                <marker date="1507645887653" expanded="true" signature="14869:14880" ph="..." />
+                <marker date="1507645887653" expanded="true" signature="14977:14988" ph="..." />
+                <marker date="1507645887653" expanded="false" signature="22622:24862" ph="Refresh HTML elements in the UI" />
+                <marker date="1507645887653" expanded="true" signature="23199:23210" ph="..." />
+                <marker date="1507645887653" expanded="true" signature="23291:23302" ph="..." />
+                <marker date="1507645887653" expanded="true" signature="23383:23394" ph="..." />
+                <marker date="1507645887653" expanded="true" signature="23475:23486" ph="..." />
+                <marker date="1507645887653" expanded="true" signature="23567:23578" ph="..." />
+                <marker date="1507645887653" expanded="false" signature="24864:29991" ph="Load Data from APIs" />
+                <marker date="1507645887653" expanded="false" signature="29993:31030" ph="Classes for API elements" />
               </folding>
             </state>
           </provider>
@@ -70,8 +68,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1546" />
-    <option name="y" value="-911" />
+    <option name="x" value="54" />
+    <option name="y" value="-11" />
     <option name="width" value="1547" />
     <option name="height" value="912" />
   </component>
@@ -143,16 +141,15 @@
       <updated>1507550336219</updated>
       <workItem from="1507550338371" duration="9083000" />
       <workItem from="1507577072165" duration="1036000" />
-      <workItem from="1507618964656" duration="185000" />
+      <workItem from="1507618964656" duration="11188000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10304000" />
+    <option name="totallyTimeSpent" value="21307000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1546" y="-911" width="1547" height="912" extended-state="6" />
-    <editor active="true" />
+    <frame x="54" y="-11" width="1547" height="912" extended-state="6" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22588997" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -195,24 +192,22 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#328#349#0" expanded="false" />
-            <element signature="e#1166#1195#0" expanded="false" />
-            <element signature="e#1248#1312#0" expanded="false" />
-            <element signature="e#4887#4914#0" expanded="false" />
-            <element signature="n#!!block;n#weatherFunction#0" expanded="false" />
-            <element signature="e#10456#13640#0" expanded="false" />
-            <element signature="e#10558#13542#0" expanded="false" />
-            <marker date="1507577764785" expanded="true" signature="12379:12390" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12487:12498" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12595:12606" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12703:12714" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12811:12822" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="20832:20843" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="20924:20935" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="21016:21027" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="21108:21119" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="21200:21211" ph="..." />
+            <marker date="1507645887653" expanded="false" signature="12600:15810" ph="{...}" />
+            <marker date="1507645887653" expanded="false" signature="12622:15806" ph="{&quot;location&quot;: 'Linz'...}" />
+            <marker date="1507645887653" expanded="false" signature="12724:15708" ph="{...}" />
+            <marker date="1507645887653" expanded="true" signature="14545:14556" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14653:14664" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14761:14772" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14869:14880" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14977:14988" ph="..." />
+            <marker date="1507645887653" expanded="false" signature="22622:24862" ph="Refresh HTML elements in the UI" />
+            <marker date="1507645887653" expanded="true" signature="23199:23210" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23291:23302" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23383:23394" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23475:23486" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23567:23578" ph="..." />
+            <marker date="1507645887653" expanded="false" signature="24864:29991" ph="Load Data from APIs" />
+            <marker date="1507645887653" expanded="false" signature="29993:31030" ph="Classes for API elements" />
           </folding>
         </state>
       </provider>
@@ -222,24 +217,22 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#328#349#0" expanded="false" />
-            <element signature="e#1166#1195#0" expanded="false" />
-            <element signature="e#1248#1312#0" expanded="false" />
-            <element signature="e#4887#4914#0" expanded="false" />
-            <element signature="n#!!block;n#weatherFunction#0" expanded="false" />
-            <element signature="e#10456#13640#0" expanded="false" />
-            <element signature="e#10558#13542#0" expanded="false" />
-            <marker date="1507577764785" expanded="true" signature="12379:12390" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12487:12498" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12595:12606" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12703:12714" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12811:12822" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="20832:20843" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="20924:20935" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="21016:21027" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="21108:21119" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="21200:21211" ph="..." />
+            <marker date="1507645887653" expanded="false" signature="12600:15810" ph="{...}" />
+            <marker date="1507645887653" expanded="false" signature="12622:15806" ph="{&quot;location&quot;: 'Linz'...}" />
+            <marker date="1507645887653" expanded="false" signature="12724:15708" ph="{...}" />
+            <marker date="1507645887653" expanded="true" signature="14545:14556" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14653:14664" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14761:14772" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14869:14880" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14977:14988" ph="..." />
+            <marker date="1507645887653" expanded="false" signature="22622:24862" ph="Refresh HTML elements in the UI" />
+            <marker date="1507645887653" expanded="true" signature="23199:23210" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23291:23302" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23383:23394" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23475:23486" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23567:23578" ph="..." />
+            <marker date="1507645887653" expanded="false" signature="24864:29991" ph="Load Data from APIs" />
+            <marker date="1507645887653" expanded="false" signature="29993:31030" ph="Classes for API elements" />
           </folding>
         </state>
       </provider>
@@ -248,6 +241,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1206">
           <caret line="67" column="21" lean-forward="false" selection-start-line="67" selection-start-column="21" selection-end-line="67" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -261,18 +255,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="23" column="34" lean-forward="true" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1206">
           <caret line="67" column="21" lean-forward="false" selection-start-line="67" selection-start-column="21" selection-end-line="67" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -286,29 +273,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="129" column="32" lean-forward="false" selection-start-line="129" selection-start-column="32" selection-end-line="129" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="712">
-          <caret line="766" column="12" lean-forward="false" selection-start-line="766" selection-start-column="12" selection-end-line="766" selection-end-column="12" />
+        <state relative-caret-position="-3474">
+          <caret line="29" column="19" lean-forward="false" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
           <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#328#349#0" expanded="false" />
-            <element signature="e#1166#1195#0" expanded="false" />
-            <element signature="e#1248#1312#0" expanded="false" />
-            <element signature="e#4887#4914#0" expanded="false" />
-            <element signature="n#!!block;n#weatherFunction#0" expanded="false" />
-            <element signature="e#10456#13640#0" expanded="false" />
-            <element signature="e#10558#13542#0" expanded="false" />
-            <marker date="1507577764785" expanded="true" signature="12379:12390" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12487:12498" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12595:12606" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12703:12714" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="12811:12822" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="20832:20843" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="20924:20935" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="21016:21027" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="21108:21119" ph="..." />
-            <marker date="1507577764785" expanded="true" signature="21200:21211" ph="..." />
+            <marker date="1507645887653" expanded="false" signature="12600:15810" ph="{...}" />
+            <marker date="1507645887653" expanded="false" signature="12622:15806" ph="{&quot;location&quot;: 'Linz'...}" />
+            <marker date="1507645887653" expanded="false" signature="12724:15708" ph="{...}" />
+            <marker date="1507645887653" expanded="true" signature="14545:14556" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14653:14664" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14761:14772" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14869:14880" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="14977:14988" ph="..." />
+            <marker date="1507645887653" expanded="false" signature="22622:24862" ph="Refresh HTML elements in the UI" />
+            <marker date="1507645887653" expanded="true" signature="23199:23210" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23291:23302" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23383:23394" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23475:23486" ph="..." />
+            <marker date="1507645887653" expanded="true" signature="23567:23578" ph="..." />
+            <marker date="1507645887653" expanded="false" signature="24864:29991" ph="Load Data from APIs" />
+            <marker date="1507645887653" expanded="false" signature="29993:31030" ph="Classes for API elements" />
           </folding>
         </state>
       </provider>

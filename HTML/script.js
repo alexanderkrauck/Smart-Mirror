@@ -10,11 +10,12 @@ Languages = {
 
 /**
  * The existing views for switching views.
- * @type {{TEXT_ANIMATED: number, DEFAULT: number}}
+ * @type {{TEXT_ANIMATED: number, DEFAULT: number, OFF: number}}
  */
 Views = {
     TEXT_ANIMATED: 0,
-    DEFAULT: 1
+    DEFAULT: 1,
+    OFF: 2
 }
 //endregion
 
@@ -52,6 +53,18 @@ let currentDate;
 //region Views in HTML format
 let viewTextAnimated;
 let viewDefault;
+let viewOff;
+
+let appEmailText;
+let appSettingsText;
+let appSearchText;
+let appTitle;
+
+let googleAccountTitle;
+let googleAccountName;
+let googleAccountImage;
+
+let hideSmartMirrorText;
 //endregion
 
 //region Fields for using the smart-mirror in multiple languages
@@ -101,6 +114,13 @@ let greeting_startup;
 
 let date_pattern;
 let upcoming_events_soon_pattern;
+
+let google_account;
+let app;
+let app_search;
+let app_email;
+let app_settings;
+let hide_smart_mirror;
 //endregion
 
 //region ENGLISH: prefix is "en"
@@ -149,6 +169,13 @@ let en_greeting_startup = "Welcome to Smart-Mirror!";
 
 let en_date_pattern = "-D-, -M- -N-, -Y-";
 let en_upcoming_events_soon_pattern = "in -A- days";
+
+let de_google_account = "Google Account"
+let en_app = "Apps";
+let en_app_search = "Search";
+let en_app_email = "EMail";
+let en_app_settings = "Settings";
+let en_hide_smart_mirror = "Suspend Smart Mirror";
 //endregion
 
 //region GERMAN: prefix is "de"
@@ -198,6 +225,12 @@ let de_greeting_startup = "Willkommen zu Smart-Mirror!";
 let de_date_pattern = "-D-, -N-. -M-, -Y-";
 let de_upcoming_events_soon_pattern = "in -A- Tagen";
 
+let en_google_account = "Google Account"
+let de_app = "Applikationen";
+let de_app_search = "Suche";
+let de_app_email = "EMail";
+let de_app_settings = "Einstellungen";
+let de_hide_smart_mirror = "Smart Mirror beenden";
 //endregion
 //endregion
 
@@ -261,6 +294,13 @@ function setLanguages() {
 
             date_pattern = en_date_pattern;
             upcoming_events_soon_pattern = en_upcoming_events_soon_pattern;
+
+            google_account = en_google_account;
+            app = en_app;
+            app_search = en_app_search;
+            app_email = en_app_email;
+            app_settings = en_app_settings;
+            hide_smart_mirror = en_hide_smart_mirror;
             break;
         case 1:
             daytime_night = de_daytime_night;
@@ -308,8 +348,44 @@ function setLanguages() {
 
             date_pattern = de_date_pattern;
             upcoming_events_soon_pattern = de_upcoming_events_soon_pattern;
+
+            google_account = de_google_account;
+            app = de_app;
+            app_search = de_app_search;
+            app_email = de_app_email;
+            app_settings = de_app_settings;
+            hide_smart_mirror = de_hide_smart_mirror;
             break;
     }
+}
+
+
+function loadHTMLElements(){
+    viewTextAnimated = $("#view_text_animation");
+    viewDefault = $("#view_default");
+    viewOff = $("#view_off");
+    
+    appTitle = $("#app_title");
+    appSettingsText = $("#app_settings_text");
+    appEmailText = $("#app_email_text");
+    appSearchText = $("#app_search_text");
+    
+    googleAccountImage = $("#google_account_image");
+    googleAccountName = $("#google_account_name");
+    googleAccountTitle = $("#google_account_title");
+
+    hideSmartMirrorText = $("#hide_smart_mirror_text");
+}
+
+function setTextToHTML(){
+    hideSmartMirrorText.html(hide_smart_mirror);
+
+    googleAccountTitle.html(google_account);
+
+    appSearchText.html(app_search);
+    appEmailText.html(app_email);
+    appSettingsText.html(app_settings);
+    appTitle.html(app);
 }
 
 /**
@@ -317,11 +393,12 @@ function setLanguages() {
  * The function sets up the periodical function and sets events.
  */
 function main() {
-    viewTextAnimated = $("#view_text_animation");
-    viewDefault = $("#view_default");
-
+    loadHTMLElements();
+    setTextToHTML();
+    
     viewTextAnimated.fadeOut(0, null);
     viewDefault.fadeOut(0, null);
+    viewOff.fadeOut(0,null);
 
     loadNews();
     loadQuote();
@@ -353,6 +430,11 @@ function main() {
             ux_mode: "popup",
             prompt: "select_account"
         });
+    });
+    
+    $("#button_hide_smart_mirror").click(function () {
+        switchView(Views.OFF);
+        showViewTextAnimated(["Bye bye"]);
     });
 }
 //endregion
@@ -653,6 +735,11 @@ function switchView(view) {
             activeView = view;
             viewDefault.fadeIn(0, null);
             break;
+        case Views.OFF:
+            getViewForViewId(activeView).fadeOut(0,null);
+            activeView = view;
+            viewOff.fadeIn(0,null);
+            break;
     }
 }
 
@@ -665,7 +752,8 @@ function getViewForViewId(id) {
     switch (id) {
         case Views.DEFAULT:
             return viewDefault;
-            break;
+        case Views.OFF:
+            return viewOff;
     }
 }
 
