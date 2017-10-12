@@ -8,6 +8,11 @@ Languages = {
     GERMAN: 1
 }
 
+Units = {
+    Celsius: 0,
+    Farenheit: 1
+}
+
 /**
  * The existing views for switching views.
  * @type {{TEXT_ANIMATED: number, DEFAULT: number, OFF: number}}
@@ -17,17 +22,45 @@ Views = {
     DEFAULT: 1,
     OFF: 2
 }
+
+Functions = {
+    DEFAULT: 0,
+    SETTINGS: 1,
+    GOOGLE_ACCOUNT: 2,
+    EMAIL: 3,
+    YOUTUBE: 4,
+    WEATHER: 5,
+    CALENDAR: 6
+}
+
+CalendarSettings = {
+    PRIMARY: 6,
+    CONTACTS: 1,
+    EVENTS: 2,
+    PRIMARY_CONTACTS: 3,
+    PRIMARY_EVENTS: 4,
+    CONTACTS_EVENTS: 5,
+    ALL: 0
+}
+CalendarType = {
+    PRIMARY: 0,
+    CONTACTS: 1,
+    EVENTS: 2
+}
 //endregion
 
 //region Other fields
 
-
 let audioElement;
 
 let activeView = Views.DEFAULT;
+let activeFunction = Functions.DEFAULT;
 
-let defaultLanguage = Languages.ENGLISH;
-let setLanguage = 0;
+let activeCalendarSetting = CalendarSettings.ALL;
+
+let setLanguage = Languages.ENGLISH;
+
+let setUnit = Units.Celsius;
 
 let signedIn = false;
 
@@ -62,8 +95,11 @@ let googleAccountTitle;
 let googleAccountName;
 let googleAccountImage;
 
-let hideSmartMirrorText;
+let onlyMirrorText;
 let settingsText;
+
+let onlyMirrorButton;
+let settingsButton;
 //endregion
 
 //region Fields for using the smart-mirror in multiple languages
@@ -114,11 +150,13 @@ let greeting_startup;
 let date_pattern;
 let upcoming_events_soon_pattern;
 
-let google_account;
 let app_search;
 let app_email;
+let app_youtube;
+
+let google_account;
 let settings;
-let hide_smart_mirror;
+let only_mirror;
 //endregion
 
 //region ENGLISH: prefix is "en"
@@ -168,12 +206,13 @@ let en_greeting_startup = "Welcome to Smart-Mirror!";
 let en_date_pattern = "-D-, -M- -N-, -Y-";
 let en_upcoming_events_soon_pattern = "in -A- days";
 
-let de_google_account = "Google Account";
 let en_app_search = "Search";
 let en_app_email = "EMail";
+let en_app_youtube = "YouTube"
 
+let de_google_account = "Google Account";
 let en_settings = "Settings";
-let en_hide_smart_mirror = "Only Mirror";
+let en_only_mirror = "Only Mirror";
 //endregion
 
 //region GERMAN: prefix is "de"
@@ -223,12 +262,13 @@ let de_greeting_startup = "Willkommen zu Smart-Mirror!";
 let de_date_pattern = "-D-, -N-. -M-, -Y-";
 let de_upcoming_events_soon_pattern = "in -A- Tagen";
 
-let en_google_account = "Google Account";
 let de_app_search = "Suche";
 let de_app_email = "EMail";
+let de_app_youtube = "YouTube"
 
+let en_google_account = "Google Account";
 let de_settings = "Einstellungen";
-let de_hide_smart_mirror = "Nur Spiegel";
+let de_only_mirror = "Nur Spiegel";
 //endregion
 //endregion
 
@@ -242,9 +282,6 @@ $(document).ready(function () {
  * Sets the used language letiables to the active language letiables.
  */
 function setLanguages() {
-    if (setLanguage === null)
-        setLanguage = defaultLanguage;
-
     switch (setLanguage) {
         case 0:
             daytime_night = en_daytime_night;
@@ -293,11 +330,13 @@ function setLanguages() {
             date_pattern = en_date_pattern;
             upcoming_events_soon_pattern = en_upcoming_events_soon_pattern;
 
-            google_account = en_google_account;
             app_search = en_app_search;
             app_email = en_app_email;
+            app_youtube = en_app_youtube;
+
+            google_account = en_google_account;
             settings = en_settings;
-            hide_smart_mirror = en_hide_smart_mirror;
+            only_mirror = en_only_mirror;
             break;
         case 1:
             daytime_night = de_daytime_night;
@@ -346,40 +385,47 @@ function setLanguages() {
             date_pattern = de_date_pattern;
             upcoming_events_soon_pattern = de_upcoming_events_soon_pattern;
 
-            google_account = de_google_account;
             app_search = de_app_search;
             app_email = de_app_email;
+            app_youtube = de_app_youtube;
+
+            google_account = de_google_account;
             settings = de_settings;
-            hide_smart_mirror = de_hide_smart_mirror;
+            only_mirror = de_only_mirror;
             break;
     }
 }
 
 
-function loadHTMLElements(){
+function loadHTMLElements() {
     viewTextAnimated = $("#view_text_animation");
     viewDefault = $("#view_default");
     viewOff = $("#view_off");
-    
+
     appEmailText = $("#app_email_text");
     appSearchText = $("#app_search_text");
-    
+    appYoutubeText = $("#app_youtube_text");
+
     googleAccountImage = $("#google_account_image");
     googleAccountName = $("#google_account_name");
     googleAccountTitle = $("#google_account_title");
 
-    hideSmartMirrorText = $("#hide_smart_mirror_text");
+    onlyMirrorText = $("#only_mirror_text");
     settingsText = $("#settings_text");
+
+    onlyMirrorButton = $("#button_only_mirror");
+    settingsButton = $("#button_settings");
 }
 
-function setTextToHTML(){
-    hideSmartMirrorText.html(hide_smart_mirror);
+function setTextToHTML() {
+    onlyMirrorText.html(only_mirror);
     settingsText.html(settings);
 
     googleAccountTitle.html(google_account);
 
     appSearchText.html(app_search);
     appEmailText.html(app_email);
+    appYoutubeText.html(app_youtube);
 }
 
 /**
@@ -389,10 +435,10 @@ function setTextToHTML(){
 function main() {
     loadHTMLElements();
     setTextToHTML();
-    
+
     viewTextAnimated.fadeOut(0, null);
     viewDefault.fadeOut(0, null);
-    viewOff.fadeOut(0,null);
+    viewOff.fadeOut(0, null);
 
     loadNews();
     loadQuote();
@@ -416,6 +462,8 @@ function main() {
     audioElement.setAttribute('src', './Sounds/startup.ogg');
     audioElement.play();
 
+
+
     //The click event when the google button is clicked.
     $("#google_account").click(function () {
         if (signedIn)
@@ -425,14 +473,20 @@ function main() {
             prompt: "select_account"
         });
     });
-    
-    $("#button_hide_smart_mirror").click(function () {
+
+    onlyMirrorButton.click(function () {
         switchView(Views.OFF);
         showViewTextAnimated(["Bye bye"]);
     });
-    viewOff.click(function(){
+    settingsButton.click(function () {
+
+    });
+
+    viewOff.click(function () {
         switchView(Views.DEFAULT);
     });
+
+
 }
 //endregion
 
@@ -475,7 +529,12 @@ function weatherFunction() {
             let minutePuffer = closerEvent.getMinutes() < 10 ? "0" : "";
 
             //Create HTML text.
-            let currentTemperatureContent = "<img class='current_weather_image' src='" + useIcon + "'/>" + weather.temp + "°C";
+            let temperatureText;
+            if (setUnit === Units.Celsius)
+                temperatureText = weather.temp + "°C";
+            else if (setUnit === Units.Farenheit)
+                temperatureText = Math.round(weather.temp * 1.8 + 32) + "°F";
+            let currentTemperatureContent = "<img class='current_weather_image' src='" + useIcon + "'/>" + temperatureText;
             let currentAdditionalWeatherInfo = "<img src='" + locationIconWindy + "'/>" + windspeed + "<img src='" + locationSunsetSunrise + "'/>" + hourPuffer + closerEvent.getHours() + ":" + minutePuffer + closerEvent.getMinutes();
 
             //The table content for the weather preview
@@ -503,11 +562,22 @@ function weatherFunction() {
                 let weekday;
                 weekday = (currentDate.getDay() + count) % 7;
                 weatherPreview += days[weekday];
-                //}
+
+
+                let high;
+                let low;
+                if (setUnit == Units.Celsius) {
+                    high = element.high;
+                    low = element.low;
+                } else if (setUnit == Units.Farenheit) {
+                    high = Math.round(element.high * 1.8 + 32);
+                    low = Math.round(element.low * 1.8 + 32);
+                }
+
                 weatherPreview += "</td>";
                 weatherPreview += "<td><img src='" + iconLocation + "'/></td>";
-                weatherPreview += "<td>" + element.high + ".0</td>"
-                weatherPreview += "<td>" + element.low + ".0</td></tr>"
+                weatherPreview += "<td>" + high + ".0</td>"
+                weatherPreview += "<td>" + low + ".0</td></tr>"
                 count++;
 
             });
@@ -725,17 +795,15 @@ function showViewTextAnimated(text) {
  * Changes the active view to the give view.
  * @param view
  */
-function switchView(view) {
-    switch (view) {
+function switchView(viewId) {
+    getViewForViewId(activeView).fadeOut(0, null);
+    activeView = viewId;
+    switch (activeView) {
         case Views.DEFAULT:
-            getViewForViewId(activeView).fadeOut(0, null);
-            activeView = view;
             viewDefault.fadeIn(0, null);
             break;
         case Views.OFF:
-            getViewForViewId(activeView).fadeOut(0,null);
-            activeView = view;
-            viewOff.fadeIn(0,null);
+            viewOff.fadeIn(0, null);
             break;
     }
 }
@@ -756,6 +824,49 @@ function getViewForViewId(id) {
 
 //endregion
 
+//region Switch functions in HTML
+function switchFunction(functionId) {
+    getViewForViewId(activeFunction).fadeOut(0, null);
+    activeFunction = functionId;
+    switch (activeFunction) {
+        case Functions.DEFAULT:
+            viewDefault.fadeIn(0, null);
+            break;
+        case Functions.SETTINGS:
+            viewOff.fadeIn(0, null);
+            break;
+        case Functions.CALENDAR:
+            break;
+        case Functions.GOOGLE_ACCOUNT:
+            break;
+        case Functions.WEATHER:
+            break;
+        case Functions.YOUTUBE:
+            break;
+        case Functions.EMAIL:
+            break;
+    }
+}
+
+function getFunctionForFunctionId(id) {
+    switch (id) {
+        case Functions.DEFAULT:
+            return null;
+        case Functions.SETTINGS:
+            return null;
+        case Functions.CALENDAR:
+            return null;
+        case Functions.EMAIL:
+            return null;
+        case Functions.GOOGLE_ACCOUNT:
+            return null;
+        case Functions.WEATHER:
+            return null;
+        case Functions.YOUTUBE:
+            return null;
+    }
+}
+//endregion
 
 //Objects for the loaded data from the APIs
 let quote;
@@ -770,62 +881,84 @@ function refreshGMailData() {
 
 }
 
+
+let currentMonth;
+let currentYear;
 /**
  * Builds a string in HTML format and sets the content of the table specified in the HTML code to this string.
  * The string contains the last 10 calendar entries.
  */
 function refreshCalendarEntryData() {
+    currentMonth = currentDate.getMonth();
+    currentYear = currentDate.getYear();
+    
+    let day = currentDate.getDate();
+    let i;
+    let e;
+    let tableString = "";
+    for(i=0;i<5;i++){
+        tableString+="<tr>"
+        for(e=0;e<7;e++){
+            tableString+="<td style='background-color:green;'></td>";
+        }
+        tableString+="</tr>";
+    }
+    $("#calendar").html(tableString);
+    
     let upcomingEvents = "";
     let count = 0;
 
     calendarEntries.forEach(function (element) {
         //The opacity is reduced the later the event is.
-        if (count < 5)
-            upcomingEvents += "<tr><td>";
-        else if (count === 5)
-            upcomingEvents += "<tr style='opacity:0.9'><td>";
-        else if (count === 6)
-            upcomingEvents += "<tr style='opacity:0.7'><td>";
-        else if (count === 7)
-            upcomingEvents += "<tr style='opacity:0.6'><td>";
-        else if (count === 8)
-            upcomingEvents += "<tr style='opacity:0.4'><td>";
-        else if (count === 9)
-            upcomingEvents += "<tr style='opacity:0.2'><td>";
+        if (count < 10) {
+            if (element.calendarType == CalendarType.PRIMARY && (activeCalendarSetting == CalendarSettings.ALL || activeCalendarSetting == CalendarSettings.PRIMARY_CONTACTS || activeCalendarSetting == CalendarSettings.PRIMARY || activeCalendarSetting == CalendarSettings.PRIMARY_EVENTS) || element.calendarType == CalendarType.EVENTS && (activeCalendarSetting == CalendarSettings.ALL || activeCalendarSetting == CalendarSettings.PRIMARY_EVENTS || activeCalendarSetting == CalendarSettings.EVENTS || activeCalendarSetting == CalendarSettings.CONTACTS_EVENTS) || element.calendarType == CalendarType.CONTACTS && (activeCalendarSetting == CalendarSettings.ALL || activeCalendarSetting == CalendarSettings.PRIMARY_CONTACTS || activeCalendarSetting == CalendarSettings.CONTACTS_EVENTS || activeCalendarSetting == CalendarSettings.CONTACTS)) {
+                if (count < 5)
+                    upcomingEvents += "<tr><td>";
+                else if (count === 5)
+                    upcomingEvents += "<tr style='opacity:0.9'><td>";
+                else if (count === 6)
+                    upcomingEvents += "<tr style='opacity:0.7'><td>";
+                else if (count === 7)
+                    upcomingEvents += "<tr style='opacity:0.6'><td>";
+                else if (count === 8)
+                    upcomingEvents += "<tr style='opacity:0.4'><td>";
+                else if (count === 9)
+                    upcomingEvents += "<tr style='opacity:0.2'><td>";
 
-        if (element.title.length >= 25)
-            upcomingEvents += element.title.substr(0, 25) + "...";
-        else
-            upcomingEvents += element.title;
+                if (element.title.length >= 25)
+                    upcomingEvents += element.title.substr(0, 25) + "...";
+                else
+                    upcomingEvents += element.title;
 
-        upcomingEvents += "</td><td>";
+                upcomingEvents += "</td><td>";
 
-        let daysTo = Math.round(getTimeTo(element.datetime) / (1000 * 60 * 60 * 24));
-        if (daysTo === 0)
-            upcomingEvents += "Today";
-        else if (daysTo <= 7)
-            upcomingEvents += upcoming_events_soon_pattern.replace("-A-", daysTo);
-        else {
-            let datetime = element.datetime;
+                let daysTo = Math.round(getTimeTo(element.datetime) / (1000 * 60 * 60 * 24));
+                if (daysTo === 0)
+                    upcomingEvents += "Today";
+                else if (daysTo <= 7)
+                    upcomingEvents += upcoming_events_soon_pattern.replace("-A-", daysTo);
+                else {
+                    let datetime = element.datetime;
 
-            let date;
-            let month;
-            if (datetime.getDate() <= 9)
-                date = "0" + datetime.getDate();
-            else
-                date = datetime.getDate();
-            //month + 1 because January is 0 and not 1 (array)
-            if ((datetime.getMonth() + 1) <= 9)
-                month = "0" + (datetime.getMonth() + 1);
-            else
-                month = datetime.getMonth() + 1;
+                    let date;
+                    let month;
+                    if (datetime.getDate() <= 9)
+                        date = "0" + datetime.getDate();
+                    else
+                        date = datetime.getDate();
+                    //month + 1 because January is 0 and not 1 (array)
+                    if ((datetime.getMonth() + 1) <= 9)
+                        month = "0" + (datetime.getMonth() + 1);
+                    else
+                        month = datetime.getMonth() + 1;
 
-            //year + 1900 because it counts from 0 as 1900.
-            upcomingEvents += date + "." + month + "." + (1900 + datetime.getYear());
+                    //year + 1900 because it counts from 0 as 1900.
+                    upcomingEvents += date + "." + month + "." + (1900 + datetime.getYear());
+                }
+                upcomingEvents += "</td></tr>";
+                count++;
+            }
         }
-        upcomingEvents += "</td></tr>";
-        count++;
-
     });
     $("#upcoming_events").html(upcomingEvents);
 }
@@ -848,8 +981,8 @@ function loadQuote() {
         success: function (data) {
             quote = new Quote(data[0].content, data[0].title);
         },
-        error: function(data){
-            
+        error: function (data) {
+
         }
     });
 }
@@ -876,7 +1009,7 @@ function loadNews() {
                             news.push(new News(article.title, article.description, article.author, article.publishedAt, article.url, source.id));
                         });
                     },
-                    error:function(data){
+                    error: function (data) {
 
                     }
                 });
@@ -991,9 +1124,55 @@ function loadCalendarEntries() {
             if (!datetime)
                 datetime = event.start.date;
             let title = event.summary;
-            calendarEntries.push(new CalendarEntry(title, datetime))
+            calendarEntries.push(new CalendarEntry(title, datetime, CalendarType.PRIMARY));
         });
+        calendarEntries.sort(function (a, b) {
+            return a.datetime.getTime() > b.datetime.getTime();
+        });
+        refreshCalendarEntryData();
+    });
+    gapi.client.calendar.events.list({
+        'calendarId': '#contacts@group.v.calendar.google.com',
+        'timeMin': (new Date()).toISOString(),
+        'showDeleted': false,
+        'singleEvents': true,
+        'maxResults': 10,
+        'orderBy': 'startTime'
+    }).then(function (response) {
+        let events = response.result.items;
 
+        events.forEach(function (event) {
+            let datetime = event.start.dateTime;
+            if (!datetime)
+                datetime = event.start.date;
+            let title = event.summary;
+            calendarEntries.push(new CalendarEntry(title, datetime, CalendarType.CONTACTS));
+        });
+        calendarEntries.sort(function (a, b) {
+            return a.datetime.getTime() > b.datetime.getTime();
+        });
+        refreshCalendarEntryData();
+    });
+    gapi.client.calendar.events.list({
+        'calendarId': 'de.austrian#holiday@group.v.calendar.google.com',
+        'timeMin': (new Date()).toISOString(),
+        'showDeleted': false,
+        'singleEvents': true,
+        'maxResults': 10,
+        'orderBy': 'startTime'
+    }).then(function (response) {
+        let events = response.result.items;
+
+        events.forEach(function (event) {
+            let datetime = event.start.dateTime;
+            if (!datetime)
+                datetime = event.start.date;
+            let title = event.summary;
+            calendarEntries.push(new CalendarEntry(title, datetime, CalendarType.EVENTS));
+        });
+        calendarEntries.sort(function (a, b) {
+            return b.datetime.getTime() - a.datetime.getTime();
+        });
         refreshCalendarEntryData();
     });
 }
@@ -1006,9 +1185,10 @@ function loadCalendarEntries() {
  * One calendar entry with the needed data.
  */
 class CalendarEntry {
-    constructor(title, datetime) {
+    constructor(title, datetime, calendarType) {
         this.title = title;
         this.datetime = new Date(datetime);
+        this.calendarType = calendarType;
     }
 }
 

@@ -156,11 +156,11 @@ p {
 #base_functions{
     clear: both;
 }
-#basic_functions_table tr td{
+#base_functions_table tr td{
         padding: 0px 20px 0px 20px;
 }
-#button_hide_smart_mirror{
-    padding: 0px 20px 0px 0px;
+#button_only_mirror{
+    padding: 0px 20px 0px 0px !important;
 }
 #functions_line{
     color: white;
@@ -227,3 +227,13 @@ p {
     height: 100%;
 }
 /*endregion*/
+
+
+#calendar{
+    height: 1300px;
+    width: 100%;
+    border-color: white
+}
+#calendar tr td{
+    width: 14.2857143%;
+}

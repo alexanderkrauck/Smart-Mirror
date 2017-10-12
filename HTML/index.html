@@ -61,8 +61,14 @@
 
         <!--The content with the apps, app views etc...-->
         <div id="container_functions">
+            <div id="running_function">
+                <div id="calendar_function">
+                    <table id="calendar">
+                    </table>
+                </div>
+            </div>
             <div id="apps">
-                <table class="functions_table" id="apps_table">
+                <table class="functions_table" style="width: 100%" id="apps_table">
                     <tr>
                         <td>
                             <table>
@@ -70,7 +76,7 @@
                                     <td><img src="Icons/youtube.svg" /></td>
                                 </tr>
                                 <tr>
-                                    <td >YouTube</td>
+                                    <td id="app_youtube_text" />
                                 </tr>
                             </table>
                         </td>
@@ -80,7 +86,7 @@
                                     <td><img src="Icons/search.svg" /></td>
                                 </tr>
                                 <tr>
-                                    <td id="app_search_text"/>
+                                    <td id="app_search_text" />
                                 </tr>
                             </table>
                         </td>
@@ -90,7 +96,7 @@
                                     <td><img src="Icons/email.svg" /></td>
                                 </tr>
                                 <tr>
-                                    <td id="app_email_text"/>
+                                    <td id="app_email_text" />
                                 </tr>
                             </table>
                         </td>
@@ -102,17 +108,17 @@
                 <div id="system_functions">
                     <table class="functions_table" id="base_functions_table">
                         <tr>
-                            <td id="button_hide_smart_mirror">
+                            <td id="button_only_mirror">
                                 <table>
                                     <tr>
                                         <td><img src="Icons/hide.svg" /></td>
                                     </tr>
                                     <tr>
-                                        <td id="hide_smart_mirror_text"></td>
+                                        <td id="only_mirror_text"></td>
                                     </tr>
                                 </table>
                             </td>
-                            <td>
+                            <td id="button_settings">
                                 <table>
                                     <tr>
                                         <td><img src="Icons/settings.svg" /></td>
@@ -130,7 +136,7 @@
                     <table>
                         <tr id="google_account">
                             <td>
-                                <p id="google_account_name"/>
+                                <p id="google_account_name" />
                             </td>
                             <td>
                                 <div id="google_account_image"></div>
