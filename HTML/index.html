@@ -62,9 +62,20 @@
         <!--The content with the apps, app views etc...-->
         <div id="container_functions">
             <div id="running_function">
-                <div id="calendar_function">
+                <div style="display: none" id="calendar_function">
                     <table id="calendar">
                     </table>
+                    <div style="margin:auto; text-align: center">
+                        <div  id="calendar_back_button" style="float: left;">
+                            <img src="Icons/back.svg" style="width: 15px;height: 15px; display: inline" />
+                            <p id="calendar_back_text" style="display: inline">September 2017</p>
+                        </div>
+                        <div id="calendar_current_month" style="display: inline">October 2017</div>
+                        <div id="calendar_forward_button" style="float: right"><div style="float: left;">
+                            <p id="calendar_forward_text" style="display: inline">December 2017</p>
+                            <img src="Icons/forward.svg" style="width: 15px;height: 15px; display: inline" />
+                        </div></div>
+                    </div>
                 </div>
             </div>
             <div id="apps">
@@ -105,6 +116,7 @@
             </div>
             <div id="base_functions">
                 <hr id="functions_line" />
+
                 <div id="system_functions">
                     <table class="functions_table" id="base_functions_table">
                         <tr>
@@ -125,6 +137,22 @@
                                     </tr>
                                     <tr>
                                         <td id="settings_text"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 100px; width: 100px;display: inline-block">
+                    <table class="functions_table">
+                        <tr>
+                            <td id="button_back">
+                                <table>
+                                    <tr>
+                                        <td><img src="Icons/back.svg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Back</td>
                                     </tr>
                                 </table>
                             </td>

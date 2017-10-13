@@ -100,6 +100,15 @@ let settingsText;
 
 let onlyMirrorButton;
 let settingsButton;
+let backButton;
+
+let calendarBackButton;
+let calendarForwardButton;
+
+let calendarBackText;
+let calendarForwardText;
+
+let calendarCurrentMonth;
 //endregion
 
 //region Fields for using the smart-mirror in multiple languages
@@ -415,6 +424,14 @@ function loadHTMLElements() {
 
     onlyMirrorButton = $("#button_only_mirror");
     settingsButton = $("#button_settings");
+
+    backButton = $("#button_back");
+
+    calendarBackButton = $("#calendar_back_button");
+    calendarForwardButton = $("#calendar_forward_button");
+    calendarBackText = $("#calendar_back_text");
+    calendarForwardText = $("#calendar_forward_text");
+    calendarCurrentMonth = $("#calendar_current_month");
 }
 
 function setTextToHTML() {
@@ -439,6 +456,7 @@ function main() {
     viewTextAnimated.fadeOut(0, null);
     viewDefault.fadeOut(0, null);
     viewOff.fadeOut(0, null);
+    backButton.fadeOut(0, null);
 
     loadNews();
     loadQuote();
@@ -486,6 +504,27 @@ function main() {
         switchView(Views.DEFAULT);
     });
 
+    $("#upcoming_events").click(function () {
+        switchFunction(Functions.CALENDAR);
+    });
+    backButton.click(function () {
+        switchFunction(Functions.DEFAULT);
+    });
+    
+    currentYear = currentDate.getYear();
+    currentMonth = currentDate.getMonth();
+    calendarBackButton.click(function(){
+        currentMonth = (currentMonth+12-1)%12;
+        if(currentMonth==11)
+            currentYear-=1;
+        refreshCalendarEntryData();
+    });
+    calendarForwardButton.click(function(){
+        currentMonth = (currentMonth + 1)% 12;
+        if(currentMonth==0)
+            currentYear+=1;
+        refreshCalendarEntryData();
+    });
 
 }
 //endregion
@@ -826,17 +865,20 @@ function getViewForViewId(id) {
 
 //region Switch functions in HTML
 function switchFunction(functionId) {
-    getViewForViewId(activeFunction).fadeOut(0, null);
+    getFunctionForFunctionId(activeFunction).fadeOut(0, null);
     activeFunction = functionId;
     switch (activeFunction) {
         case Functions.DEFAULT:
-            viewDefault.fadeIn(0, null);
+            $("#apps_table").fadeIn(0, null);
+            $("#upcoming_events").fadeIn(0, null);
+            $("#weather_preview").fadeIn(0, null);
+            backButton.fadeOut(0, null);
             break;
         case Functions.SETTINGS:
-            viewOff.fadeIn(0, null);
             break;
         case Functions.CALENDAR:
-            break;
+            $("#calendar_function").fadeIn(0, null);
+            backButton.fadeIn(0, null);
         case Functions.GOOGLE_ACCOUNT:
             break;
         case Functions.WEATHER:
@@ -851,11 +893,11 @@ function switchFunction(functionId) {
 function getFunctionForFunctionId(id) {
     switch (id) {
         case Functions.DEFAULT:
-            return null;
+            return $("#apps_table");
         case Functions.SETTINGS:
             return null;
         case Functions.CALENDAR:
-            return null;
+            return $("#calendar_function");
         case Functions.EMAIL:
             return null;
         case Functions.GOOGLE_ACCOUNT:
@@ -889,22 +931,63 @@ let currentYear;
  * The string contains the last 10 calendar entries.
  */
 function refreshCalendarEntryData() {
-    currentMonth = currentDate.getMonth();
-    currentYear = currentDate.getYear();
-    
+    calendarEntries.sort(function (a, b) {
+        return a.datetime.getTime() - b.datetime.getTime();
+    });
+
     let day = currentDate.getDate();
+    let monthDate = new Date();
+    monthDate.setMonth(currentMonth);
+    monthDate.setFullYear(currentYear+1900);
+    monthDate.setDate(0);
+    monthDate.setHours(0);
+    monthDate.setSeconds(0);
+    monthDate.setMinutes(0);
+    monthDate.setMilliseconds(0);
+    let oneDayMillis = 86400000;
     let i;
     let e;
     let tableString = "";
-    for(i=0;i<5;i++){
-        tableString+="<tr>"
-        for(e=0;e<7;e++){
-            tableString+="<td style='background-color:green;'></td>";
+    let days = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
+    let months = [january, february, march, apil, may, june, july, august, september, october, november, december];
+    tableString += "<tr>";
+    for (i = 0; i < 7; i++) {
+        tableString += "<td style='height:50px; text-align:center'>" + days[i] + "</td>";
+    }
+    tableString += "</tr>";
+    while (monthDate.getDay() != 1) {
+        monthDate.setTime(monthDate.getTime() - oneDayMillis);
+    }
+    let listIndex = 0;
+    calendarCurrentMonth.html(months[currentMonth] + " " + (currentYear+1900));
+    calendarBackText.html(months[(currentMonth+12-1)%12] +" "+(currentYear+1900));
+    calendarForwardText.html(months[(currentMonth+1)%12]+" "+(currentYear+1900));
+    
+    for (i = 0; i < 6; i++) {
+        tableString += "<tr>"
+        for (e = 0; e < 7; e++) {
+            let color;
+            if (monthDate.getDate() == currentDate.getDate() && currentMonth == currentDate.getMonth() && currentYear == currentDate.getYear())
+                color = "#444";
+            else
+                color = "#222";
+            tableString += "<td style='background-color:" + color + ";vertical-align:top;'><div><p>" + monthDate.getDate() + "</p>";
+            while (calendarEntries[listIndex].datetime.getTime() < monthDate.getTime() && listIndex < calendarEntries.length) {
+                listIndex++;
+            }
+            while (calendarEntries[listIndex].datetime.getTime() < monthDate.getTime() + oneDayMillis && listIndex < calendarEntries.length) {
+                tableString += "<p>" + calendarEntries[listIndex].title + "</p>";
+                listIndex++;
+            }
+
+
+            monthDate.setTime(monthDate.getTime() + oneDayMillis);
+            tableString += "</div></td>"
         }
-        tableString+="</tr>";
+        tableString += "</tr>";
     }
     $("#calendar").html(tableString);
-    
+
     let upcomingEvents = "";
     let count = 0;
 
@@ -1126,9 +1209,6 @@ function loadCalendarEntries() {
             let title = event.summary;
             calendarEntries.push(new CalendarEntry(title, datetime, CalendarType.PRIMARY));
         });
-        calendarEntries.sort(function (a, b) {
-            return a.datetime.getTime() > b.datetime.getTime();
-        });
         refreshCalendarEntryData();
     });
     gapi.client.calendar.events.list({
@@ -1148,9 +1228,6 @@ function loadCalendarEntries() {
             let title = event.summary;
             calendarEntries.push(new CalendarEntry(title, datetime, CalendarType.CONTACTS));
         });
-        calendarEntries.sort(function (a, b) {
-            return a.datetime.getTime() > b.datetime.getTime();
-        });
         refreshCalendarEntryData();
     });
     gapi.client.calendar.events.list({
@@ -1169,9 +1246,6 @@ function loadCalendarEntries() {
                 datetime = event.start.date;
             let title = event.summary;
             calendarEntries.push(new CalendarEntry(title, datetime, CalendarType.EVENTS));
-        });
-        calendarEntries.sort(function (a, b) {
-            return b.datetime.getTime() - a.datetime.getTime();
         });
         refreshCalendarEntryData();
     });
