@@ -231,15 +231,21 @@ p {
 
 
 #calendar{
-    height: 1000px;
+    height: 1450px;
     width: 100%;
     border-color: white;
     margin-bottom: 10px;
 }
 #calendar tr td{
     width: 14.2857143%;
+    height: 14.2857143%;
+}
+#calendar p{
+    height: 40px;
+    word-break: break-all;
+    
 }
 #running_function{
-    margin: 0px 0px 20px 100px;
-    width: calc( 100% - 200px)
+    margin: 0px 0px 20px 50px;
+    width: calc( 100% - 100px)
 }

@@ -63,24 +63,37 @@
         <div id="container_functions">
             <div id="running_function">
                 <div style="display: none" id="calendar_function">
+                    <div>
+                        <p style="font-size: 60px">Calendar</p>
+                    </div>
                     <table id="calendar">
                     </table>
                     <div style="margin:auto; text-align: center">
-                        <div  id="calendar_back_button" style="float: left;">
+                        <div id="calendar_back_button" style="float: left;">
                             <img src="Icons/back.svg" style="width: 15px;height: 15px; display: inline" />
-                            <p id="calendar_back_text" style="display: inline">September 2017</p>
+                            <p id="calendar_back_text" style="display: inline"></p>
                         </div>
-                        <div id="calendar_current_month" style="display: inline">October 2017</div>
-                        <div id="calendar_forward_button" style="float: right"><div style="float: left;">
-                            <p id="calendar_forward_text" style="display: inline">December 2017</p>
-                            <img src="Icons/forward.svg" style="width: 15px;height: 15px; display: inline" />
-                        </div></div>
+                        <div id="calendar_current_month" style="display: inline"></div>
+                        <div id="calendar_forward_button" style="float: right">
+                            <p id="calendar_forward_text" style="display: inline"></p>
+                            <img src="Icons/forward.svg" style="width: 15px;height: 15px"/>
+                        </div>
                     </div>
                 </div>
             </div>
             <div id="apps">
                 <table class="functions_table" style="width: 100%" id="apps_table">
                     <tr>
+                        <td id="button_app_calendar">
+                            <table>
+                                <tr>
+                                    <td><img src="Icons/calendar.svg" /></td>
+                                </tr>
+                                <tr>
+                                    <td id="app_calendar_text" />
+                                </tr>
+                            </table>
+                        </td>
                         <td>
                             <table>
                                 <tr>

@@ -90,6 +90,8 @@ let viewOff;
 
 let appEmailText;
 let appSearchText;
+let appYoutubeText;
+let appCalendarText;
 
 let googleAccountTitle;
 let googleAccountName;
@@ -102,6 +104,8 @@ let onlyMirrorButton;
 let settingsButton;
 let backButton;
 
+let appCalendarButton;
+
 let calendarBackButton;
 let calendarForwardButton;
 
@@ -109,6 +113,8 @@ let calendarBackText;
 let calendarForwardText;
 
 let calendarCurrentMonth;
+
+let clickAudio;
 //endregion
 
 //region Fields for using the smart-mirror in multiple languages
@@ -162,6 +168,7 @@ let upcoming_events_soon_pattern;
 let app_search;
 let app_email;
 let app_youtube;
+let app_calendar;
 
 let google_account;
 let settings;
@@ -218,6 +225,7 @@ let en_upcoming_events_soon_pattern = "in -A- days";
 let en_app_search = "Search";
 let en_app_email = "EMail";
 let en_app_youtube = "YouTube"
+let en_app_calendar = "Calendar";
 
 let de_google_account = "Google Account";
 let en_settings = "Settings";
@@ -273,7 +281,8 @@ let de_upcoming_events_soon_pattern = "in -A- Tagen";
 
 let de_app_search = "Suche";
 let de_app_email = "EMail";
-let de_app_youtube = "YouTube"
+let de_app_youtube = "YouTube";
+let de_app_calendar = "Kalender";
 
 let en_google_account = "Google Account";
 let de_settings = "Einstellungen";
@@ -342,6 +351,7 @@ function setLanguages() {
             app_search = en_app_search;
             app_email = en_app_email;
             app_youtube = en_app_youtube;
+            app_calendar = en_app_calendar;
 
             google_account = en_google_account;
             settings = en_settings;
@@ -397,6 +407,7 @@ function setLanguages() {
             app_search = de_app_search;
             app_email = de_app_email;
             app_youtube = de_app_youtube;
+            app_calendar = de_app_calendar;
 
             google_account = de_google_account;
             settings = de_settings;
@@ -414,6 +425,8 @@ function loadHTMLElements() {
     appEmailText = $("#app_email_text");
     appSearchText = $("#app_search_text");
     appYoutubeText = $("#app_youtube_text");
+    appCalendarText = $("#app_calendar_text");
+    
 
     googleAccountImage = $("#google_account_image");
     googleAccountName = $("#google_account_name");
@@ -427,6 +440,8 @@ function loadHTMLElements() {
 
     backButton = $("#button_back");
 
+    appCalendarButton = $("#button_app_calendar");
+    
     calendarBackButton = $("#calendar_back_button");
     calendarForwardButton = $("#calendar_forward_button");
     calendarBackText = $("#calendar_back_text");
@@ -443,6 +458,7 @@ function setTextToHTML() {
     appSearchText.html(app_search);
     appEmailText.html(app_email);
     appYoutubeText.html(app_youtube);
+    appCalendarText.html(app_calendar);
 }
 
 /**
@@ -479,11 +495,15 @@ function main() {
     let audioElement = document.createElement('audio');
     audioElement.setAttribute('src', './Sounds/startup.ogg');
     audioElement.play();
+    
+    clickAudio = document.createElement('audio');
+    clickAudio.setAttribute('src','./Sounds/touch.mp3');
 
 
 
     //The click event when the google button is clicked.
     $("#google_account").click(function () {
+        clickAudio.play();
         if (signedIn)
             gapi.auth2.getAuthInstance().signOut();
         gapi.auth2.getAuthInstance().signIn({
@@ -493,36 +513,45 @@ function main() {
     });
 
     onlyMirrorButton.click(function () {
+        clickAudio.play();
         switchView(Views.OFF);
         showViewTextAnimated(["Bye bye"]);
     });
     settingsButton.click(function () {
-
+        clickAudio.play();
     });
 
     viewOff.click(function () {
+        clickAudio.play();
         switchView(Views.DEFAULT);
     });
 
-    $("#upcoming_events").click(function () {
+    let clickCalendarFunction = function () {
+        clickAudio.play();
         switchFunction(Functions.CALENDAR);
-    });
+    };
+    $("#upcoming_events").click(clickCalendarFunction);
+    appCalendarButton.click(clickCalendarFunction);
+    
     backButton.click(function () {
+        clickAudio.play();
         switchFunction(Functions.DEFAULT);
     });
-    
+
     currentYear = currentDate.getYear();
     currentMonth = currentDate.getMonth();
-    calendarBackButton.click(function(){
-        currentMonth = (currentMonth+12-1)%12;
-        if(currentMonth==11)
-            currentYear-=1;
+    calendarBackButton.click(function () {
+        clickAudio.play();
+        currentMonth = (currentMonth + 12 - 1) % 12;
+        if (currentMonth == 11)
+            currentYear -= 1;
         refreshCalendarEntryData();
     });
-    calendarForwardButton.click(function(){
-        currentMonth = (currentMonth + 1)% 12;
-        if(currentMonth==0)
-            currentYear+=1;
+    calendarForwardButton.click(function () {
+        clickAudio.play();
+        currentMonth = (currentMonth + 1) % 12;
+        if (currentMonth == 0)
+            currentYear += 1;
         refreshCalendarEntryData();
     });
 
@@ -878,6 +907,8 @@ function switchFunction(functionId) {
             break;
         case Functions.CALENDAR:
             $("#calendar_function").fadeIn(0, null);
+            $("#upcoming_events").fadeOut(0, null);
+            $("#weather_preview").fadeOut(0, null);
             backButton.fadeIn(0, null);
         case Functions.GOOGLE_ACCOUNT:
             break;
@@ -938,7 +969,7 @@ function refreshCalendarEntryData() {
     let day = currentDate.getDate();
     let monthDate = new Date();
     monthDate.setMonth(currentMonth);
-    monthDate.setFullYear(currentYear+1900);
+    monthDate.setFullYear(currentYear + 1900);
     monthDate.setDate(0);
     monthDate.setHours(0);
     monthDate.setSeconds(0);
@@ -959,11 +990,11 @@ function refreshCalendarEntryData() {
         monthDate.setTime(monthDate.getTime() - oneDayMillis);
     }
     let listIndex = 0;
-    calendarCurrentMonth.html(months[currentMonth] + " " + (currentYear+1900));
-    calendarBackText.html(months[(currentMonth+12-1)%12] +" "+(currentYear+1900));
-    calendarForwardText.html(months[(currentMonth+1)%12]+" "+(currentYear+1900));
-    
-    for (i = 0; i < 6; i++) {
+    calendarCurrentMonth.html(months[currentMonth] + " " + (currentYear + 1900));
+    calendarBackText.html(months[(currentMonth + 12 - 1) % 12] + " " + (currentYear + 1900));
+    calendarForwardText.html(months[(currentMonth + 1) % 12] + " " + (currentYear + 1900));
+
+    while(monthDate.getMonth()==currentMonth||monthDate.getMonth()==(currentMonth+12-1)%12) {
         tableString += "<tr>"
         for (e = 0; e < 7; e++) {
             let color;
@@ -971,7 +1002,7 @@ function refreshCalendarEntryData() {
                 color = "#444";
             else
                 color = "#222";
-            tableString += "<td style='background-color:" + color + ";vertical-align:top;'><div><p>" + monthDate.getDate() + "</p>";
+            tableString += "<td style='background-color:" + color + ";vertical-align:top;'><div><p style='display:block'>" + monthDate.getDate() + "</p>";
             while (calendarEntries[listIndex].datetime.getTime() < monthDate.getTime() && listIndex < calendarEntries.length) {
                 listIndex++;
             }
@@ -1194,10 +1225,8 @@ function loadCalendarEntries() {
     calendarEntries = [];
     gapi.client.calendar.events.list({
         'calendarId': 'primary',
-        'timeMin': (new Date()).toISOString(),
         'showDeleted': false,
         'singleEvents': true,
-        'maxResults': 10,
         'orderBy': 'startTime'
     }).then(function (response) {
         let events = response.result.items;
