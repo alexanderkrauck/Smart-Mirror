@@ -426,7 +426,7 @@ function loadHTMLElements() {
     appSearchText = $("#app_search_text");
     appYoutubeText = $("#app_youtube_text");
     appCalendarText = $("#app_calendar_text");
-    
+
 
     googleAccountImage = $("#google_account_image");
     googleAccountName = $("#google_account_name");
@@ -441,7 +441,7 @@ function loadHTMLElements() {
     backButton = $("#button_back");
 
     appCalendarButton = $("#button_app_calendar");
-    
+
     calendarBackButton = $("#calendar_back_button");
     calendarForwardButton = $("#calendar_forward_button");
     calendarBackText = $("#calendar_back_text");
@@ -495,9 +495,9 @@ function main() {
     let audioElement = document.createElement('audio');
     audioElement.setAttribute('src', './Sounds/startup.ogg');
     audioElement.play();
-    
+
     clickAudio = document.createElement('audio');
-    clickAudio.setAttribute('src','./Sounds/touch.mp3');
+    clickAudio.setAttribute('src', './Sounds/touch.mp3');
 
 
 
@@ -532,7 +532,7 @@ function main() {
     };
     $("#upcoming_events").click(clickCalendarFunction);
     appCalendarButton.click(clickCalendarFunction);
-    
+
     backButton.click(function () {
         clickAudio.play();
         switchFunction(Functions.DEFAULT);
@@ -994,7 +994,7 @@ function refreshCalendarEntryData() {
     calendarBackText.html(months[(currentMonth + 12 - 1) % 12] + " " + (currentYear + 1900));
     calendarForwardText.html(months[(currentMonth + 1) % 12] + " " + (currentYear + 1900));
 
-    while(monthDate.getMonth()==currentMonth||monthDate.getMonth()==(currentMonth+12-1)%12) {
+    while (monthDate.getMonth() == currentMonth || monthDate.getMonth() == (currentMonth + 12 - 1) % 12) {
         tableString += "<tr>"
         for (e = 0; e < 7; e++) {
             let color;
@@ -1026,51 +1026,56 @@ function refreshCalendarEntryData() {
         //The opacity is reduced the later the event is.
         if (count < 10) {
             if (element.calendarType == CalendarType.PRIMARY && (activeCalendarSetting == CalendarSettings.ALL || activeCalendarSetting == CalendarSettings.PRIMARY_CONTACTS || activeCalendarSetting == CalendarSettings.PRIMARY || activeCalendarSetting == CalendarSettings.PRIMARY_EVENTS) || element.calendarType == CalendarType.EVENTS && (activeCalendarSetting == CalendarSettings.ALL || activeCalendarSetting == CalendarSettings.PRIMARY_EVENTS || activeCalendarSetting == CalendarSettings.EVENTS || activeCalendarSetting == CalendarSettings.CONTACTS_EVENTS) || element.calendarType == CalendarType.CONTACTS && (activeCalendarSetting == CalendarSettings.ALL || activeCalendarSetting == CalendarSettings.PRIMARY_CONTACTS || activeCalendarSetting == CalendarSettings.CONTACTS_EVENTS || activeCalendarSetting == CalendarSettings.CONTACTS)) {
-                if (count < 5)
-                    upcomingEvents += "<tr><td>";
-                else if (count === 5)
-                    upcomingEvents += "<tr style='opacity:0.9'><td>";
-                else if (count === 6)
-                    upcomingEvents += "<tr style='opacity:0.7'><td>";
-                else if (count === 7)
-                    upcomingEvents += "<tr style='opacity:0.6'><td>";
-                else if (count === 8)
-                    upcomingEvents += "<tr style='opacity:0.4'><td>";
-                else if (count === 9)
-                    upcomingEvents += "<tr style='opacity:0.2'><td>";
-
-                if (element.title.length >= 25)
-                    upcomingEvents += element.title.substr(0, 25) + "...";
-                else
-                    upcomingEvents += element.title;
-
-                upcomingEvents += "</td><td>";
-
                 let daysTo = Math.round(getTimeTo(element.datetime) / (1000 * 60 * 60 * 24));
-                if (daysTo === 0)
-                    upcomingEvents += "Today";
-                else if (daysTo <= 7)
-                    upcomingEvents += upcoming_events_soon_pattern.replace("-A-", daysTo);
-                else {
-                    let datetime = element.datetime;
+                if (daysTo >= 0) {
 
-                    let date;
-                    let month;
-                    if (datetime.getDate() <= 9)
-                        date = "0" + datetime.getDate();
-                    else
-                        date = datetime.getDate();
-                    //month + 1 because January is 0 and not 1 (array)
-                    if ((datetime.getMonth() + 1) <= 9)
-                        month = "0" + (datetime.getMonth() + 1);
-                    else
-                        month = datetime.getMonth() + 1;
 
-                    //year + 1900 because it counts from 0 as 1900.
-                    upcomingEvents += date + "." + month + "." + (1900 + datetime.getYear());
+                    if (count < 5)
+                        upcomingEvents += "<tr><td>";
+                    else if (count === 5)
+                        upcomingEvents += "<tr style='opacity:0.9'><td>";
+                    else if (count === 6)
+                        upcomingEvents += "<tr style='opacity:0.7'><td>";
+                    else if (count === 7)
+                        upcomingEvents += "<tr style='opacity:0.6'><td>";
+                    else if (count === 8)
+                        upcomingEvents += "<tr style='opacity:0.4'><td>";
+                    else if (count === 9)
+                        upcomingEvents += "<tr style='opacity:0.2'><td>";
+
+                    if (element.title.length >= 25)
+                        upcomingEvents += element.title.substr(0, 25) + "...";
+                    else
+                        upcomingEvents += element.title;
+
+                    upcomingEvents += "</td><td>";
+
+
+                    if (daysTo === 0)
+                        upcomingEvents += "Today";
+                    else if (daysTo <= 7)
+                        upcomingEvents += upcoming_events_soon_pattern.replace("-A-", daysTo);
+                    else {
+                        let datetime = element.datetime;
+
+                        let date;
+                        let month;
+                        if (datetime.getDate() <= 9)
+                            date = "0" + datetime.getDate();
+                        else
+                            date = datetime.getDate();
+                        //month + 1 because January is 0 and not 1 (array)
+                        if ((datetime.getMonth() + 1) <= 9)
+                            month = "0" + (datetime.getMonth() + 1);
+                        else
+                            month = datetime.getMonth() + 1;
+
+                        //year + 1900 because it counts from 0 as 1900.
+                        upcomingEvents += date + "." + month + "." + (1900 + datetime.getYear());
+                    }
+                    upcomingEvents += "</td></tr>";
+                    count++;
                 }
-                upcomingEvents += "</td></tr>";
-                count++;
             }
         }
     });
