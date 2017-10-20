@@ -1,0 +1,14 @@
+{
+  "name": "index.html",
+  "version": "5.0.0",
+  "description": "Smart Mirror",
+  "main": "jQuery.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Alexander Krauck",
+  "license": "ISC",
+  "dependencies": {
+    "material-components-web": "^0.23.0"
+  }
+}

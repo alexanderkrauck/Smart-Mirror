@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <!--Import CSS document-->
+    <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <!--Import JavaScript documents-->
@@ -76,7 +77,23 @@
                         <div id="calendar_current_month" style="display: inline"></div>
                         <div id="calendar_forward_button" style="float: right">
                             <p id="calendar_forward_text" style="display: inline"></p>
-                            <img src="Icons/forward.svg" style="width: 15px;height: 15px"/>
+                            <img src="Icons/forward.svg" style="width: 15px;height: 15px" />
+                        </div>
+                    </div>
+                </div>
+                <div style="display: none" id="settings_function">
+                    <div>
+                        <p style="font-size: 60px">Settings</p>
+                        <p style="font-size: 40px">Calendar</p>
+                        <p>Sources</p>
+                        <div class="mdc-checkbox mdc-checkbox--theme-dark">
+                            <input type="checkbox" class="mdc-checkbox__native-control"/>
+                            <div class="mdc-checkbox__background">
+                                <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                    <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                                </svg>
+                                <div class="mdc-checkbox__mixedmark"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

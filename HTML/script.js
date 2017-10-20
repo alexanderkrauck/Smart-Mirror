@@ -427,7 +427,6 @@ function loadHTMLElements() {
     appYoutubeText = $("#app_youtube_text");
     appCalendarText = $("#app_calendar_text");
 
-
     googleAccountImage = $("#google_account_image");
     googleAccountName = $("#google_account_name");
     googleAccountTitle = $("#google_account_title");
@@ -519,6 +518,7 @@ function main() {
     });
     settingsButton.click(function () {
         clickAudio.play();
+        switchFunction(Functions.SETTINGS);
     });
 
     viewOff.click(function () {
@@ -904,6 +904,10 @@ function switchFunction(functionId) {
             backButton.fadeOut(0, null);
             break;
         case Functions.SETTINGS:
+            $("#settings_function").fadeIn(0,null);
+            $("#upcoming_events").fadeOut(0, null);
+            $("#weather_preview").fadeOut(0, null);
+            backButton.fadeIn(0, null);
             break;
         case Functions.CALENDAR:
             $("#calendar_function").fadeIn(0, null);
@@ -926,7 +930,7 @@ function getFunctionForFunctionId(id) {
         case Functions.DEFAULT:
             return $("#apps_table");
         case Functions.SETTINGS:
-            return null;
+            return $("#settings_function");
         case Functions.CALENDAR:
             return $("#calendar_function");
         case Functions.EMAIL:
