@@ -249,3 +249,13 @@ p {
     margin: 0px 0px 20px 50px;
     width: calc( 100% - 100px)
 }
+
+#gawgaw::after, #gawgaw::before, #gawgaw div::before, #gawgaw div::after,#gawgaw,#gawgaw div{
+    background-color: black;
+            border-color: white;
+    width: 50px;
+    height: 50px;
+
+}
+#gawgaw::after, #gawgaw::before{
+}
