@@ -1002,7 +1002,7 @@ function refreshCalendarEntryData() {
         tableString += "<tr>"
         for (e = 0; e < 7; e++) {
             let color;
-            if (monthDate.getDate() == currentDate.getDate() && currentMonth == currentDate.getMonth() && currentYear == currentDate.getYear())
+            if (monthDate.getDate() == currentDate.getDate() && monthDate.getMonth() == currentDate.getMonth() &&currentMonth == currentDate.getMonth() && currentYear == currentDate.getYear())
                 color = "#444";
             else
                 color = "#222";
