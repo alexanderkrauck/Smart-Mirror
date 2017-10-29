@@ -247,7 +247,8 @@ p {
 }
 #running_function{
     margin: 0px 0px 20px 50px;
-    width: calc( 100% - 100px)
+    width: calc( 100% - 100px);
+    height: 1600px;
 }
 
 #gawgaw::after, #gawgaw::before, #gawgaw div::before, #gawgaw div::after,#gawgaw,#gawgaw div{
@@ -266,5 +267,39 @@ p {
 
 .mdc-form-field{
     display: block;
-    margin: 30px 0px 0px 0px;
+    margin: 0px 0px 30px 0px;
+}
+
+.function_title{
+    font-size: 60px;
+    padding-bottom: 25px;
+}
+.settings_area_title{
+    font-size: 20px;
+    padding-bottom: 15px;
+    font-weight: bold;
+}
+.settings_area{
+    margin-top: 40px;
+}
+.settings_area_subtitle{
+    font-size: 30px;
+    padding-bottom: 15px;
+}
+#settings_system{
+    margin-top: 0px;
+}
+.settings_subarea{
+    margin-left: 25px;
+}
+
+.mdc-radio__background{
+    height: 40px;
+    width:40px;
+    top: 0px;
+    left: 0px;
+}
+.checkbox_label{
+    margin-left: 15px;
+    font-size: 30px;
 }

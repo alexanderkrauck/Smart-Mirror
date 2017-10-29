@@ -555,6 +555,12 @@ function main() {
         refreshCalendarEntryData();
     });
 
+
+    $("input:radio[name='languages']").change(function () {
+        setLanguage = parseInt($(this).val());
+        setLanguages();
+        setTextToHTML();
+    });
 }
 //endregion
 
@@ -904,7 +910,7 @@ function switchFunction(functionId) {
             backButton.fadeOut(0, null);
             break;
         case Functions.SETTINGS:
-            $("#settings_function").fadeIn(0,null);
+            $("#settings_function").fadeIn(0, null);
             $("#upcoming_events").fadeOut(0, null);
             $("#weather_preview").fadeOut(0, null);
             backButton.fadeIn(0, null);
@@ -1002,7 +1008,7 @@ function refreshCalendarEntryData() {
         tableString += "<tr>"
         for (e = 0; e < 7; e++) {
             let color;
-            if (monthDate.getDate() == currentDate.getDate() && monthDate.getMonth() == currentDate.getMonth() &&currentMonth == currentDate.getMonth() && currentYear == currentDate.getYear())
+            if (monthDate.getDate() == currentDate.getDate() && monthDate.getMonth() == currentDate.getMonth() && currentMonth == currentDate.getMonth() && currentYear == currentDate.getYear())
                 color = "#444";
             else
                 color = "#222";

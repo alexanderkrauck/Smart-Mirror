@@ -65,7 +65,7 @@
             <div id="running_function">
                 <div style="display: none" id="calendar_function">
                     <div>
-                        <p style="font-size: 60px">Calendar</p>
+                        <p class="function_title">Calendar</p>
                     </div>
                     <table id="calendar">
                     </table>
@@ -83,68 +83,140 @@
                 </div>
                 <div style="display: none" id="settings_function">
                     <div>
-                        <p style="font-size: 60px;padding-bottom: 25px;">Settings</p>
-                        <p style="font-size: 40px">System</p>
-                        <p class="title_text" style="font-size: 30px;">Language</p>
+                        <p class="function_title">Settings</p>
 
-
-                        <div class="mdc-radio">
-                            <input class="mdc-radio__native-control" type="radio" id="radio-1" name="radios" checked>
-                            <div class="mdc-radio__background">
-                                <div class="mdc-radio__outer-circle"></div>
-                                <div class="mdc-radio__inner-circle"></div>
+                        <div class="settings_area" id="settings_system">
+                            <p class="settings_area_title">System</p>
+                            <div class="settings_subarea">
+                                <p class="settings_area_subtitle">Language</p>
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 50%">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="mdc-radio">
+                                                            <input class="mdc-radio__native-control" type="radio" id="language_german" name="languages" value="1" checked>
+                                                            <div class="mdc-radio__background">
+                                                                <div class="mdc-radio__outer-circle"></div>
+                                                                <div class="mdc-radio__inner-circle"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label class="checkbox_label" id="language_german_label" for="language_german">German</label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="width: 50%">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="mdc-radio">
+                                                            <input class="mdc-radio__native-control" type="radio" id="language_english" name="languages" value="0">
+                                                            <div class="mdc-radio__background">
+                                                                <div class="mdc-radio__outer-circle"></div>
+                                                                <div class="mdc-radio__inner-circle"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label class="checkbox_label" id="language_english_label" for="language_english">English</label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="settings_subarea">
+                                <p class="settings_area_subtitle">Temperature Unit</p>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td width="50%">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="mdc-radio">
+                                                            <input class="mdc-radio__native-control" type="radio" id="temperature_unit_celsius" name="temperature_units" value="1" checked>
+                                                            <div class="mdc-radio__background" style="width:40px;height: 40px;top:0px;left: 0px;">
+                                                                <div class="mdc-radio__outer-circle"></div>
+                                                                <div class="mdc-radio__inner-circle"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label class="checkbox_label" id="temperature_unit_celsius_label" for="temperature_unit_celsius">Celsius</label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="50%">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="mdc-radio">
+                                                            <input class="mdc-radio__native-control" type="radio" id="temperature_unit_farenheit" name="temperature_units" value="0">
+                                                            <div class="mdc-radio__background">
+                                                                <div class="mdc-radio__outer-circle"></div>
+                                                                <div class="mdc-radio__inner-circle"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label class="checkbox_label" id="temperature_unit_farenheit_label" for="temperature_unit_farenheit">Farenheit</label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
-                        <label id="radio-1-label" for="radio-1">German</label>
 
-                        <div class="mdc-radio">
-                            <input class="mdc-radio__native-control" type="radio" id="radio-2" name="radios">
-                            <div class="mdc-radio__background">
-                                <div class="mdc-radio__outer-circle"></div>
-                                <div class="mdc-radio__inner-circle"></div>
-                            </div>
-                        </div>
-                        <label id="radio-2-label" for="radio-2">English</label>
+                        <div class="settings_area">
+                            <p class="settings_area_title">Calendar</p>
+                            <div class="settings_subarea">
 
-
-                        <p style="font-size: 40px">Calendar</p>
-                        <p class="title_text" style="font-size: 30px;">Sources</p>
-
-                        <div class="mdc-form-field">
-                            <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
-                                <input style="background-color: black" type="checkbox" id="normal_entries_checkbox" class="mdc-checkbox__native-control" />
-                                <div class="mdc-checkbox__background" style="background-color: black">
-                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                <p class="settings_area_subtitle">Sources</p>
+                                <div class="mdc-form-field">
+                                    <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
+                                        <input style="background-color: black" type="checkbox" id="normal_entries_checkbox" class="mdc-checkbox__native-control" />
+                                        <div class="mdc-checkbox__background" style="background-color: black">
+                                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
                                         <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
                                     </svg>
-                                    <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
+                                            <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
+                                        </div>
+                                    </div>
+                                    <label for="normal_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white">Normal Entries</label>
                                 </div>
-                            </div>
-                            <label for="normal_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white">Normal Entries</label>
-                        </div>
-                        <div class="mdc-form-field">
-                            <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
-                                <input style="background-color: black" type="checkbox" id="birthday_entries_checkbox" class="mdc-checkbox__native-control" />
-                                <div class="mdc-checkbox__background" style="background-color: black">
-                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                <div class="mdc-form-field">
+                                    <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
+                                        <input style="background-color: black" type="checkbox" id="birthday_entries_checkbox" class="mdc-checkbox__native-control" />
+                                        <div class="mdc-checkbox__background" style="background-color: black">
+                                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
                                         <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
                                     </svg>
-                                    <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
+                                            <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
+                                        </div>
+                                    </div>
+                                    <label for="birthday_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white">Birthdays</label>
                                 </div>
-                            </div>
-                            <label for="birthday_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white">Birthdays</label>
-                        </div>
-                        <div class="mdc-form-field">
-                            <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
-                                <input style="background-color: black" type="checkbox" id="holidays_entries_checkbox" class="mdc-checkbox__native-control" />
-                                <div class="mdc-checkbox__background" style="background-color: black">
-                                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                <div class="mdc-form-field">
+                                    <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
+                                        <input style="background-color: black" type="checkbox" id="holidays_entries_checkbox" class="mdc-checkbox__native-control" />
+                                        <div class="mdc-checkbox__background" style="background-color: black">
+                                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
                                         <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
                                     </svg>
-                                    <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
+                                            <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
+                                        </div>
+                                    </div>
+                                    <label for="holidays_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white">Holidays</label>
                                 </div>
                             </div>
-                            <label for="holidays_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white">Holidays</label>
                         </div>
                     </div>
                 </div>
