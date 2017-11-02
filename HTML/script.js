@@ -33,19 +33,10 @@ Functions = {
     CALENDAR: 6
 }
 
-CalendarSettings = {
-    PRIMARY: 6,
-    CONTACTS: 1,
-    EVENTS: 2,
-    PRIMARY_CONTACTS: 3,
-    PRIMARY_EVENTS: 4,
-    CONTACTS_EVENTS: 5,
-    ALL: 0
-}
 CalendarType = {
-    PRIMARY: 0,
-    CONTACTS: 1,
-    EVENTS: 2
+    PRIMARY: 4,
+    CONTACTS: 2,
+    EVENTS: 1
 }
 //endregion
 
@@ -56,7 +47,7 @@ let audioElement;
 let activeView = Views.DEFAULT;
 let activeFunction = Functions.DEFAULT;
 
-let activeCalendarSetting = CalendarSettings.ALL;
+let activeCalendarSetting = parseInt('111', 2);
 
 let setLanguage = Languages.ENGLISH;
 
@@ -105,6 +96,7 @@ let settingsButton;
 let backButton;
 
 let appCalendarButton;
+let appEMailButton;
 
 let calendarBackButton;
 let calendarForwardButton;
@@ -440,6 +432,7 @@ function loadHTMLElements() {
     backButton = $("#button_back");
 
     appCalendarButton = $("#button_app_calendar");
+    appEMailButton = $("#button_app_email");
 
     calendarBackButton = $("#calendar_back_button");
     calendarForwardButton = $("#calendar_forward_button");
@@ -532,6 +525,10 @@ function main() {
     };
     $("#upcoming_events").click(clickCalendarFunction);
     appCalendarButton.click(clickCalendarFunction);
+    appEMailButton.click(function(){
+        clickAudio.play();
+        switchFunction(Functions.EMAIL);
+    })
 
     backButton.click(function () {
         clickAudio.play();
@@ -560,6 +557,36 @@ function main() {
         setLanguage = parseInt($(this).val());
         setLanguages();
         setTextToHTML();
+    });
+    $("input:radio[name='temperature_units']").change(function () {
+        setUnit = parseInt($(this).val());
+        weatherFunction();
+    });
+
+
+    $("#normal_entries_checkbox").change(function () {
+        if (this.checked) {
+            activeCalendarSetting = activeCalendarSetting | CalendarType.PRIMARY;
+        } else {
+            activeCalendarSetting = activeCalendarSetting & ~CalendarType.PRIMARY;
+        }
+        refreshCalendarEntryData();
+    });
+    $("#birthday_entries_checkbox").change(function () {
+        if (this.checked) {
+            activeCalendarSetting = activeCalendarSetting | CalendarType.CONTACTS;
+        } else {
+            activeCalendarSetting = activeCalendarSetting & ~CalendarType.CONTACTS;
+        }
+        refreshCalendarEntryData();
+    });
+    $("#holidays_entries_checkbox").change(function () {
+        if (this.checked) {
+            activeCalendarSetting = activeCalendarSetting | CalendarType.EVENTS;
+        } else {
+            activeCalendarSetting = activeCalendarSetting & ~CalendarType.EVENTS;
+        }
+        refreshCalendarEntryData();
     });
 }
 //endregion
@@ -900,35 +927,40 @@ function getViewForViewId(id) {
 
 //region Switch functions in HTML
 function switchFunction(functionId) {
-    getFunctionForFunctionId(activeFunction).fadeOut(0, null);
-    activeFunction = functionId;
-    switch (activeFunction) {
-        case Functions.DEFAULT:
-            $("#apps_table").fadeIn(0, null);
-            $("#upcoming_events").fadeIn(0, null);
-            $("#weather_preview").fadeIn(0, null);
-            backButton.fadeOut(0, null);
-            break;
-        case Functions.SETTINGS:
-            $("#settings_function").fadeIn(0, null);
-            $("#upcoming_events").fadeOut(0, null);
-            $("#weather_preview").fadeOut(0, null);
-            backButton.fadeIn(0, null);
-            break;
-        case Functions.CALENDAR:
-            $("#calendar_function").fadeIn(0, null);
-            $("#upcoming_events").fadeOut(0, null);
-            $("#weather_preview").fadeOut(0, null);
-            backButton.fadeIn(0, null);
-        case Functions.GOOGLE_ACCOUNT:
-            break;
-        case Functions.WEATHER:
-            break;
-        case Functions.YOUTUBE:
-            break;
-        case Functions.EMAIL:
-            break;
-    }
+    getFunctionForFunctionId(activeFunction).fadeOut(200, function () {
+        activeFunction = functionId;
+        switch (activeFunction) {
+            case Functions.DEFAULT:
+                $("#apps_table").fadeIn(0, null);
+                $("#upcoming_events").fadeIn(0, null);
+                $("#weather_preview").fadeIn(0, null);
+                backButton.fadeOut(0, null);
+                break;
+            case Functions.SETTINGS:
+                $("#settings_function").fadeIn(200, null);
+                $("#upcoming_events").fadeOut(0, null);
+                $("#weather_preview").fadeOut(0, null);
+                backButton.fadeIn(0, null);
+                break;
+            case Functions.CALENDAR:
+                $("#calendar_function").fadeIn(200, null);
+                $("#upcoming_events").fadeOut(0, null);
+                $("#weather_preview").fadeOut(0, null);
+                backButton.fadeIn(0, null);
+            case Functions.GOOGLE_ACCOUNT:
+                break;
+            case Functions.WEATHER:
+                break;
+            case Functions.YOUTUBE:
+                break;
+            case Functions.EMAIL:
+                $("#email_function").fadeIn(200, null);
+                $("#upcoming_events").fadeOut(0 , null);
+                $("#weather_preview").fadeOut(0, null);
+                backButton.fadeIn(0, null);
+                break;
+        }
+    });
 }
 
 function getFunctionForFunctionId(id) {
@@ -940,7 +972,7 @@ function getFunctionForFunctionId(id) {
         case Functions.CALENDAR:
             return $("#calendar_function");
         case Functions.EMAIL:
-            return null;
+            return $("#email_function");
         case Functions.GOOGLE_ACCOUNT:
             return null;
         case Functions.WEATHER:
@@ -1035,7 +1067,7 @@ function refreshCalendarEntryData() {
     calendarEntries.forEach(function (element) {
         //The opacity is reduced the later the event is.
         if (count < 10) {
-            if (element.calendarType == CalendarType.PRIMARY && (activeCalendarSetting == CalendarSettings.ALL || activeCalendarSetting == CalendarSettings.PRIMARY_CONTACTS || activeCalendarSetting == CalendarSettings.PRIMARY || activeCalendarSetting == CalendarSettings.PRIMARY_EVENTS) || element.calendarType == CalendarType.EVENTS && (activeCalendarSetting == CalendarSettings.ALL || activeCalendarSetting == CalendarSettings.PRIMARY_EVENTS || activeCalendarSetting == CalendarSettings.EVENTS || activeCalendarSetting == CalendarSettings.CONTACTS_EVENTS) || element.calendarType == CalendarType.CONTACTS && (activeCalendarSetting == CalendarSettings.ALL || activeCalendarSetting == CalendarSettings.PRIMARY_CONTACTS || activeCalendarSetting == CalendarSettings.CONTACTS_EVENTS || activeCalendarSetting == CalendarSettings.CONTACTS)) {
+            if ((element.calendarType & activeCalendarSetting) != 0) {
                 let daysTo = Math.round(getTimeTo(element.datetime) / (1000 * 60 * 60 * 24));
                 if (daysTo >= 0) {
 
