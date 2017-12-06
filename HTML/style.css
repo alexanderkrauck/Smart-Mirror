@@ -303,3 +303,44 @@ p {
     margin-left: 15px;
     font-size: 30px;
 }
+
+#emails tr{
+    height: 70px;
+}
+
+#view_quote{
+    height: 90%;
+    width: 100%;
+}
+#text_quote_quote {
+    width: 100%;
+    color: white;
+    /* Change font-weight to light probably*/
+    font-size: 45px;
+    text-align: center;
+}
+#text_quote_author {
+    font-size: 35px;
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+
+}
+#container3_quote{
+    vertical-align: bottom;
+    display: table-cell;
+    height: 100%;
+}
+
+#container2_quote {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+#container1_quote {
+    height: 100%;
+    width: 100%;
+    display: inline-flex;
+}

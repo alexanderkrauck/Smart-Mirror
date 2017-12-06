@@ -21,7 +21,20 @@
 
 
     <!--The smart mirror off view-->
-    <div class="view" id="view_off"></div>
+    <div class="view" id="view_off">
+    </div>
+
+    <!--The quote view-->
+    <div class="view" id="view_quote">
+        <div id="container1_quote">
+            <div id="container2_quote">
+                <div id="container3_quote">
+                    <p id="text_quote_quote"></p>
+                    <p id="text_quote_author"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--The text animation view-->
     <div class="view" id="view_text_animation">
@@ -82,6 +95,16 @@
                 </div>
                 <div style="display:none" id="email_function">
                     <p class="function_title">EMail</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="text-align: left">Subject</th>
+                                <th style="text-align: left">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="emails">
+                        </tbody>
+                    </table>
                 </div>
                 <div style="display: none" id="settings_function">
                     <div>
@@ -176,6 +199,49 @@
                                     </tr>
                                 </table>
                             </div>
+                            <div class="settings_subarea">
+                                <p class="settings_area_subtitle">Only Mirror</p>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td width="50%">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="mdc-radio">
+                                                            <input class="mdc-radio__native-control" type="radio" id="only_mirror_nothing" name="only_mirror" value="0" checked>
+                                                            <div class="mdc-radio__background" style="width:40px;height: 40px;top:0px;left: 0px;">
+                                                                <div class="mdc-radio__outer-circle"></div>
+                                                                <div class="mdc-radio__inner-circle"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label class="checkbox_label" id="only_mirror_nothing_label" for="only_mirror_nothing">Show nothing</label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="50%">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="mdc-radio">
+                                                            <input class="mdc-radio__native-control" type="radio" id="only_mirror_quote" name="only_mirror" value="1">
+                                                            <div class="mdc-radio__background">
+                                                                <div class="mdc-radio__outer-circle"></div>
+                                                                <div class="mdc-radio__inner-circle"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label class="checkbox_label" id="only_mirror_quote_label" for="only_mirror_quote">Show a Quote</label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
 
                         <div class="settings_area">
@@ -227,6 +293,16 @@
             <div id="apps">
                 <table class="functions_table" style="width: 100%" id="apps_table">
                     <tr>
+                        <td id="button_app_news">
+                            <table>
+                                <tr>
+                                    <td><img src="Icons/news.svg" /></td>
+                                </tr>
+                                <tr>
+                                    <td id="app_news_text" />
+                                </tr>
+                            </table>
+                        </td>
                         <td id="button_app_calendar">
                             <table>
                                 <tr>
@@ -308,7 +384,7 @@
                                         <td><img src="Icons/back.svg" /></td>
                                     </tr>
                                     <tr>
-                                        <td>Back</td>
+                                        <td id="back_text"></td>
                                     </tr>
                                 </table>
                             </td>

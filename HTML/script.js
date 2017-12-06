@@ -20,7 +20,8 @@ Units = {
 Views = {
     TEXT_ANIMATED: 0,
     DEFAULT: 1,
-    OFF: 2
+    OFF: 2,
+    QUOTE: 3
 }
 
 Functions = {
@@ -38,6 +39,11 @@ CalendarType = {
     CONTACTS: 2,
     EVENTS: 1
 }
+
+OnlyMirrorMode = {
+    SHOW_NOTHING:0,
+    SHOW_QUOTE:1
+}
 //endregion
 
 //region Other fields
@@ -52,6 +58,8 @@ let activeCalendarSetting = parseInt('111', 2);
 let setLanguage = Languages.ENGLISH;
 
 let setUnit = Units.Celsius;
+
+let setOnlyMirror = OnlyMirrorMode.SHOW_NOTHING;
 
 let signedIn = false;
 
@@ -78,11 +86,13 @@ let currentDate;
 let viewTextAnimated;
 let viewDefault;
 let viewOff;
+let viewQuote;
 
 let appEmailText;
 let appSearchText;
 let appYoutubeText;
 let appCalendarText;
+let appNewsText;
 
 let googleAccountTitle;
 let googleAccountName;
@@ -90,6 +100,7 @@ let googleAccountImage;
 
 let onlyMirrorText;
 let settingsText;
+let backText;
 
 let onlyMirrorButton;
 let settingsButton;
@@ -97,6 +108,7 @@ let backButton;
 
 let appCalendarButton;
 let appEMailButton;
+let appNewsButton;
 
 let calendarBackButton;
 let calendarForwardButton;
@@ -107,6 +119,9 @@ let calendarForwardText;
 let calendarCurrentMonth;
 
 let clickAudio;
+
+let textQuoteQuote;
+let textQuoteAuthor;
 //endregion
 
 //region Fields for using the smart-mirror in multiple languages
@@ -161,9 +176,11 @@ let app_search;
 let app_email;
 let app_youtube;
 let app_calendar;
+let app_news;
 
 let google_account;
 let settings;
+let back;
 let only_mirror;
 //endregion
 
@@ -218,9 +235,11 @@ let en_app_search = "Search";
 let en_app_email = "EMail";
 let en_app_youtube = "YouTube"
 let en_app_calendar = "Calendar";
+let en_app_news = "News";
 
-let de_google_account = "Google Account";
+let en_google_account = "Google Account";
 let en_settings = "Settings";
+let en_back = "Back";
 let en_only_mirror = "Only Mirror";
 //endregion
 
@@ -275,9 +294,11 @@ let de_app_search = "Suche";
 let de_app_email = "EMail";
 let de_app_youtube = "YouTube";
 let de_app_calendar = "Kalender";
+let de_app_news = "Nachrichten";
 
-let en_google_account = "Google Account";
+let de_google_account = "Google Account";
 let de_settings = "Einstellungen";
+let de_back = "Zurück";
 let de_only_mirror = "Nur Spiegel";
 //endregion
 //endregion
@@ -344,9 +365,11 @@ function setLanguages() {
             app_email = en_app_email;
             app_youtube = en_app_youtube;
             app_calendar = en_app_calendar;
+            app_news = en_app_news;
 
             google_account = en_google_account;
             settings = en_settings;
+            back = en_back;
             only_mirror = en_only_mirror;
             break;
         case 1:
@@ -400,9 +423,11 @@ function setLanguages() {
             app_email = de_app_email;
             app_youtube = de_app_youtube;
             app_calendar = de_app_calendar;
+            app_news = de_app_news;
 
             google_account = de_google_account;
             settings = de_settings;
+            back = de_back;
             only_mirror = de_only_mirror;
             break;
     }
@@ -413,11 +438,13 @@ function loadHTMLElements() {
     viewTextAnimated = $("#view_text_animation");
     viewDefault = $("#view_default");
     viewOff = $("#view_off");
+    viewQuote = $("#view_quote");
 
     appEmailText = $("#app_email_text");
     appSearchText = $("#app_search_text");
     appYoutubeText = $("#app_youtube_text");
     appCalendarText = $("#app_calendar_text");
+    appNewsText = $("#app_news_text");
 
     googleAccountImage = $("#google_account_image");
     googleAccountName = $("#google_account_name");
@@ -425,6 +452,7 @@ function loadHTMLElements() {
 
     onlyMirrorText = $("#only_mirror_text");
     settingsText = $("#settings_text");
+    backText = $("#back_text");
 
     onlyMirrorButton = $("#button_only_mirror");
     settingsButton = $("#button_settings");
@@ -433,17 +461,22 @@ function loadHTMLElements() {
 
     appCalendarButton = $("#button_app_calendar");
     appEMailButton = $("#button_app_email");
+    appNewsButton = $("#button_app_news");
 
     calendarBackButton = $("#calendar_back_button");
     calendarForwardButton = $("#calendar_forward_button");
     calendarBackText = $("#calendar_back_text");
     calendarForwardText = $("#calendar_forward_text");
     calendarCurrentMonth = $("#calendar_current_month");
+
+    textQuoteAuthor = $("#text_quote_author");
+    textQuoteQuote = $("#text_quote_quote");
 }
 
 function setTextToHTML() {
     onlyMirrorText.html(only_mirror);
     settingsText.html(settings);
+    backText.html(back);
 
     googleAccountTitle.html(google_account);
 
@@ -451,6 +484,7 @@ function setTextToHTML() {
     appEmailText.html(app_email);
     appYoutubeText.html(app_youtube);
     appCalendarText.html(app_calendar);
+    appNewsText.html(app_news);
 }
 
 /**
@@ -506,7 +540,14 @@ function main() {
 
     onlyMirrorButton.click(function () {
         clickAudio.play();
-        switchView(Views.OFF);
+        switch(setOnlyMirror){
+            case OnlyMirrorMode.SHOW_NOTHING:
+                switchView(Views.OFF);
+                break;
+            case OnlyMirrorMode.SHOW_QUOTE:
+                switchView(Views.QUOTE);
+                break;
+        }
         showViewTextAnimated(["Bye bye"]);
     });
     settingsButton.click(function () {
@@ -518,6 +559,10 @@ function main() {
         clickAudio.play();
         switchView(Views.DEFAULT);
     });
+    viewQuote.click(function () {
+        clickAudio.play();
+        switchView(Views.DEFAULT);
+    });
 
     let clickCalendarFunction = function () {
         clickAudio.play();
@@ -525,10 +570,14 @@ function main() {
     };
     $("#upcoming_events").click(clickCalendarFunction);
     appCalendarButton.click(clickCalendarFunction);
-    appEMailButton.click(function(){
+    appEMailButton.click(function () {
         clickAudio.play();
         switchFunction(Functions.EMAIL);
     })
+
+    appNewsButton.click(function () {
+        clickAudio.play();
+    });
 
     backButton.click(function () {
         clickAudio.play();
@@ -562,7 +611,9 @@ function main() {
         setUnit = parseInt($(this).val());
         weatherFunction();
     });
-
+    $("input:radio[name='only_mirror']").change(function () {
+        setOnlyMirror = parseInt($(this).val());
+    });
 
     $("#normal_entries_checkbox").change(function () {
         if (this.checked) {
@@ -906,6 +957,9 @@ function switchView(viewId) {
         case Views.OFF:
             viewOff.fadeIn(0, null);
             break;
+        case Views.QUOTE:
+            viewQuote.fadeIn(0, null);
+            break;
     }
 }
 
@@ -920,6 +974,8 @@ function getViewForViewId(id) {
             return viewDefault;
         case Views.OFF:
             return viewOff;
+        case Views.QUOTE:
+            return viewQuote;
     }
 }
 
@@ -955,7 +1011,7 @@ function switchFunction(functionId) {
                 break;
             case Functions.EMAIL:
                 $("#email_function").fadeIn(200, null);
-                $("#upcoming_events").fadeOut(0 , null);
+                $("#upcoming_events").fadeOut(0, null);
                 $("#weather_preview").fadeOut(0, null);
                 backButton.fadeIn(0, null);
                 break;
@@ -999,6 +1055,16 @@ function refreshGMailData() {
 
 let currentMonth;
 let currentYear;
+
+function refreshEMailData() {
+    let tableString = "";
+    eMails.forEach(function (eMail) {
+        let dateText = eMail.datetime.getDate().toString() + "." + (eMail.datetime.getMonth() + 1).toString() + "." + (eMail.datetime.getYear() + 1900).toString();
+        tableString += "<tr><td>" + eMail.subject + "</td><td>" + dateText + "</td></tr>";
+    });
+    $("#emails").html(tableString);
+}
+
 /**
  * Builds a string in HTML format and sets the content of the table specified in the HTML code to this string.
  * The string contains the last 10 calendar entries.
@@ -1141,6 +1207,8 @@ function loadQuote() {
         url: "https://quotesondesign.com/wp-json/posts?filter[orderby]=rand",
         success: function (data) {
             quote = new Quote(data[0].content, data[0].title);
+            textQuoteQuote.html(quote.quote);
+            textQuoteAuthor.html(quote.author);
         },
         error: function (data) {
 
@@ -1193,7 +1261,7 @@ function handleClientLoad() {
 //The CLIENT_ID is needed to connect to the google APIs. Visit at console.cloud.google.com.
 let CLIENT_ID = "1094965716521-t47je6shvn0la4s3h57e2vflaflodgul.apps.googleusercontent.com";
 //Array of API discovery doc URLs for APIs used in this script.
-let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest", "https://people.googleapis.com/$discovery/rest", "https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"];
+let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest", "https://people.googleapis.com/$discovery/rest", "https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest", "https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
 //Authorization scopes required by the API.
 let SCOPES = "https://www.googleapis.com/auth/calendar profile https://www.googleapis.com/auth/gmail.readonly";
 
@@ -1226,11 +1294,22 @@ function updateSigninStatus(isSignedIn) {
         loadCalendarEntries();
         loadProfileData();
         loadGMailData();
+        loadYouTubeData();
     } else {
         calendarEntries = [];
         eMails = [];
         signedIn = false;
     }
+}
+
+function loadYouTubeData() {
+
+    gapi.client.youtube.channels.list({
+        'part': 'snippet,contentDetails',
+        'mine': true
+    }).then(function (response) {
+        alert("gaw");
+    });
 }
 
 /**
@@ -1239,7 +1318,9 @@ function updateSigninStatus(isSignedIn) {
 function loadGMailData() {
     gapi.client.gmail.users.messages.list({
         'userId': "me",
-        'maxResults': 10
+        'maxResults': 20,
+        'includeSpamTrash': false,
+        'labelIds': ['INBOX']
     }).then(function (response) {
         response.result.messages.forEach(function (message) {
             gapi.client.gmail.users.messages.get({
@@ -1247,6 +1328,7 @@ function loadGMailData() {
                 'id': message.id
             }).then(function (resp) {
                 eMails.push(new EMail(message.id, resp.result.snippet, resp.result.internalDate));
+                refreshEMailData();
             });
         });
     });
@@ -1347,6 +1429,7 @@ class CalendarEntry {
  */
 class EMail {
     constructor(id, subject, utcTime) {
+        //alert(subject);
         this.id = id;
         this.subject = subject;
         let date = new Date(0);
