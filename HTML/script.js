@@ -41,8 +41,8 @@ CalendarType = {
 }
 
 OnlyMirrorMode = {
-    SHOW_NOTHING:0,
-    SHOW_QUOTE:1
+    SHOW_NOTHING: 0,
+    SHOW_QUOTE: 1
 }
 //endregion
 
@@ -61,7 +61,11 @@ let setUnit = Units.Celsius;
 
 let setOnlyMirror = OnlyMirrorMode.SHOW_NOTHING;
 
+let setWeatherLocation = "Linz";
+let backupWeatherLocation = "Linz";
+
 let signedIn = false;
+
 
 //delays for different functions
 let delayWeather = 900000; //every 15 minutes
@@ -122,6 +126,43 @@ let clickAudio;
 
 let textQuoteQuote;
 let textQuoteAuthor;
+
+let textFunctionSettingsTitle;
+let textFunctionCalendarTitle;
+let textFuntionEMailTitle;
+
+let textSettingsSystemTitle;
+let textSettingsCalendarTitle;
+let textSettingsWeatherTitle;
+
+let textSettingsLanguagesSubtitle;
+let textSettingsTemperatureUnitSubtitle;
+let textSettingsOnlyMirrorSubtitle;
+let textSettingsSourcesSubtitle;
+let textSettingsLocationSubtitle;
+
+let textSettingsEnglishLabel;
+let textSettingsGermanLabel;
+let textSettingsCelsiusLabel;
+let textSettingsFarenheitLabel;
+let textSettingsShowNothingLabel;
+let textSettingsShowQuoteLabel;
+let textSettingsNormalEntriesLabel;
+let textSettingsBirthdaysLabel;
+let textSettingsHolidaysLabel;
+
+let radioGerman;
+let radioEnglish;
+let radioCelsius;
+let radioFarenheit;
+let radioShowNothing;
+let radioShowQuote;
+
+let checkboxPrimary;
+let checkboxEvents;
+let checkboxContacts;
+
+let inputWeatherLocation;
 //endregion
 
 //region Fields for using the smart-mirror in multiple languages
@@ -182,6 +223,32 @@ let google_account;
 let settings;
 let back;
 let only_mirror;
+
+let settings_title;
+let calendar_title;
+let email_title;
+
+let settings_system_title;
+let settings_calendar_title;
+let settings_weather_title;
+
+let settings_languages_subtitle;
+let settings_temperature_unit_subtitle;
+let settings_only_mirror_subtitle;
+let settings_sources_subtitle;
+let settings_location_subtitle;
+
+let settings_english_label;
+let settings_german_label;
+let settings_celsius_label;
+let settings_farenheit_label;
+let settings_show_nothing_label;
+let settings_show_quote_label;
+let settings_normal_entries_label;
+let settings_birthdays_label;
+let settings_holidays_label;
+
+let settings_location_placeholder;
 //endregion
 
 //region ENGLISH: prefix is "en"
@@ -241,6 +308,32 @@ let en_google_account = "Google Account";
 let en_settings = "Settings";
 let en_back = "Back";
 let en_only_mirror = "Only Mirror";
+
+let en_settings_title = "Settings";
+let en_calendar_title = "Calendar";
+let en_email_title = "EMail";
+
+let en_settings_system_title = "System";
+let en_settings_calendar_title = "Calendar";
+let en_settings_weather_title = "Weather";
+
+let en_settings_languages_subtitle = "Languages";
+let en_settings_temperature_unit_subtitle = "Temperature Unit";
+let en_settings_only_mirror_subtitle = "Only Mirror";
+let en_settings_sources_subtitle = "Sources";
+let en_settings_location_subtitle = "Location";
+
+let en_settings_english_label = "English";
+let en_settings_german_label = "German";
+let en_settings_celsius_label = "Celsius";
+let en_settings_farenheit_label = "Farenheit";
+let en_settings_show_nothing_label = "Show Nothing";
+let en_settings_show_quote_label = "Show a Quote";
+let en_settings_normal_entries_label = "Normal Entries";
+let en_settings_birthdays_label = "Birthdays";
+let en_settings_holidays_label = "Holidays";
+
+let en_settings_location_placeholder = "City / Area";
 //endregion
 
 //region GERMAN: prefix is "de"
@@ -300,19 +393,81 @@ let de_google_account = "Google Account";
 let de_settings = "Einstellungen";
 let de_back = "Zurück";
 let de_only_mirror = "Nur Spiegel";
+
+let de_settings_title = "Einstellungen";
+let de_calendar_title = "Kalender";
+let de_email_title = "EMail";
+
+let de_settings_system_title = "System";
+let de_settings_calendar_title = "Kalender";
+let de_settings_weather_title = "Wetter";
+
+let de_settings_languages_subtitle = "Sprachen";
+let de_settings_temperature_unit_subtitle = "Temperatureeinheit";
+let de_settings_only_mirror_subtitle = "Nur Spiegel";
+let de_settings_sources_subtitle = "Quellen";
+let de_settings_location_subtitle = "Lage";
+
+let de_settings_english_label = "Englisch";
+let de_settings_german_label = "Deutsch";
+let de_settings_celsius_label = "Celsius";
+let de_settings_farenheit_label = "Farenheit";
+let de_settings_show_nothing_label = "Zeige Nichts";
+let de_settings_show_quote_label = "Zeige ein Zitat";
+let de_settings_normal_entries_label = "Normale Einträge";
+let de_settings_birthdays_label = "Geburtstage";
+let de_settings_holidays_label = "Feiertage";
+
+let de_settings_location_placeholder = "Stadt / Gebiet";
 //endregion
 //endregion
 
 //region Startup components
 $(document).ready(function () {
-    setLanguages();
+    loadCookies();
+
     main();
 });
+
+function saveCookies() {
+    document.cookie = "language=" + setLanguage + ";expires=Thu, 18 Dec 2019 12:00:00 UTC";
+    document.cookie = "temperature_unit=" + setUnit + ";expires=Thu, 18 Dec 2019 12:00:00 UTC";
+    document.cookie = "only_mirror=" + setOnlyMirror + ";expires=Thu, 18 Dec 2019 12:00:00 UTC";
+    document.cookie = "calendar_settings=" + activeCalendarSetting + ";expires=Thu, 18 Dec 2019 12:00:00 UTC";
+    document.cookie = "weather_location=" + setWeatherLocation + ";expires=Thu, 18 Dec 2019 12:00:00 UTC";
+    document.cookie = "backup_weather_location=" + backupWeatherLocation + ";expires=Thu, 18 Dec 2019 12:00:00 UTC";
+}
+
+function loadCookies() {
+    let cookies = document.cookie.split(";");
+    cookies.forEach(function (element) {
+        let keyCombo = element.split("=");
+        if (keyCombo[0].includes("language")) {
+            setLanguage = parseInt(keyCombo[1]);
+        }
+        if (keyCombo[0].includes("temperature_unit")) {
+            setUnit = parseInt(keyCombo[1]);
+        }
+        if (keyCombo[0].includes("only_mirror")) {
+            setOnlyMirror = parseInt(keyCombo[1]);
+        }
+        if (keyCombo[0].includes("calendar_settings")) {
+            activeCalendarSetting = parseInt(keyCombo[1]);
+        }
+        if (keyCombo[0].includes("weather_location")) {
+            setWeatherLocation = keyCombo[1];
+        }
+        if (keyCombo[0].includes("backup_weather_location")) {
+            backupWeatherLocation = keyCombo[1];
+        }
+    });
+}
 
 /**
  * Sets the used language letiables to the active language letiables.
  */
 function setLanguages() {
+
     switch (setLanguage) {
         case 0:
             daytime_night = en_daytime_night;
@@ -371,6 +526,32 @@ function setLanguages() {
             settings = en_settings;
             back = en_back;
             only_mirror = en_only_mirror;
+
+            settings_title = en_settings_title;
+            calendar_title = en_calendar_title;
+            email_title = en_email_title;
+
+            settings_system_title = en_settings_system_title;
+            settings_calendar_title = en_settings_calendar_title;
+            settings_weather_title = en_settings_weather_title;
+
+            settings_languages_subtitle = en_settings_languages_subtitle;
+            settings_temperature_unit_subtitle = en_settings_temperature_unit_subtitle;
+            settings_only_mirror_subtitle = en_settings_only_mirror_subtitle;
+            settings_sources_subtitle = en_settings_sources_subtitle;
+            settings_location_subtitle = en_settings_location_subtitle;
+
+            settings_english_label = en_settings_english_label;
+            settings_german_label = en_settings_german_label;
+            settings_celsius_label = en_settings_celsius_label;
+            settings_farenheit_label = en_settings_farenheit_label;
+            settings_show_nothing_label = en_settings_show_nothing_label;
+            settings_show_quote_label = en_settings_show_quote_label;
+            settings_normal_entries_label = en_settings_normal_entries_label;
+            settings_birthdays_label = en_settings_birthdays_label;
+            settings_holidays_label = en_settings_holidays_label;
+
+            settings_location_placeholder = en_settings_location_placeholder;
             break;
         case 1:
             daytime_night = de_daytime_night;
@@ -429,8 +610,37 @@ function setLanguages() {
             settings = de_settings;
             back = de_back;
             only_mirror = de_only_mirror;
+
+            settings_title = de_settings_title;
+            calendar_title = de_calendar_title;
+            email_title = de_email_title;
+
+            settings_system_title = de_settings_system_title;
+            settings_calendar_title = de_settings_calendar_title;
+            settings_weather_title = de_settings_weather_title;
+
+            settings_languages_subtitle = de_settings_languages_subtitle;
+            settings_temperature_unit_subtitle = de_settings_temperature_unit_subtitle;
+            settings_only_mirror_subtitle = de_settings_only_mirror_subtitle;
+            settings_sources_subtitle = de_settings_sources_subtitle;
+            settings_location_subtitle = de_settings_location_subtitle;
+
+            settings_english_label = de_settings_english_label;
+            settings_german_label = de_settings_german_label;
+            settings_celsius_label = de_settings_celsius_label;
+            settings_farenheit_label = de_settings_farenheit_label;
+            settings_show_nothing_label = de_settings_show_nothing_label;
+            settings_show_quote_label = de_settings_show_quote_label;
+            settings_normal_entries_label = de_settings_normal_entries_label;
+            settings_birthdays_label = de_settings_birthdays_label;
+            settings_holidays_label = de_settings_holidays_label;
+
+            settings_location_placeholder = de_settings_location_placeholder;
             break;
     }
+
+    weatherFunction();
+    timerFunction();
 }
 
 
@@ -471,6 +681,43 @@ function loadHTMLElements() {
 
     textQuoteAuthor = $("#text_quote_author");
     textQuoteQuote = $("#text_quote_quote");
+
+    textFunctionSettingsTitle = $("#settings_title");
+    textFunctionCalendarTitle = $("#calendar_title");
+    textFunctionEMailTitle = $("#email_title");
+
+    textSettingsSystemTitle = $("#system_settings_title");
+    textSettingsCalendarTitle = $("#calendar_settings_title");
+    textSettingsWeatherTitle = $("#weather_settings_title");
+
+    textSettingsLanguagesSubtitle = $("#system_settings_subtitle_language");
+    textSettingsTemperatureUnitSubtitle = $("#system_settings_subtitle_temperature_unit");
+    textSettingsOnlyMirrorSubtitle = $("#system_settings_subtitle_only_mirror");
+    textSettingsSourcesSubtitle = $("#calendar_settings_subtitle_sources");
+    textSettingsLocationSubtitle = $("#weather_settings_subtitle_location");
+
+    textSettingsEnglishLabel = $("#language_english_label");
+    textSettingsGermanLabel = $("#language_german_label");
+    textSettingsCelsiusLabel = $("#temperature_unit_celsius_label");
+    textSettingsFarenheitLabel = $("#temperature_unit_farenheit_label");
+    textSettingsShowNothingLabel = $("#only_mirror_nothing_label");
+    textSettingsShowQuoteLabel = $("#only_mirror_quote_label");
+    textSettingsNormalEntriesLabel = $("#sources_normal_entries_label");
+    textSettingsBirthdaysLabel = $("#sources_birthdays_label");
+    textSettingsHolidaysLabel = $("#sources_holidays_label");
+
+    radioEnglish = $("#language_english");
+    radioGerman = $("#language_german");
+    radioCelsius = $("#temperature_unit_celsius");
+    radioFarenheit = $("#temperature_unit_farenheit");
+    radioShowNothing = $("#only_mirror_nothing");
+    radioShowQuote = $("#only_mirror_quote");
+
+    checkboxPrimary = $("#normal_entries_checkbox");
+    checkboxEvents = $("#holidays_entries_checkbox");
+    checkboxContacts = $("#birthday_entries_checkbox");
+
+    inputWeatherLocation = $("#weather_location_input");
 }
 
 function setTextToHTML() {
@@ -485,6 +732,32 @@ function setTextToHTML() {
     appYoutubeText.html(app_youtube);
     appCalendarText.html(app_calendar);
     appNewsText.html(app_news);
+
+    textFunctionSettingsTitle.html(settings_title);
+    textFunctionCalendarTitle.html(calendar_title);
+    textFunctionEMailTitle.html(email_title);
+
+    textSettingsSystemTitle.html(settings_system_title);
+    textSettingsCalendarTitle.html(settings_calendar_title);
+    textSettingsWeatherTitle.html(settings_weather_title);
+
+    textSettingsLanguagesSubtitle.html(settings_languages_subtitle);
+    textSettingsTemperatureUnitSubtitle.html(settings_temperature_unit_subtitle);
+    textSettingsOnlyMirrorSubtitle.html(settings_only_mirror_subtitle);
+    textSettingsSourcesSubtitle.html(settings_sources_subtitle);
+    textSettingsLocationSubtitle.html(settings_location_subtitle);
+
+    textSettingsEnglishLabel.html(settings_english_label);
+    textSettingsGermanLabel.html(settings_german_label);
+    textSettingsCelsiusLabel.html(settings_celsius_label);
+    textSettingsFarenheitLabel.html(settings_farenheit_label);
+    textSettingsShowNothingLabel.html(settings_show_nothing_label);
+    textSettingsShowQuoteLabel.html(settings_show_quote_label);
+    textSettingsNormalEntriesLabel.html(settings_normal_entries_label);
+    textSettingsBirthdaysLabel.html(settings_birthdays_label);
+    textSettingsHolidaysLabel.html(settings_holidays_label);
+
+    inputWeatherLocation.attr("placeholder", settings_location_placeholder);
 }
 
 /**
@@ -492,8 +765,47 @@ function setTextToHTML() {
  * The function sets up the periodical function and sets events.
  */
 function main() {
+    setLanguages();
     loadHTMLElements();
     setTextToHTML();
+
+    if (setLanguage == Languages.ENGLISH) {
+        radioEnglish.prop("checked", true);
+    }
+    if (setLanguage == Languages.GERMAN) {
+        radioGerman.prop("checked", true);
+    }
+    if (setUnit == Units.Celsius) {
+        radioCelsius.prop("checked", true);
+    }
+    if (setUnit == Units.Farenheit) {
+        radioFarenheit.prop("checked", true);
+    }
+    if (setOnlyMirror == OnlyMirrorMode.SHOW_NOTHING) {
+        radioShowNothing.prop("checked", true);
+    }
+    if (setOnlyMirror == OnlyMirrorMode.SHOW_QUOTE) {
+        radioShowQuote.prop("checked", true);
+    }
+    if ((activeCalendarSetting & CalendarType.PRIMARY) > 0) {
+        checkboxPrimary.prop("checked", true);
+    } else {
+        checkboxPrimary.prop("checked", false);
+    }
+
+    if ((activeCalendarSetting & CalendarType.EVENTS) > 0) {
+        checkboxEvents.prop("checked", true);
+    } else {
+        checkboxEvents.prop("checked", false);
+    }
+
+    if ((activeCalendarSetting & CalendarType.CONTACTS) > 0) {
+        checkboxContacts.prop("checked", true);
+    } else {
+        checkboxContacts.prop("checked", false);
+    }
+    inputWeatherLocation.val(setWeatherLocation);
+
 
     viewTextAnimated.fadeOut(0, null);
     viewDefault.fadeOut(0, null);
@@ -540,7 +852,7 @@ function main() {
 
     onlyMirrorButton.click(function () {
         clickAudio.play();
-        switch(setOnlyMirror){
+        switch (setOnlyMirror) {
             case OnlyMirrorMode.SHOW_NOTHING:
                 switchView(Views.OFF);
                 break;
@@ -606,38 +918,52 @@ function main() {
         setLanguage = parseInt($(this).val());
         setLanguages();
         setTextToHTML();
+        saveCookies();
     });
     $("input:radio[name='temperature_units']").change(function () {
         setUnit = parseInt($(this).val());
         weatherFunction();
+        saveCookies();
     });
     $("input:radio[name='only_mirror']").change(function () {
         setOnlyMirror = parseInt($(this).val());
+        saveCookies();
     });
 
-    $("#normal_entries_checkbox").change(function () {
+    checkboxPrimary.change(function () {
         if (this.checked) {
             activeCalendarSetting = activeCalendarSetting | CalendarType.PRIMARY;
         } else {
             activeCalendarSetting = activeCalendarSetting & ~CalendarType.PRIMARY;
         }
         refreshCalendarEntryData();
+        saveCookies();
     });
-    $("#birthday_entries_checkbox").change(function () {
+    checkboxContacts.change(function () {
         if (this.checked) {
             activeCalendarSetting = activeCalendarSetting | CalendarType.CONTACTS;
         } else {
             activeCalendarSetting = activeCalendarSetting & ~CalendarType.CONTACTS;
         }
         refreshCalendarEntryData();
+        saveCookies();
     });
-    $("#holidays_entries_checkbox").change(function () {
+    checkboxEvents.change(function () {
         if (this.checked) {
             activeCalendarSetting = activeCalendarSetting | CalendarType.EVENTS;
         } else {
             activeCalendarSetting = activeCalendarSetting & ~CalendarType.EVENTS;
         }
         refreshCalendarEntryData();
+        saveCookies();
+    });
+
+    inputWeatherLocation.focusout(function () {
+        if (inputWeatherLocation.val() != "") {
+            setWeatherLocation = inputWeatherLocation.val();
+            saveCookies();
+            weatherFunction();
+        }
     });
 }
 //endregion
@@ -658,10 +984,12 @@ function dimensionsFunction() {
  */
 function weatherFunction() {
     $.simpleWeather({
-        location: 'Linz',
+        location: setWeatherLocation,
         woeid: '',
         unit: 'c',
         success: function (weather) {
+            backupWeatherLocation = inputWeatherLocation.val();
+            saveCookies();
 
             let sunrise = parseSpecialTimeToDate(weather.sunrise);
             let sunset = parseSpecialTimeToDate(weather.sunset);
@@ -740,6 +1068,10 @@ function weatherFunction() {
         },
         error: function (error) {
             //-alert("Weather not avaiable!");
+            setWeatherLocation = backupWeatherLocation;
+            saveCookies();
+            weatherFunction();
+            inputWeatherLocation.val(setWeatherLocation);
         }
     });
 }

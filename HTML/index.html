@@ -78,7 +78,7 @@
             <div id="running_function">
                 <div style="display: none" id="calendar_function">
                     <div>
-                        <p class="function_title">Calendar</p>
+                        <p class="function_title" id="calendar_title">Calendar</p>
                     </div>
                     <table id="calendar"></table>
                     <div style="margin:auto; text-align: center">
@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div style="display:none" id="email_function">
-                    <p class="function_title">EMail</p>
+                    <p class="function_title" id="email_title">EMail</p>
                     <table>
                         <thead>
                             <tr>
@@ -108,12 +108,12 @@
                 </div>
                 <div style="display: none" id="settings_function">
                     <div>
-                        <p class="function_title">Settings</p>
+                        <p class="function_title" id="settings_title"></p>
 
                         <div class="settings_area" id="settings_system">
-                            <p class="settings_area_title">System</p>
+                            <p class="settings_area_title" id="system_settings_title"></p>
                             <div class="settings_subarea">
-                                <p class="settings_area_subtitle">Language</p>
+                                <p class="settings_area_subtitle" id="system_settings_subtitle_language"></p>
                                 <table style="width: 100%">
                                     <tr>
                                         <td style="width: 50%">
@@ -129,7 +129,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <label class="checkbox_label" id="language_english_label" for="language_english">English</label>
+                                                        <label class="checkbox_label" id="language_english_label" for="language_english"></label>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -147,7 +147,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <label class="checkbox_label" id="language_german_label" for="language_german">German</label>
+                                                        <label class="checkbox_label" id="language_german_label" for="language_german"></label>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -157,7 +157,7 @@
                                 </table>
                             </div>
                             <div class="settings_subarea">
-                                <p class="settings_area_subtitle">Temperature Unit</p>
+                                <p class="settings_area_subtitle" id="system_settings_subtitle_temperature_unit"></p>
                                 <table style="width: 100%;">
                                     <tr>
                                         <td width="50%">
@@ -173,7 +173,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <label class="checkbox_label" id="temperature_unit_celsius_label" for="temperature_unit_celsius">Celsius</label>
+                                                        <label class="checkbox_label" id="temperature_unit_celsius_label" for="temperature_unit_celsius"></label>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -191,7 +191,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <label class="checkbox_label" id="temperature_unit_farenheit_label" for="temperature_unit_farenheit">Farenheit</label>
+                                                        <label class="checkbox_label" id="temperature_unit_farenheit_label" for="temperature_unit_farenheit"></label>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -200,7 +200,7 @@
                                 </table>
                             </div>
                             <div class="settings_subarea">
-                                <p class="settings_area_subtitle">Only Mirror</p>
+                                <p class="settings_area_subtitle" id="system_settings_subtitle_only_mirror"></p>
                                 <table style="width: 100%;">
                                     <tr>
                                         <td width="50%">
@@ -216,7 +216,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <label class="checkbox_label" id="only_mirror_nothing_label" for="only_mirror_nothing">Show nothing</label>
+                                                        <label class="checkbox_label" id="only_mirror_nothing_label" for="only_mirror_nothing"></label>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -234,7 +234,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <label class="checkbox_label" id="only_mirror_quote_label" for="only_mirror_quote">Show a Quote</label>
+                                                        <label class="checkbox_label" id="only_mirror_quote_label" for="only_mirror_quote"></label>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -245,10 +245,10 @@
                         </div>
 
                         <div class="settings_area">
-                            <p class="settings_area_title">Calendar</p>
+                            <p class="settings_area_title" id="calendar_settings_title"></p>
                             <div class="settings_subarea">
 
-                                <p class="settings_area_subtitle">Sources</p>
+                                <p class="settings_area_subtitle" id="calendar_settings_subtitle_sources"></p>
                                 <div class="mdc-form-field">
                                     <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
                                         <input style="background-color: black" type="checkbox" id="normal_entries_checkbox" class="mdc-checkbox__native-control" checked/>
@@ -259,7 +259,7 @@
                                             <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
                                         </div>
                                     </div>
-                                    <label for="normal_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white">Normal Entries</label>
+                                    <label id="sources_normal_entries_label" for="normal_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white"></label>
                                 </div>
                                 <div class="mdc-form-field">
                                     <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
@@ -271,7 +271,7 @@
                                             <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
                                         </div>
                                     </div>
-                                    <label for="birthday_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white">Birthdays</label>
+                                    <label id="sources_birthdays_label" for="birthday_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white"></label>
                                 </div>
                                 <div class="mdc-form-field">
                                     <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
@@ -283,8 +283,18 @@
                                             <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
                                         </div>
                                     </div>
-                                    <label for="holidays_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white">Holidays</label>
+                                    <label for="holidays_entries_checkbox" id="sources_holidays_label" style="font-size: 30px; margin-left: 40px;color:white"></label>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="settings_area">
+                            <p class="settings_area_title" id="weather_settings_title"></p>
+
+                            <div class="settings_subarea">
+                                <p class="settings_area_subtitle" id="weather_settings_subtitle_location"></p>
+
+                                <input type="text" id="weather_location_input" placeholder="City/Region" style="background-color: black;color: white;border:0px;border-bottom: 1px solid white;font-size: 30px;height: 35px;width: 45%">
                             </div>
                         </div>
                     </div>
