@@ -7,15 +7,18 @@ Languages = {
     ENGLISH: 0,
     GERMAN: 1
 }
-
+/**
+ * The existing possibilities for the temperature unit
+ * @type {{CELSIUS: number, FAHRENHEIT: number}}
+ */
 Units = {
-    Celsius: 0,
-    Farenheit: 1
+    CELSIUS: 0,
+    FAHRENHEIT: 1
 }
 
 /**
  * The existing views for switching views.
- * @type {{TEXT_ANIMATED: number, DEFAULT: number, OFF: number}}
+ * @type {{TEXT_ANIMATED: number, DEFAULT: number, OFF: number, QUOTE: number}}
  */
 Views = {
     TEXT_ANIMATED: 0,
@@ -24,6 +27,10 @@ Views = {
     QUOTE: 3
 }
 
+/**
+ * The existing functions.
+ * @type {{DEFAULT: number, SETTINGS: number, GOOGLE_ACCOUNT: number, EMAIL: number, YOUTUBE: number, WEATHER: number, CALENDAR: number}}
+ */
 Functions = {
     DEFAULT: 0,
     SETTINGS: 1,
@@ -34,12 +41,20 @@ Functions = {
     CALENDAR: 6
 }
 
+/**
+ * The existing Calendar-Types
+ * @type {{PRIMARY: number, CONTACTS: number, EVENTS: number}}
+ */
 CalendarType = {
     PRIMARY: 4,
     CONTACTS: 2,
     EVENTS: 1
 }
 
+/**
+ * The existing modes for the "OFF" screen.
+ * @type {{SHOW_NOTHING: number, SHOW_QUOTE: number}}
+ */
 OnlyMirrorMode = {
     SHOW_NOTHING: 0,
     SHOW_QUOTE: 1
@@ -48,24 +63,28 @@ OnlyMirrorMode = {
 
 //region Other fields
 
+//The Audio element used for the click sound.
 let audioElement;
 
+//region Settings Variables
+//The currently active view is set here
 let activeView = Views.DEFAULT;
+//The currently active function is set here
 let activeFunction = Functions.DEFAULT;
-
+//The default calendar settings are set here (everything active)
 let activeCalendarSetting = parseInt('111', 2);
-
+//The default language is set here.
 let setLanguage = Languages.ENGLISH;
-
-let setUnit = Units.Celsius;
-
+//The default Temperature Unit is set here
+let setUnit = Units.CELSIUS;
+//The default mode for "OFF" mirror is set here.
 let setOnlyMirror = OnlyMirrorMode.SHOW_NOTHING;
-
+//The default weather location is set here.
 let setWeatherLocation = "Linz";
 let backupWeatherLocation = "Linz";
 
 let signedIn = false;
-
+//endregion
 
 //delays for different functions
 let delayWeather = 900000; //every 15 minutes
@@ -86,7 +105,7 @@ let locationSunsetSunrise = "./Icons/sunset_sunrise.svg";
 let currentDate;
 //endregion
 
-//region Views in HTML format
+//region Views from HTML
 let viewTextAnimated;
 let viewDefault;
 let viewOff;
@@ -325,8 +344,8 @@ let en_settings_location_subtitle = "Location";
 
 let en_settings_english_label = "English";
 let en_settings_german_label = "German";
-let en_settings_celsius_label = "Celsius";
-let en_settings_farenheit_label = "Farenheit";
+let en_settings_celsius_label = "CELSIUS";
+let en_settings_farenheit_label = "FAHRENHEIT";
 let en_settings_show_nothing_label = "Show Nothing";
 let en_settings_show_quote_label = "Show a Quote";
 let en_settings_normal_entries_label = "Normal Entries";
@@ -410,8 +429,8 @@ let de_settings_location_subtitle = "Lage";
 
 let de_settings_english_label = "Englisch";
 let de_settings_german_label = "Deutsch";
-let de_settings_celsius_label = "Celsius";
-let de_settings_farenheit_label = "Farenheit";
+let de_settings_celsius_label = "CELSIUS";
+let de_settings_farenheit_label = "FAHRENHEIT";
 let de_settings_show_nothing_label = "Zeige Nichts";
 let de_settings_show_quote_label = "Zeige ein Zitat";
 let de_settings_normal_entries_label = "Normale Einträge";
@@ -423,12 +442,17 @@ let de_settings_location_placeholder = "Stadt / Gebiet";
 //endregion
 
 //region Startup components
+/**
+ * The very first function which is executed
+ */
 $(document).ready(function () {
     loadCookies();
-
     main();
 });
 
+/**
+ * The function to save the settings persistent as cookies
+ */
 function saveCookies() {
     document.cookie = "language=" + setLanguage + ";expires=Thu, 18 Dec 2019 12:00:00 UTC";
     document.cookie = "temperature_unit=" + setUnit + ";expires=Thu, 18 Dec 2019 12:00:00 UTC";
@@ -438,6 +462,9 @@ function saveCookies() {
     document.cookie = "backup_weather_location=" + backupWeatherLocation + ";expires=Thu, 18 Dec 2019 12:00:00 UTC";
 }
 
+/**
+ * The function to load the persisted settings in the startup
+ */
 function loadCookies() {
     let cookies = document.cookie.split(";");
     cookies.forEach(function (element) {
@@ -464,7 +491,7 @@ function loadCookies() {
 }
 
 /**
- * Sets the used language letiables to the active language letiables.
+ * Sets the used language variables to the active language variables.
  */
 function setLanguages() {
 
@@ -643,7 +670,9 @@ function setLanguages() {
     timerFunction();
 }
 
-
+/**
+ * Here are the HTML elemets assigned to the correct variable via JQuery
+ */
 function loadHTMLElements() {
     viewTextAnimated = $("#view_text_animation");
     viewDefault = $("#view_default");
@@ -720,6 +749,10 @@ function loadHTMLElements() {
     inputWeatherLocation = $("#weather_location_input");
 }
 
+/**
+ * This function is used for setting the right language to the loaded HTML variables.
+ * Called every time the language changes and in the startup
+ */
 function setTextToHTML() {
     onlyMirrorText.html(only_mirror);
     settingsText.html(settings);
@@ -769,22 +802,23 @@ function main() {
     loadHTMLElements();
     setTextToHTML();
 
-    if (setLanguage == Languages.ENGLISH) {
+    //region Change HTML settings variables to correct state
+    if (setLanguage === Languages.ENGLISH) {
         radioEnglish.prop("checked", true);
     }
-    if (setLanguage == Languages.GERMAN) {
+    if (setLanguage === Languages.GERMAN) {
         radioGerman.prop("checked", true);
     }
-    if (setUnit == Units.Celsius) {
+    if (setUnit === Units.CELSIUS) {
         radioCelsius.prop("checked", true);
     }
-    if (setUnit == Units.Farenheit) {
+    if (setUnit === Units.FAHRENHEIT) {
         radioFarenheit.prop("checked", true);
     }
-    if (setOnlyMirror == OnlyMirrorMode.SHOW_NOTHING) {
+    if (setOnlyMirror === OnlyMirrorMode.SHOW_NOTHING) {
         radioShowNothing.prop("checked", true);
     }
-    if (setOnlyMirror == OnlyMirrorMode.SHOW_QUOTE) {
+    if (setOnlyMirror === OnlyMirrorMode.SHOW_QUOTE) {
         radioShowQuote.prop("checked", true);
     }
     if ((activeCalendarSetting & CalendarType.PRIMARY) > 0) {
@@ -805,7 +839,7 @@ function main() {
         checkboxContacts.prop("checked", false);
     }
     inputWeatherLocation.val(setWeatherLocation);
-
+    //endregion
 
     viewTextAnimated.fadeOut(0, null);
     viewDefault.fadeOut(0, null);
@@ -874,6 +908,7 @@ function main() {
     viewQuote.click(function () {
         clickAudio.play();
         switchView(Views.DEFAULT);
+        loadQuote();
     });
 
     let clickCalendarFunction = function () {
@@ -930,6 +965,7 @@ function main() {
         saveCookies();
     });
 
+    //Called when the events checkbox changes state to update calendar etc...
     checkboxPrimary.change(function () {
         if (this.checked) {
             activeCalendarSetting = activeCalendarSetting | CalendarType.PRIMARY;
@@ -939,6 +975,7 @@ function main() {
         refreshCalendarEntryData();
         saveCookies();
     });
+    //Called when the events checkbox changes state to update calendar etc...
     checkboxContacts.change(function () {
         if (this.checked) {
             activeCalendarSetting = activeCalendarSetting | CalendarType.CONTACTS;
@@ -948,6 +985,7 @@ function main() {
         refreshCalendarEntryData();
         saveCookies();
     });
+    //Called when the events checkbox changes state to update calendar etc...
     checkboxEvents.change(function () {
         if (this.checked) {
             activeCalendarSetting = activeCalendarSetting | CalendarType.EVENTS;
@@ -958,8 +996,9 @@ function main() {
         saveCookies();
     });
 
+    //when the weather location settings text field loses focus the weather location will be updated
     inputWeatherLocation.focusout(function () {
-        if (inputWeatherLocation.val() != "") {
+        if (inputWeatherLocation.val() !== "") {
             setWeatherLocation = inputWeatherLocation.val();
             saveCookies();
             weatherFunction();
@@ -1010,9 +1049,9 @@ function weatherFunction() {
 
             //Create HTML text.
             let temperatureText;
-            if (setUnit === Units.Celsius)
+            if (setUnit === Units.CELSIUS)
                 temperatureText = weather.temp + "°C";
-            else if (setUnit === Units.Farenheit)
+            else if (setUnit === Units.FAHRENHEIT)
                 temperatureText = Math.round(weather.temp * 1.8 + 32) + "°F";
             let currentTemperatureContent = "<img class='current_weather_image' src='" + useIcon + "'/>" + temperatureText;
             let currentAdditionalWeatherInfo = "<img src='" + locationIconWindy + "'/>" + windspeed + "<img src='" + locationSunsetSunrise + "'/>" + hourPuffer + closerEvent.getHours() + ":" + minutePuffer + closerEvent.getMinutes();
@@ -1046,10 +1085,10 @@ function weatherFunction() {
 
                 let high;
                 let low;
-                if (setUnit == Units.Celsius) {
+                if (setUnit == Units.CELSIUS) {
                     high = element.high;
                     low = element.low;
-                } else if (setUnit == Units.Farenheit) {
+                } else if (setUnit == Units.FAHRENHEIT) {
                     high = Math.round(element.high * 1.8 + 32);
                     low = Math.round(element.low * 1.8 + 32);
                 }

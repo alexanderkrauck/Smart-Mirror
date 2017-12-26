@@ -75,12 +75,15 @@
 
         <!--The content with the apps, app views etc...-->
         <div id="container_functions">
+            <!--The container of all the functions-->
             <div id="running_function">
+                <!--The Calendar-Function-->
                 <div style="display: none" id="calendar_function">
-                    <div>
-                        <p class="function_title" id="calendar_title">Calendar</p>
-                    </div>
+                    <!--The Top Title of the Calendar Function-->
+                    <p class="function_title" id="calendar_title">Calendar</p>
+                    <!--The Table which is filled via Javascript-->
                     <table id="calendar"></table>
+                    <!--The container which contains the interactive elements of the calendar-->
                     <div style="margin:auto; text-align: center">
                         <div id="calendar_back_button" style="float: left;">
                             <img src="Icons/back.svg" style="width: 15px;height: 15px; display: inline" />
@@ -93,25 +96,37 @@
                         </div>
                     </div>
                 </div>
+                <!--The EMail Function-->
                 <div style="display:none" id="email_function">
-                    <p class="function_title" id="email_title">EMail</p>
+                    <!--The Top Title of the EMail Function-->
+                    <p class="function_title" id="email_title"></p>
+
+                    <!--The Table for the EMail content-->
                     <table>
+                        <!--The Heading Columns for the Table-->
                         <thead>
                             <tr>
                                 <th style="text-align: left">Subject</th>
                                 <th style="text-align: left">Date</th>
                             </tr>
                         </thead>
-                        <tbody id="emails">
-                        </tbody>
+                        <!--The Body of the Table which is filled via JavaScript-->
+                        <tbody id="emails"></tbody>
                     </table>
                 </div>
+                <!--The Settings Function-->
                 <div style="display: none" id="settings_function">
                     <div>
+                        <!--The Top Title of the Settings Function-->
                         <p class="function_title" id="settings_title"></p>
 
+                        <!--The System-Settings Area-->
                         <div class="settings_area" id="settings_system">
+
+                            <!--The System-Settings Title-->
                             <p class="settings_area_title" id="system_settings_title"></p>
+
+                            <!--The Language-System-Settings Subarea-->
                             <div class="settings_subarea">
                                 <p class="settings_area_subtitle" id="system_settings_subtitle_language"></p>
                                 <table style="width: 100%">
@@ -156,49 +171,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="settings_subarea">
-                                <p class="settings_area_subtitle" id="system_settings_subtitle_temperature_unit"></p>
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td width="50%">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div class="mdc-radio">
-                                                            <input class="mdc-radio__native-control" type="radio" id="temperature_unit_celsius" name="temperature_units" value="0" checked>
-                                                            <div class="mdc-radio__background" style="width:40px;height: 40px;top:0px;left: 0px;">
-                                                                <div class="mdc-radio__outer-circle"></div>
-                                                                <div class="mdc-radio__inner-circle"></div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox_label" id="temperature_unit_celsius_label" for="temperature_unit_celsius"></label>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td width="50%">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div class="mdc-radio">
-                                                            <input class="mdc-radio__native-control" type="radio" id="temperature_unit_farenheit" name="temperature_units" value="1">
-                                                            <div class="mdc-radio__background">
-                                                                <div class="mdc-radio__outer-circle"></div>
-                                                                <div class="mdc-radio__inner-circle"></div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox_label" id="temperature_unit_farenheit_label" for="temperature_unit_farenheit"></label>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+                            <!--The Only Mirror-System-Settings Subarea-->
                             <div class="settings_subarea">
                                 <p class="settings_area_subtitle" id="system_settings_subtitle_only_mirror"></p>
                                 <table style="width: 100%;">
@@ -242,10 +215,16 @@
                                     </tr>
                                 </table>
                             </div>
+
                         </div>
 
-                        <div class="settings_area">
+                        <!--The Calendar-Settings Area-->
+                        <div class="settings_area" id="calendar_settings">
+
+                            <!--The Calendar-Settings Title-->
                             <p class="settings_area_title" id="calendar_settings_title"></p>
+
+                            <!--The Sources-Calendar-Settings Subarea-->
                             <div class="settings_subarea">
 
                                 <p class="settings_area_subtitle" id="calendar_settings_subtitle_sources"></p>
@@ -286,20 +265,71 @@
                                     <label for="holidays_entries_checkbox" id="sources_holidays_label" style="font-size: 30px; margin-left: 40px;color:white"></label>
                                 </div>
                             </div>
+
                         </div>
 
-                        <div class="settings_area">
+                        <!--The Weather-Settings Area-->
+                        <div class="settings_area" id="weather_settings">
+
+                            <!--The Weather-Settings Title-->
                             <p class="settings_area_title" id="weather_settings_title"></p>
 
+                            <!--The Location-Weather-Settings Subarea-->
                             <div class="settings_subarea">
                                 <p class="settings_area_subtitle" id="weather_settings_subtitle_location"></p>
 
                                 <input type="text" id="weather_location_input" placeholder="City/Region" style="background-color: black;color: white;border:0px;border-bottom: 1px solid white;font-size: 30px;height: 35px;width: 45%">
                             </div>
+                            <!--The Temperature Unit-Weather-Settings Subarea-->
+                            <div class="settings_subarea" style="margin-top: 15px">
+                                <p class="settings_area_subtitle" id="system_settings_subtitle_temperature_unit"></p>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td width="50%">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="mdc-radio">
+                                                            <input class="mdc-radio__native-control" type="radio" id="temperature_unit_celsius" name="temperature_units" value="0" checked>
+                                                            <div class="mdc-radio__background" style="width:40px;height: 40px;top:0px;left: 0px;">
+                                                                <div class="mdc-radio__outer-circle"></div>
+                                                                <div class="mdc-radio__inner-circle"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label class="checkbox_label" id="temperature_unit_celsius_label" for="temperature_unit_celsius"></label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="50%">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div class="mdc-radio">
+                                                            <input class="mdc-radio__native-control" type="radio" id="temperature_unit_farenheit" name="temperature_units" value="1">
+                                                            <div class="mdc-radio__background">
+                                                                <div class="mdc-radio__outer-circle"></div>
+                                                                <div class="mdc-radio__inner-circle"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label class="checkbox_label" id="temperature_unit_farenheit_label" for="temperature_unit_farenheit"></label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
+            <!--The container of all the chooseabler applications-->
             <div id="apps">
                 <table class="functions_table" style="width: 100%" id="apps_table">
                     <tr>
@@ -356,6 +386,7 @@
                     </tr>
                 </table>
             </div>
+            <!--The container of all the chooseable base-functions-->
             <div id="base_functions">
                 <hr id="functions_line" />
 
@@ -417,7 +448,9 @@
             </div>
         </div>
 
+        <!--The container for the upcoming events timeline filled by JavaScript-->
         <table id="upcoming_events"></table>
+        <!--The container for the weather preview timeline filled by JavaScript-->
         <table id="weather_preview"></table>
     </div>
 </body>
