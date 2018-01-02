@@ -344,8 +344,8 @@ let en_settings_location_subtitle = "Location";
 
 let en_settings_english_label = "English";
 let en_settings_german_label = "German";
-let en_settings_celsius_label = "CELSIUS";
-let en_settings_farenheit_label = "FAHRENHEIT";
+let en_settings_celsius_label = "Celsius";
+let en_settings_farenheit_label = "Fahrenheit";
 let en_settings_show_nothing_label = "Show Nothing";
 let en_settings_show_quote_label = "Show a Quote";
 let en_settings_normal_entries_label = "Normal Entries";
@@ -429,8 +429,8 @@ let de_settings_location_subtitle = "Lage";
 
 let de_settings_english_label = "Englisch";
 let de_settings_german_label = "Deutsch";
-let de_settings_celsius_label = "CELSIUS";
-let de_settings_farenheit_label = "FAHRENHEIT";
+let de_settings_celsius_label = "Celsius";
+let de_settings_farenheit_label = "Fahrenheit";
 let de_settings_show_nothing_label = "Zeige Nichts";
 let de_settings_show_quote_label = "Zeige ein Zitat";
 let de_settings_normal_entries_label = "Normale Einträge";
