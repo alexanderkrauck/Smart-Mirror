@@ -38,7 +38,8 @@ Functions = {
     EMAIL: 3,
     YOUTUBE: 4,
     WEATHER: 5,
-    CALENDAR: 6
+    CALENDAR: 6,
+    NEWS: 7
 }
 
 /**
@@ -182,6 +183,9 @@ let checkboxEvents;
 let checkboxContacts;
 
 let inputWeatherLocation;
+
+let calendarTable;
+let newsTable;
 //endregion
 
 //region Fields for using the smart-mirror in multiple languages
@@ -747,6 +751,9 @@ function loadHTMLElements() {
     checkboxContacts = $("#birthday_entries_checkbox");
 
     inputWeatherLocation = $("#weather_location_input");
+
+    calendarTable = $("#calendar");
+    newsTable = $("#news");
 }
 
 /**
@@ -924,6 +931,7 @@ function main() {
 
     appNewsButton.click(function () {
         clickAudio.play();
+        switchFunction(Functions.NEWS);
     });
 
     backButton.click(function () {
@@ -1386,6 +1394,11 @@ function switchFunction(functionId) {
                 $("#weather_preview").fadeOut(0, null);
                 backButton.fadeIn(0, null);
                 break;
+            case Functions.NEWS:
+                $("#news_function").fadeIn(200, null);
+                $("#upcoming_events").fadeOut(0, null);
+                $("#weather_preview").fadeOut(0, null);
+                break;
         }
     });
 }
@@ -1406,6 +1419,8 @@ function getFunctionForFunctionId(id) {
             return null;
         case Functions.YOUTUBE:
             return null;
+        case Functions.NEWS:
+            return $("#news_function");
     }
 }
 //endregion
@@ -1434,6 +1449,26 @@ function refreshEMailData() {
         tableString += "<tr><td>" + eMail.subject + "</td><td>" + dateText + "</td></tr>";
     });
     $("#emails").html(tableString);
+}
+
+
+function refreshNewsData() {
+    let tableString = "";
+    let i = 0;
+    news.forEach(function (item) {
+        i++;
+        if (i < 15) {
+            tableString += "<tr><td>" + item.releaseDate.toDateString() + " - " + item.title + "</td></tr><tr><td>" + item.description + "</td></tr><tr><td>-";
+            if (item.author != null)
+                tableString += item.author;
+            else
+                tableString += "Unknown Author";
+            tableString += "</td></tr>";
+        }
+
+    });
+
+    newsTable.html(tableString);
 }
 
 /**
@@ -1561,9 +1596,6 @@ function refreshCalendarEntryData() {
     $("#upcoming_events").html(upcomingEvents);
 }
 
-function refreshNews() {
-
-}
 
 //endregion
 
@@ -1607,6 +1639,7 @@ function loadNews() {
                     success: function (data) {
                         data.articles.forEach(function (article) {
                             news.push(new News(article.title, article.description, article.author, article.publishedAt, article.url, source.id));
+                            refreshNewsData();
                         });
                     },
                     error: function (data) {
