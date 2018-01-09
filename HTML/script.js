@@ -1398,6 +1398,7 @@ function switchFunction(functionId) {
                 $("#news_function").fadeIn(200, null);
                 $("#upcoming_events").fadeOut(0, null);
                 $("#weather_preview").fadeOut(0, null);
+                backButton.fadeIn(0, null);
                 break;
         }
     });
@@ -1465,7 +1466,6 @@ function refreshNewsData() {
                 tableString += "Unknown Author";
             tableString += "</td></tr>";
         }
-
     });
 
     newsTable.html(tableString);
