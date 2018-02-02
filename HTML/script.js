@@ -1722,7 +1722,7 @@ function loadYouTubeData() {
 function loadGMailData() {
     gapi.client.gmail.users.messages.list({
         'userId': "me",
-        'maxResults': 20,
+        'maxResults': 15,
         'includeSpamTrash': false,
         'labelIds': ['INBOX']
     }).then(function (response) {

@@ -231,7 +231,7 @@ p {
 
 
 #calendar{
-    height: 1450px;
+    height: 1200px;
     width: 100%;
     border-color: white;
     margin-bottom: 10px;
@@ -248,7 +248,7 @@ p {
 #running_function{
     margin: 0px 0px 20px 50px;
     width: calc( 100% - 100px);
-    height: 1600px;
+    height: 1350px;
 }
 
 #gawgaw::after, #gawgaw::before, #gawgaw div::before, #gawgaw div::after,#gawgaw,#gawgaw div{
