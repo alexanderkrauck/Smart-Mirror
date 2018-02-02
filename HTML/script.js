@@ -1458,7 +1458,7 @@ function refreshNewsData() {
     let i = 0;
     news.forEach(function (item) {
         i++;
-        if (i < 15) {
+        if (i < 12) {
             tableString += "<tr><td>" + item.releaseDate.toDateString() + " - " + item.title + "</td></tr><tr><td>" + item.description + "</td></tr><tr><td>-";
             if (item.author != null)
                 tableString += item.author;
