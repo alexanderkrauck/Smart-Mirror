@@ -2,373 +2,371 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <!--Import CSS document-->
-    <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="utf-8" />
+  <!--Import CSS document-->
+  <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
 
-    <!--Import JavaScript documents-->
-    <script src="jQuery.js" type="text/javascript"></script>
-    <script src="simpleweather.js" type="text/javascript"></script>
-    <script src="script.js" type="text/javascript"></script>
-    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
-
-
-    </script>
+  <!--Import JavaScript documents-->
+  <script src="jQuery.js" type="text/javascript"></script>
+  <script src="simpleweather.js" type="text/javascript"></script>
+  <script src="script.js" type="text/javascript"></script>
+  <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
+  </script>
 </head>
 
 <body id="body">
 
 
-    <!--The smart mirror off view-->
-    <div class="view" id="view_off">
+  <!--The smart mirror off view-->
+  <div class="view" id="view_off">
+  </div>
+
+  <!--The quote view-->
+  <div class="view" id="view_quote">
+    <div id="container1_quote">
+      <div id="container2_quote">
+        <div id="container3_quote">
+          <p id="text_quote_quote"></p>
+          <p id="text_quote_author"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--The text animation view-->
+  <div class="view" id="view_text_animation">
+    <div id="container1_text_animation">
+      <div id="container2_text_animation">
+        <p id="text_animation"></p>
+      </div>
+    </div>
+  </div>
+
+  <!--The default view-->
+  <div class="view" id="view_default">
+    <!--The datetime container-->
+    <div id="container_datetime">
+      <p class="small_info" id="current_date"></p>
+      <table class="big_info">
+        <tr>
+          <td>
+            <p id="current_time"></p>
+          </td>
+          <td>
+            <p id="current_seconds"></p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!--The weather container-->
+    <div id="container_weather">
+      <p id="weather_additional_info" class="small_info"></p>
+      <table class="big_info" style="float: right">
+        <tr>
+          <td>
+            <p id="current_temperature"></p>
+          </td>
+        </tr>
+      </table>
     </div>
 
-    <!--The quote view-->
-    <div class="view" id="view_quote">
-        <div id="container1_quote">
-            <div id="container2_quote">
-                <div id="container3_quote">
-                    <p id="text_quote_quote"></p>
-                    <p id="text_quote_author"></p>
-                </div>
+    <!--The content with the apps, app views etc...-->
+    <div id="container_functions">
+      <!--The container of all the functions-->
+      <div id="running_function">
+        <!--The Calendar-Function-->
+        <div style="display: none" id="calendar_function">
+          <!--The Top Title of the Calendar Function-->
+          <p class="function_title" id="calendar_title">Calendar</p>
+          <!--The Table which is filled via Javascript-->
+          <table id="calendar"></table>
+          <!--The container which contains the interactive elements of the calendar-->
+          <div style="margin:auto; text-align: center">
+            <div id="calendar_back_button" style="float: left;">
+              <img src="Icons/back.svg" style="width: 15px;height: 15px; display: inline" />
+              <p id="calendar_back_text" style="display: inline"></p>
             </div>
-        </div>
-    </div>
-
-    <!--The text animation view-->
-    <div class="view" id="view_text_animation">
-        <div id="container1_text_animation">
-            <div id="container2_text_animation">
-                <p id="text_animation"></p>
+            <div id="calendar_current_month" style="display: inline"></div>
+            <div id="calendar_forward_button" style="float: right">
+              <p id="calendar_forward_text" style="display: inline"></p>
+              <img src="Icons/forward.svg" style="width: 15px;height: 15px" />
             </div>
+          </div>
         </div>
-    </div>
+        <!--The EMail Function-->
+        <div style="display:none" id="email_function">
+          <!--The Top Title of the EMail Function-->
+          <p class="function_title" id="email_title"></p>
 
-    <!--The default view-->
-    <div class="view" id="view_default">
-        <!--The datetime container-->
-        <div id="container_datetime">
-            <p class="small_info" id="current_date"></p>
-            <table class="big_info">
-                <tr>
-                    <td>
-                        <p id="current_time"></p>
-                    </td>
-                    <td>
-                        <p id="current_seconds"></p>
-                    </td>
-                </tr>
-            </table>
+          <!--The Table for the EMail content-->
+          <table>
+            <!--The Heading Columns for the Table-->
+            <thead>
+              <tr>
+                <th style="text-align: left">Subject</th>
+                <th style="text-align: left">Date</th>
+              </tr>
+            </thead>
+            <!--The Body of the Table which is filled via JavaScript-->
+            <tbody id="emails"></tbody>
+          </table>
         </div>
-        <!--The weather container-->
-        <div id="container_weather">
-            <p id="weather_additional_info" class="small_info"></p>
-            <table class="big_info" style="float: right">
-                <tr>
-                    <td>
-                        <p id="current_temperature"></p>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        <!--The Settings Function-->
+        <div style="display: none" id="settings_function">
+          <div>
+            <!--The Top Title of the Settings Function-->
+            <p class="function_title" id="settings_title"></p>
 
-        <!--The content with the apps, app views etc...-->
-        <div id="container_functions">
-            <!--The container of all the functions-->
-            <div id="running_function">
-                <!--The Calendar-Function-->
-                <div style="display: none" id="calendar_function">
-                    <!--The Top Title of the Calendar Function-->
-                    <p class="function_title" id="calendar_title">Calendar</p>
-                    <!--The Table which is filled via Javascript-->
-                    <table id="calendar"></table>
-                    <!--The container which contains the interactive elements of the calendar-->
-                    <div style="margin:auto; text-align: center">
-                        <div id="calendar_back_button" style="float: left;">
-                            <img src="Icons/back.svg" style="width: 15px;height: 15px; display: inline" />
-                            <p id="calendar_back_text" style="display: inline"></p>
-                        </div>
-                        <div id="calendar_current_month" style="display: inline"></div>
-                        <div id="calendar_forward_button" style="float: right">
-                            <p id="calendar_forward_text" style="display: inline"></p>
-                            <img src="Icons/forward.svg" style="width: 15px;height: 15px" />
-                        </div>
+            <!--The System-Settings Area-->
+            <div class="settings_area" id="settings_system">
+
+              <!--The System-Settings Title-->
+              <p class="settings_area_title" id="system_settings_title"></p>
+
+              <!--The Language-System-Settings Subarea-->
+              <div class="settings_subarea">
+                <p class="settings_area_subtitle" id="system_settings_subtitle_language"></p>
+                <table style="width: 100%">
+                  <tr>
+                    <td style="width: 50%">
+                      <table>
+                        <tr>
+                          <td>
+                            <div class="mdc-radio">
+                              <input class="mdc-radio__native-control" type="radio" id="language_english" name="languages" value="0" checked>
+                              <div class="mdc-radio__background">
+                                <div class="mdc-radio__outer-circle"></div>
+                                <div class="mdc-radio__inner-circle"></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <label class="checkbox_label" id="language_english_label" for="language_english"></label>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td style="width: 50%">
+                      <table>
+                        <tr>
+                          <td>
+                            <div class="mdc-radio">
+                              <input class="mdc-radio__native-control" type="radio" id="language_german" name="languages" value="1">
+                              <div class="mdc-radio__background">
+                                <div class="mdc-radio__outer-circle"></div>
+                                <div class="mdc-radio__inner-circle"></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <label class="checkbox_label" id="language_german_label" for="language_german"></label>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+
+                  </tr>
+                </table>
+              </div>
+              <!--The Only Mirror-System-Settings Subarea-->
+              <div class="settings_subarea">
+                <p class="settings_area_subtitle" id="system_settings_subtitle_only_mirror"></p>
+                <table style="width: 100%;">
+                  <tr>
+                    <td width="50%">
+                      <table>
+                        <tr>
+                          <td>
+                            <div class="mdc-radio">
+                              <input class="mdc-radio__native-control" type="radio" id="only_mirror_nothing" name="only_mirror" value="0" checked>
+                              <div class="mdc-radio__background" style="width:40px;height: 40px;top:0px;left: 0px;">
+                                <div class="mdc-radio__outer-circle"></div>
+                                <div class="mdc-radio__inner-circle"></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <label class="checkbox_label" id="only_mirror_nothing_label" for="only_mirror_nothing"></label>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td width="50%">
+                      <table>
+                        <tr>
+                          <td>
+                            <div class="mdc-radio">
+                              <input class="mdc-radio__native-control" type="radio" id="only_mirror_quote" name="only_mirror" value="1">
+                              <div class="mdc-radio__background">
+                                <div class="mdc-radio__outer-circle"></div>
+                                <div class="mdc-radio__inner-circle"></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <label class="checkbox_label" id="only_mirror_quote_label" for="only_mirror_quote"></label>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+            </div>
+
+            <!--The Calendar-Settings Area-->
+            <div class="settings_area" id="calendar_settings">
+
+              <!--The Calendar-Settings Title-->
+              <p class="settings_area_title" id="calendar_settings_title"></p>
+
+              <!--The Sources-Calendar-Settings Subarea-->
+              <div class="settings_subarea">
+
+                <p class="settings_area_subtitle" id="calendar_settings_subtitle_sources"></p>
+                <div class="mdc-form-field">
+                  <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
+                    <input style="background-color: black" type="checkbox" id="normal_entries_checkbox" class="mdc-checkbox__native-control" checked/>
+                    <div class="mdc-checkbox__background" style="background-color: black">
+                      <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                        <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                                    </svg>
+                      <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
                     </div>
+                  </div>
+                  <label id="sources_normal_entries_label" for="normal_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white"></label>
                 </div>
-                <!--The EMail Function-->
-                <div style="display:none" id="email_function">
-                    <!--The Top Title of the EMail Function-->
-                    <p class="function_title" id="email_title"></p>
-
-                    <!--The Table for the EMail content-->
-                    <table>
-                        <!--The Heading Columns for the Table-->
-                        <thead>
-                            <tr>
-                                <th style="text-align: left">Subject</th>
-                                <th style="text-align: left">Date</th>
-                            </tr>
-                        </thead>
-                        <!--The Body of the Table which is filled via JavaScript-->
-                        <tbody id="emails"></tbody>
-                    </table>
-                </div>
-                <!--The Settings Function-->
-                <div style="display: none" id="settings_function">
-                    <div>
-                        <!--The Top Title of the Settings Function-->
-                        <p class="function_title" id="settings_title"></p>
-
-                        <!--The System-Settings Area-->
-                        <div class="settings_area" id="settings_system">
-
-                            <!--The System-Settings Title-->
-                            <p class="settings_area_title" id="system_settings_title"></p>
-
-                            <!--The Language-System-Settings Subarea-->
-                            <div class="settings_subarea">
-                                <p class="settings_area_subtitle" id="system_settings_subtitle_language"></p>
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div class="mdc-radio">
-                                                            <input class="mdc-radio__native-control" type="radio" id="language_english" name="languages" value="0" checked>
-                                                            <div class="mdc-radio__background">
-                                                                <div class="mdc-radio__outer-circle"></div>
-                                                                <div class="mdc-radio__inner-circle"></div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox_label" id="language_english_label" for="language_english"></label>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td style="width: 50%">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div class="mdc-radio">
-                                                            <input class="mdc-radio__native-control" type="radio" id="language_german" name="languages" value="1">
-                                                            <div class="mdc-radio__background">
-                                                                <div class="mdc-radio__outer-circle"></div>
-                                                                <div class="mdc-radio__inner-circle"></div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox_label" id="language_german_label" for="language_german"></label>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-
-                                    </tr>
-                                </table>
-                            </div>
-                            <!--The Only Mirror-System-Settings Subarea-->
-                            <div class="settings_subarea">
-                                <p class="settings_area_subtitle" id="system_settings_subtitle_only_mirror"></p>
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td width="50%">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div class="mdc-radio">
-                                                            <input class="mdc-radio__native-control" type="radio" id="only_mirror_nothing" name="only_mirror" value="0" checked>
-                                                            <div class="mdc-radio__background" style="width:40px;height: 40px;top:0px;left: 0px;">
-                                                                <div class="mdc-radio__outer-circle"></div>
-                                                                <div class="mdc-radio__inner-circle"></div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox_label" id="only_mirror_nothing_label" for="only_mirror_nothing"></label>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td width="50%">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div class="mdc-radio">
-                                                            <input class="mdc-radio__native-control" type="radio" id="only_mirror_quote" name="only_mirror" value="1">
-                                                            <div class="mdc-radio__background">
-                                                                <div class="mdc-radio__outer-circle"></div>
-                                                                <div class="mdc-radio__inner-circle"></div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox_label" id="only_mirror_quote_label" for="only_mirror_quote"></label>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                        </div>
-
-                        <!--The Calendar-Settings Area-->
-                        <div class="settings_area" id="calendar_settings">
-
-                            <!--The Calendar-Settings Title-->
-                            <p class="settings_area_title" id="calendar_settings_title"></p>
-
-                            <!--The Sources-Calendar-Settings Subarea-->
-                            <div class="settings_subarea">
-
-                                <p class="settings_area_subtitle" id="calendar_settings_subtitle_sources"></p>
-                                <div class="mdc-form-field">
-                                    <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
-                                        <input style="background-color: black" type="checkbox" id="normal_entries_checkbox" class="mdc-checkbox__native-control" checked/>
-                                        <div class="mdc-checkbox__background" style="background-color: black">
-                                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <div class="mdc-form-field">
+                  <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
+                    <input style="background-color: black" type="checkbox" id="birthday_entries_checkbox" class="mdc-checkbox__native-control" checked/>
+                    <div class="mdc-checkbox__background" style="background-color: black">
+                      <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
                                         <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
                                     </svg>
-                                            <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
-                                        </div>
-                                    </div>
-                                    <label id="sources_normal_entries_label" for="normal_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white"></label>
-                                </div>
-                                <div class="mdc-form-field">
-                                    <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
-                                        <input style="background-color: black" type="checkbox" id="birthday_entries_checkbox" class="mdc-checkbox__native-control" checked/>
-                                        <div class="mdc-checkbox__background" style="background-color: black">
-                                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                        <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-                                    </svg>
-                                            <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
-                                        </div>
-                                    </div>
-                                    <label id="sources_birthdays_label" for="birthday_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white"></label>
-                                </div>
-                                <div class="mdc-form-field">
-                                    <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
-                                        <input style="background-color: black" type="checkbox" id="holidays_entries_checkbox" class="mdc-checkbox__native-control" checked/>
-                                        <div class="mdc-checkbox__background" style="background-color: black">
-                                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                        <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-                                    </svg>
-                                            <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
-                                        </div>
-                                    </div>
-                                    <label for="holidays_entries_checkbox" id="sources_holidays_label" style="font-size: 30px; margin-left: 40px;color:white"></label>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!--The Weather-Settings Area-->
-                        <div class="settings_area" id="weather_settings">
-
-                            <!--The Weather-Settings Title-->
-                            <p class="settings_area_title" id="weather_settings_title"></p>
-
-                            <!--The Location-Weather-Settings Subarea-->
-                            <div class="settings_subarea">
-                                <p class="settings_area_subtitle" id="weather_settings_subtitle_location"></p>
-
-                                <input type="text" id="weather_location_input" placeholder="City/Region" style="background-color: black;color: white;border:0px;border-bottom: 1px solid white;font-size: 30px;height: 35px;width: 45%">
-                            </div>
-                            <!--The Temperature Unit-Weather-Settings Subarea-->
-                            <div class="settings_subarea" style="margin-top: 15px">
-                                <p class="settings_area_subtitle" id="system_settings_subtitle_temperature_unit"></p>
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td width="50%">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div class="mdc-radio">
-                                                            <input class="mdc-radio__native-control" type="radio" id="temperature_unit_celsius" name="temperature_units" value="0" checked>
-                                                            <div class="mdc-radio__background" style="width:40px;height: 40px;top:0px;left: 0px;">
-                                                                <div class="mdc-radio__outer-circle"></div>
-                                                                <div class="mdc-radio__inner-circle"></div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox_label" id="temperature_unit_celsius_label" for="temperature_unit_celsius"></label>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td width="50%">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div class="mdc-radio">
-                                                            <input class="mdc-radio__native-control" type="radio" id="temperature_unit_farenheit" name="temperature_units" value="1">
-                                                            <div class="mdc-radio__background">
-                                                                <div class="mdc-radio__outer-circle"></div>
-                                                                <div class="mdc-radio__inner-circle"></div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox_label" id="temperature_unit_farenheit_label" for="temperature_unit_farenheit"></label>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                        </div>
+                      <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
                     </div>
+                  </div>
+                  <label id="sources_birthdays_label" for="birthday_entries_checkbox" style="font-size: 30px; margin-left: 40px;color:white"></label>
                 </div>
-                <!--The News Function-->
-                <div style="display: none" id="news_function">
-                    <p class="function_title" id="news_title"></p>
-                    <table id="news"></table>
+                <div class="mdc-form-field">
+                  <div id="gawgaw" class="mdc-checkbox mdc-checkbox--theme-dark" style="background-color: black">
+                    <input style="background-color: black" type="checkbox" id="holidays_entries_checkbox" class="mdc-checkbox__native-control" checked/>
+                    <div class="mdc-checkbox__background" style="background-color: black">
+                      <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                        <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                                    </svg>
+                      <div style="background-color: black" class="mdc-checkbox__mixedmark"></div>
+                    </div>
+                  </div>
+                  <label for="holidays_entries_checkbox" id="sources_holidays_label" style="font-size: 30px; margin-left: 40px;color:white"></label>
                 </div>
+              </div>
+
             </div>
-            <!--The container of all the chooseabler applications-->
-            <div id="apps">
-                <table class="functions_table" style="width: 100%" id="apps_table">
-                    <tr>
-                        <td id="button_app_news">
-                            <table>
-                                <tr>
-                                    <td><img src="Icons/news.svg" /></td>
-                                </tr>
-                                <tr>
-                                    <td id="app_news_text" />
-                                </tr>
-                            </table>
-                        </td>
-                        <td id="button_app_calendar">
-                            <table>
-                                <tr>
-                                    <td><img src="Icons/calendar.svg" /></td>
-                                </tr>
-                                <tr>
-                                    <td id="app_calendar_text" />
-                                </tr>
-                            </table>
-                        </td>
-                        <td style="display: none">
-                            <table>
-                                <tr>
-                                    <td><img src="Icons/youtube.svg" /></td>
-                                </tr>
-                                <tr>
-                                    <td id="app_youtube_text" />
-                                </tr>
-                            </table>
-                        </td>
-                        <!--<td>
+
+            <!--The Weather-Settings Area-->
+            <div class="settings_area" id="weather_settings">
+
+              <!--The Weather-Settings Title-->
+              <p class="settings_area_title" id="weather_settings_title"></p>
+
+              <!--The Location-Weather-Settings Subarea-->
+              <div class="settings_subarea">
+                <p class="settings_area_subtitle" id="weather_settings_subtitle_location"></p>
+
+                <input type="text" id="weather_location_input" placeholder="City/Region" style="background-color: black;color: white;border:0px;border-bottom: 1px solid white;font-size: 30px;height: 35px;width: 45%">
+              </div>
+              <!--The Temperature Unit-Weather-Settings Subarea-->
+              <div class="settings_subarea" style="margin-top: 15px">
+                <p class="settings_area_subtitle" id="system_settings_subtitle_temperature_unit"></p>
+                <table style="width: 100%;">
+                  <tr>
+                    <td width="50%">
+                      <table>
+                        <tr>
+                          <td>
+                            <div class="mdc-radio">
+                              <input class="mdc-radio__native-control" type="radio" id="temperature_unit_celsius" name="temperature_units" value="0" checked>
+                              <div class="mdc-radio__background" style="width:40px;height: 40px;top:0px;left: 0px;">
+                                <div class="mdc-radio__outer-circle"></div>
+                                <div class="mdc-radio__inner-circle"></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <label class="checkbox_label" id="temperature_unit_celsius_label" for="temperature_unit_celsius"></label>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td width="50%">
+                      <table>
+                        <tr>
+                          <td>
+                            <div class="mdc-radio">
+                              <input class="mdc-radio__native-control" type="radio" id="temperature_unit_farenheit" name="temperature_units" value="1">
+                              <div class="mdc-radio__background">
+                                <div class="mdc-radio__outer-circle"></div>
+                                <div class="mdc-radio__inner-circle"></div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <label class="checkbox_label" id="temperature_unit_farenheit_label" for="temperature_unit_farenheit"></label>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!--The News Function-->
+        <div style="display: none" id="news_function">
+          <p class="function_title" id="news_title"></p>
+          <table id="news"></table>
+        </div>
+      </div>
+      <!--The container of all the chooseabler applications-->
+      <div id="apps">
+        <table class="functions_table" style="width: 100%" id="apps_table">
+          <tr>
+            <td id="button_app_news">
+              <table>
+                <tr>
+                  <td><img src="Icons/news.svg" /></td>
+                </tr>
+                <tr>
+                  <td id="app_news_text" />
+                </tr>
+              </table>
+            </td>
+            <td id="button_app_calendar">
+              <table>
+                <tr>
+                  <td><img src="Icons/calendar.svg" /></td>
+                </tr>
+                <tr>
+                  <td id="app_calendar_text" />
+                </tr>
+              </table>
+            </td>
+            <td style="display: none">
+              <table>
+                <tr>
+                  <td><img src="Icons/youtube.svg" /></td>
+                </tr>
+                <tr>
+                  <td id="app_youtube_text" />
+                </tr>
+              </table>
+            </td>
+            <!--<td>
                             <table>
                                 <tr>
                                     <td><img src="Icons/search.svg" /></td>
@@ -378,86 +376,86 @@
                                 </tr>
                             </table>
                         </td>-->
-                        <td id="button_app_email">
-                            <table>
-                                <tr>
-                                    <td><img src="Icons/email.svg" /></td>
-                                </tr>
-                                <tr>
-                                    <td id="app_email_text" />
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+            <td id="button_app_email">
+              <table>
+                <tr>
+                  <td><img src="Icons/email.svg" /></td>
+                </tr>
+                <tr>
+                  <td id="app_email_text" />
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!--The container of all the chooseable base-functions-->
+      <div id="base_functions">
+        <hr id="functions_line" />
+
+        <div id="system_functions">
+          <table class="functions_table" id="base_functions_table">
+            <tr>
+              <td id="button_only_mirror">
+                <table>
+                  <tr>
+                    <td><img src="Icons/hide.svg" /></td>
+                  </tr>
+                  <tr>
+                    <td id="only_mirror_text"></td>
+                  </tr>
                 </table>
-            </div>
-            <!--The container of all the chooseable base-functions-->
-            <div id="base_functions">
-                <hr id="functions_line" />
-
-                <div id="system_functions">
-                    <table class="functions_table" id="base_functions_table">
-                        <tr>
-                            <td id="button_only_mirror">
-                                <table>
-                                    <tr>
-                                        <td><img src="Icons/hide.svg" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td id="only_mirror_text"></td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td id="button_settings">
-                                <table>
-                                    <tr>
-                                        <td><img src="Icons/settings.svg" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td id="settings_text"></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div style="height: 100px; width: 100px;display: inline-block">
-                    <table class="functions_table">
-                        <tr>
-                            <td id="button_back">
-                                <table>
-                                    <tr>
-                                        <td><img src="Icons/back.svg" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td id="back_text"></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div id="google_functions">
-                    <p id="google_account_title" class="title_text" />
-                    <table>
-                        <tr id="google_account">
-                            <td>
-                                <p id="google_account_name" />
-                            </td>
-                            <td>
-                                <div id="google_account_image"></div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+              </td>
+              <td id="button_settings">
+                <table>
+                  <tr>
+                    <td><img src="Icons/settings.svg" /></td>
+                  </tr>
+                  <tr>
+                    <td id="settings_text"></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </div>
-
-        <!--The container for the upcoming events timeline filled by JavaScript-->
-        <table id="upcoming_events"></table>
-        <!--The container for the weather preview timeline filled by JavaScript-->
-        <table id="weather_preview"></table>
+        <div style="height: 100px; width: 100px;display: inline-block">
+          <table class="functions_table">
+            <tr>
+              <td id="button_back">
+                <table>
+                  <tr>
+                    <td><img src="Icons/back.svg" /></td>
+                  </tr>
+                  <tr>
+                    <td id="back_text"></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div id="google_functions">
+          <p id="google_account_title" class="title_text" />
+          <table>
+            <tr id="google_account">
+              <td>
+                <p id="google_account_name" />
+              </td>
+              <td>
+                <div id="google_account_image"></div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
+
+    <!--The container for the upcoming events timeline filled by JavaScript-->
+    <table id="upcoming_events"></table>
+    <!--The container for the weather preview timeline filled by JavaScript-->
+    <table id="weather_preview"></table>
+  </div>
 </body>
 
 </html>

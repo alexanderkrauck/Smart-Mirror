@@ -1,347 +1,410 @@
 @import url('./Roboto/roboto.css');
-
 /*The formatting for the default html elements*/
+
 /*region*/
+
 html {
-    background-color: #000;
-    font-family: Roboto;
-    color: #FFF;
+  background-color: #000;
+  font-family: Roboto;
+  color: #FFF;
 }
+
 body {
-    margin: 0;
-    overflow: hidden;
+  margin: 0;
+  overflow: hidden;
 }
+
 p {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
+
 /*endregion*/
 
 /*Other formatting*/
+
 /*region*/
-.view{
-    display: none;
+
+.view {
+  display: none;
 }
-.title_text{
-    font-weight: bold;
-    text-align: left;
+
+.title_text {
+  font-weight: bold;
+  text-align: left;
 }
+
 /*endregion*/
 
 /*The formatting of the default view*/
+
 /*region*/
+
 #view_default {
-    padding: 2%;
+  padding: 2%;
 }
 
 /*The formatting of the time of the default view*/
+
 /*region*/
+
 #current_seconds {
-    font-size: 25px;
-    font-weight: 300;
-    opacity: 0.5;
-    margin-top: 8px;
+  font-size: 25px;
+  font-weight: 300;
+  opacity: 0.5;
+  margin-top: 8px;
 }
+
 #container_datetime {
-    float: left;
+  float: left;
 }
 
 /*The formatting of the upcoming events of the default view*/
+
 /*region*/
+
 #upcoming_events {
-    float: left;
-    font-size: 18px;
-    clear: left;
+  float: left;
+  font-size: 18px;
+  clear: left;
 }
 
 #upcoming_events td {
-    padding: 0px 6px 0px 6px;
+  padding: 0px 6px 0px 6px;
 }
+
 /*endregion*/
+
 /*endregion*/
 
 /*The formatting of the weather of the default view*/
+
 /*region*/
+
 #container_weather {
-    float: right;
-    text-align: right;
+  float: right;
+  text-align: right;
 }
 
 /*The formatting of the weather preview of the default view*/
+
 /*region*/
+
 #weather_preview {
-    float: right;
-    font-size: 18px;
-    clear: right;
+  float: right;
+  font-size: 18px;
+  clear: right;
 }
 
 #weather_preview td {
-    padding: 0px 6px 0px 6px;
-    text-align: right;
+  padding: 0px 6px 0px 6px;
+  text-align: right;
 }
 
 #weather_preview img {
-    width: 15px;
-    height: 15px;
+  width: 15px;
+  height: 15px;
 }
+
 /*endregion*/
+
 /*endregion*/
 
 /*The formatting of the small info of the default view*/
+
 /*region*/
+
 .small_info {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .small_info img {
-    width: 17px;
-    height: 17px;
-    padding: 0px 7px 0px 7px;
+  width: 17px;
+  height: 17px;
+  padding: 0px 7px 0px 7px;
 }
+
 /*endregion*/
 
 /*The formatting of the big info of the default view*/
+
 /*region*/
+
 .big_info td {
-    vertical-align: top;
+  vertical-align: top;
 }
 
 .big_info img {
-    padding: 0px 10px 0px 0px;
-    height: 40px;
-    width: 40px;
+  padding: 0px 10px 0px 0px;
+  height: 40px;
+  width: 40px;
 }
 
 .big_info p {
-    font-size: 60px;
-    font-weight: 300;
+  font-size: 60px;
+  font-weight: 300;
 }
+
 /*endregion*/
+
 /*endregion*/
 
 /*The formatting of the functions container*/
+
 /*region*/
-#container_functions{
-    width: calc( 98% - 40px );
-    bottom:20px;
-    position:absolute
-}
-.functions_table tr td{
-    text-align: center;
-    vertical-align: middle;
+
+#container_functions {
+  width: calc( 98% - 40px);
+  bottom: 20px;
+  position: absolute
 }
 
-.functions_table tr td table{
-    display: inline;
+.functions_table tr td {
+  text-align: center;
+  vertical-align: middle;
 }
-.functions_table tr td table img{
-    width: 50px;
-    height: 50px;
+
+.functions_table tr td table {
+  display: inline;
+}
+
+.functions_table tr td table img {
+  width: 50px;
+  height: 50px;
 }
 
 /*The formatting for the applications*/
+
 /*region*/
-#apps{
-    float: right;
-    margin-bottom: 20px;
+
+#apps {
+  float: right;
+  margin-bottom: 20px;
 }
 
-#apps_table tr td{
-    width: 100px
+#apps_table tr td {
+  width: 100px
 }
+
 /*endregion*/
 
 /*The formatting of the base functions*/
+
 /*region*/
-#base_functions{
-    clear: both;
-    text-align: center
+
+#base_functions {
+  clear: both;
+  text-align: center
 }
-#base_functions_table tr td{
-        padding: 0px 20px 0px 20px;
+
+#base_functions_table tr td {
+  padding: 0px 20px 0px 20px;
 }
-#button_only_mirror{
-    padding: 0px 20px 0px 0px !important;
+
+#button_only_mirror {
+  padding: 0px 20px 0px 0px !important;
 }
-#functions_line{
-    color: white;
-    margin-bottom: 20px
+
+#functions_line {
+  color: white;
+  margin-bottom: 20px
 }
-#google_functions{
-    float:right;
-    margin-top: 10px
+
+#google_functions {
+  float: right;
+  margin-top: 10px
 }
-#system_functions{
-    float:left
+
+#system_functions {
+  float: left
 }
-#google_account_name{
-    display: inline-block;
-    font-size: 22px;
-    font-weight: 300
+
+#google_account_name {
+  display: inline-block;
+  font-size: 22px;
+  font-weight: 300
 }
-#google_account_image{
-    display: inline-block;
-    border-radius: 100%;
-    background-image: url(Icons/add_outline.svg);
-    background-size: cover;
-    height: 45px;
-    width: 45px;
-    margin-left: 5px;
+
+#google_account_image {
+  display: inline-block;
+  border-radius: 100%;
+  background-image: url(Icons/add_outline.svg);
+  background-size: cover;
+  height: 45px;
+  width: 45px;
+  margin-left: 5px;
 }
+
 /*endregion*/
+
 /*endregion*/
 
 /*The formatting of the animated text view*/
+
 /*region*/
+
 #text_animation {
-    width: 100%;
-    height: 100%;
-    display: table-cell;
-    color: white;
-    vertical-align: middle;
-    /* Change font-weight to light probably*/
-    font-size: 60px;
+  width: 100%;
+  height: 100%;
+  display: table-cell;
+  color: white;
+  vertical-align: middle;
+  /* Change font-weight to light probably*/
+  font-size: 60px;
 }
 
 #container2_text_animation {
-    display: table;
-    height: 100%;
+  display: table;
+  height: 100%;
 }
 
 #container1_text_animation {
-    height: 100%;
-    display: inline-flex;
+  height: 100%;
+  display: inline-flex;
 }
 
 #view_text_animation {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: absolute;
 }
+
 /*endregion*/
 
 /*The formatting of the off view*/
+
 /*region*/
-#view_off{
-    width: 100%;
-    height: 100%;
+
+#view_off {
+  width: 100%;
+  height: 100%;
 }
+
 /*endregion*/
 
-
-#calendar{
-    height: 1080px;
-    width: 100%;
-    border-color: white;
-    margin-bottom: 10px;
-}
-#calendar tr td{
-    width: 14.2857143%;
-    height: 14.2857143%;
-}
-#calendar p{
-    height: 40px;
-    word-break: break-all;
-    
-}
-#running_function{
-    margin: 0px 0px 20px 50px;
-    width: calc( 100% - 100px);
-    height: 1200px;
+#calendar {
+  height: 1080px;
+  width: 100%;
+  border-color: white;
+  margin-bottom: 10px;
 }
 
-#gawgaw::after, #gawgaw::before, #gawgaw div::before, #gawgaw div::after,#gawgaw,#gawgaw div{
-    background-color: black;
-    border-color: white;
-    width: 50px;
-    height: 50px;
-    padding:0px;
+#calendar tr td {
+  width: 14.2857143%;
+  height: 14.2857143%;
 }
 
-#gawgaw::after, #gawgaw::before, #gawgaw div::before, #gawgaw div::after{
-        opacity: 0;
-        padding:0px;
-    margin:0px;
+#calendar p {
+  height: 40px;
+  word-break: break-all;
 }
 
-.mdc-form-field{
-    display: block;
-    margin: 0px 0px 30px 0px;
+#running_function {
+  margin: 0px 0px 20px 50px;
+  width: calc( 100% - 100px);
+  height: 1200px;
 }
 
-.function_title{
-    font-size: 60px;
-    padding-bottom: 25px;
-}
-.settings_area_title{
-    font-size: 20px;
-    padding-bottom: 15px;
-    font-weight: bold;
-}
-.settings_area{
-    margin-top: 40px;
-}
-.settings_area_subtitle{
-    font-size: 30px;
-    padding-bottom: 15px;
-}
-#settings_system{
-    margin-top: 0px;
-}
-.settings_subarea{
-    margin-left: 25px;
+#gawgaw::after, #gawgaw::before, #gawgaw div::before, #gawgaw div::after, #gawgaw, #gawgaw div {
+  background-color: black;
+  border-color: white;
+  width: 50px;
+  height: 50px;
+  padding: 0px;
 }
 
-.mdc-radio__background{
-    height: 40px;
-    width:40px;
-    top: 0px;
-    left: 0px;
-}
-.checkbox_label{
-    margin-left: 15px;
-    font-size: 30px;
+#gawgaw::after, #gawgaw::before, #gawgaw div::before, #gawgaw div::after {
+  opacity: 0;
+  padding: 0px;
+  margin: 0px;
 }
 
-#emails tr{
-    height: 70px;
+.mdc-form-field {
+  display: block;
+  margin: 0px 0px 30px 0px;
 }
 
-#view_quote{
-    height: 90%;
-    width: 100%;
+.function_title {
+  font-size: 60px;
+  padding-bottom: 25px;
 }
+
+.settings_area_title {
+  font-size: 20px;
+  padding-bottom: 15px;
+  font-weight: bold;
+}
+
+.settings_area {
+  margin-top: 40px;
+}
+
+.settings_area_subtitle {
+  font-size: 30px;
+  padding-bottom: 15px;
+}
+
+#settings_system {
+  margin-top: 0px;
+}
+
+.settings_subarea {
+  margin-left: 25px;
+}
+
+.mdc-radio__background {
+  height: 40px;
+  width: 40px;
+  top: 0px;
+  left: 0px;
+}
+
+.checkbox_label {
+  margin-left: 15px;
+  font-size: 30px;
+}
+
+#emails tr {
+  height: 70px;
+}
+
+#view_quote {
+  height: 90%;
+  width: 100%;
+}
+
 #text_quote_quote {
-    width: 100%;
-    color: white;
-    /* Change font-weight to light probably*/
-    font-size: 45px;
-    text-align: center;
+  width: 100%;
+  color: white;
+  /* Change font-weight to light probably*/
+  font-size: 45px;
+  text-align: center;
 }
-#text_quote_author {
-    font-size: 35px;
-    color: white;
-    width: 100%;
-    text-align: center;
-    padding-top: 20px;
 
+#text_quote_author {
+  font-size: 35px;
+  color: white;
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
 }
-#container3_quote{
-    vertical-align: bottom;
-    display: table-cell;
-    height: 100%;
+
+#container3_quote {
+  vertical-align: bottom;
+  display: table-cell;
+  height: 100%;
 }
 
 #container2_quote {
-    display: table;
-    height: 100%;
-    width: 100%;
+  display: table;
+  height: 100%;
+  width: 100%;
 }
 
 #container1_quote {
-    height: 100%;
-    width: 100%;
-    display: inline-flex;
+  height: 100%;
+  width: 100%;
+  display: inline-flex;
 }
