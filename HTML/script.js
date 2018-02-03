@@ -1782,10 +1782,10 @@ function loadCalendarEntries() {
   });
   gapi.client.calendar.events.list({
     'calendarId': '#contacts@group.v.calendar.google.com',
-    'timeMin': (new Date()).toISOString(),
+    //'timeMin': (new Date()).toISOString(),
     'showDeleted': false,
     'singleEvents': true,
-    'maxResults': 10,
+    //'maxResults': 10,
     'orderBy': 'startTime'
   }).then(function(response) {
     let events = response.result.items;
@@ -1801,10 +1801,10 @@ function loadCalendarEntries() {
   });
   gapi.client.calendar.events.list({
     'calendarId': 'de.austrian#holiday@group.v.calendar.google.com',
-    'timeMin': (new Date()).toISOString(),
+    //'timeMin': (new Date()).toISOString(),
     'showDeleted': false,
     'singleEvents': true,
-    'maxResults': 10,
+    //'maxResults': 10,
     'orderBy': 'startTime'
   }).then(function(response) {
     let events = response.result.items;
