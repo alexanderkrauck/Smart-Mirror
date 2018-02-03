@@ -1,7 +1,5 @@
 @import url('./Roboto/roboto.css');
-/*The formatting for the default html elements*/
-
-/*region*/
+/*region: The formatting for the default html elements*/
 
 html {
   background-color: #000;
@@ -21,9 +19,7 @@ p {
 
 /*endregion*/
 
-/*Other formatting*/
-
-/*region*/
+/*region: Other formatting*/
 
 .view {
   display: none;
@@ -36,17 +32,13 @@ p {
 
 /*endregion*/
 
-/*The formatting of the default view*/
-
-/*region*/
+/*region: The formatting of the default view*/
 
 #view_default {
   padding: 2%;
 }
 
-/*The formatting of the time of the default view*/
-
-/*region*/
+/*region: The formatting of the time of the default view*/
 
 #current_seconds {
   font-size: 25px;
@@ -59,9 +51,7 @@ p {
   float: left;
 }
 
-/*The formatting of the upcoming events of the default view*/
-
-/*region*/
+/*region: The formatting of the upcoming events of the default view*/
 
 #upcoming_events {
   float: left;
@@ -77,18 +67,14 @@ p {
 
 /*endregion*/
 
-/*The formatting of the weather of the default view*/
-
-/*region*/
+/*region: The formatting of the weather of the default view*/
 
 #container_weather {
   float: right;
   text-align: right;
 }
 
-/*The formatting of the weather preview of the default view*/
-
-/*region*/
+/*region: The formatting of the weather preview of the default view*/
 
 #weather_preview {
   float: right;
@@ -110,9 +96,7 @@ p {
 
 /*endregion*/
 
-/*The formatting of the small info of the default view*/
-
-/*region*/
+/*region: The formatting of the small info of the default view*/
 
 .small_info {
   font-size: 20px;
@@ -127,9 +111,7 @@ p {
 
 /*endregion*/
 
-/*The formatting of the big info of the default view*/
-
-/*region*/
+/*region: The formatting of the big info of the default view*/
 
 .big_info td {
   vertical-align: top;
@@ -150,9 +132,7 @@ p {
 
 /*endregion*/
 
-/*The formatting of the functions container*/
-
-/*region*/
+/*region: The formatting of the functions container*/
 
 #container_functions {
   width: calc( 98% - 40px);
@@ -174,9 +154,109 @@ p {
   height: 50px;
 }
 
-/*The formatting for the applications*/
+/*region: The formatting of the running functions*/
 
-/*region*/
+#running_function {
+  margin: 0px 0px 20px 50px;
+  width: calc( 100% - 100px);
+  height: 1200px;
+}
+
+.function_title {
+  font-size: 60px;
+  padding-bottom: 25px;
+}
+
+/*region: The formatting of the calendar function*/
+
+#calendar {
+  height: 1080px;
+  width: 100%;
+  border-color: white;
+  margin-bottom: 10px;
+}
+
+#calendar tr td {
+  width: 14.2857143%;
+  height: 14.2857143%;
+}
+
+#calendar p {
+  height: 40px;
+  word-break: break-all;
+}
+
+/*endregion*/
+
+/*region: The formatting of the settings function*/
+
+.mdc-form-field {
+  display: block;
+  margin: 0px 0px 30px 0px;
+}
+
+.settings_area_title {
+  font-size: 20px;
+  padding-bottom: 15px;
+  font-weight: bold;
+}
+
+.settings_area {
+  margin-top: 40px;
+}
+
+.settings_area_subtitle {
+  font-size: 30px;
+  padding-bottom: 15px;
+}
+
+#settings_system {
+  margin-top: 0px;
+}
+
+.settings_subarea {
+  margin-left: 25px;
+}
+
+.mdc-radio__background {
+  height: 40px;
+  width: 40px;
+  top: 0px;
+  left: 0px;
+}
+
+.checkbox_label {
+  margin-left: 15px;
+  font-size: 30px;
+}
+
+.checkbox_box::after, .checkbox_box::before, .checkbox_box div::before, .checkbox_box div::after, .checkbox_box, .checkbox_box div {
+  background-color: black !important;
+  border-color: white !important;
+  width: 50px !important;
+  height: 50px !important;
+  padding: 0px !important;
+}
+
+.checkbox_box::after, .checkbox_box::before, .checkbox_box div::before, .checkbox_box div::after {
+  opacity: 0 !important;
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+/*endregion*/
+
+/*region: The formatting of the emails function*/
+
+#emails tr {
+  height: 70px;
+}
+
+/*endregion*/
+
+/*endregion*/
+
+/*region: The formatting for the applications*/
 
 #apps {
   float: right;
@@ -189,9 +269,7 @@ p {
 
 /*endregion*/
 
-/*The formatting of the base functions*/
-
-/*region*/
+/*region: The formatting of the base functions*/
 
 #base_functions {
   clear: both;
@@ -240,9 +318,7 @@ p {
 
 /*endregion*/
 
-/*The formatting of the animated text view*/
-
-/*region*/
+/*region: The formatting of the animated text view*/
 
 #text_animation {
   width: 100%;
@@ -250,7 +326,6 @@ p {
   display: table-cell;
   color: white;
   vertical-align: middle;
-  /* Change font-weight to light probably*/
   font-size: 60px;
 }
 
@@ -273,9 +348,7 @@ p {
 
 /*endregion*/
 
-/*The formatting of the off view*/
-
-/*region*/
+/*region: The formatting of the off view*/
 
 #view_off {
   width: 100%;
@@ -284,91 +357,7 @@ p {
 
 /*endregion*/
 
-#calendar {
-  height: 1080px;
-  width: 100%;
-  border-color: white;
-  margin-bottom: 10px;
-}
-
-#calendar tr td {
-  width: 14.2857143%;
-  height: 14.2857143%;
-}
-
-#calendar p {
-  height: 40px;
-  word-break: break-all;
-}
-
-#running_function {
-  margin: 0px 0px 20px 50px;
-  width: calc( 100% - 100px);
-  height: 1200px;
-}
-
-#gawgaw::after, #gawgaw::before, #gawgaw div::before, #gawgaw div::after, #gawgaw, #gawgaw div {
-  background-color: black;
-  border-color: white;
-  width: 50px;
-  height: 50px;
-  padding: 0px;
-}
-
-#gawgaw::after, #gawgaw::before, #gawgaw div::before, #gawgaw div::after {
-  opacity: 0;
-  padding: 0px;
-  margin: 0px;
-}
-
-.mdc-form-field {
-  display: block;
-  margin: 0px 0px 30px 0px;
-}
-
-.function_title {
-  font-size: 60px;
-  padding-bottom: 25px;
-}
-
-.settings_area_title {
-  font-size: 20px;
-  padding-bottom: 15px;
-  font-weight: bold;
-}
-
-.settings_area {
-  margin-top: 40px;
-}
-
-.settings_area_subtitle {
-  font-size: 30px;
-  padding-bottom: 15px;
-}
-
-#settings_system {
-  margin-top: 0px;
-}
-
-.settings_subarea {
-  margin-left: 25px;
-}
-
-.mdc-radio__background {
-  height: 40px;
-  width: 40px;
-  top: 0px;
-  left: 0px;
-}
-
-.checkbox_label {
-  margin-left: 15px;
-  font-size: 30px;
-}
-
-#emails tr {
-  height: 70px;
-}
+/*region: The formatting of the quote view*/
 
 #view_quote {
   height: 90%;
@@ -378,7 +367,6 @@ p {
 #text_quote_quote {
   width: 100%;
   color: white;
-  /* Change font-weight to light probably*/
   font-size: 45px;
   text-align: center;
 }
@@ -408,3 +396,5 @@ p {
   width: 100%;
   display: inline-flex;
 }
+
+/*endregion*/

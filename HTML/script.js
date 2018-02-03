@@ -1,4 +1,4 @@
-//region ENUMS
+//region: ENUMS
 /**
  * Possible languages for internationalisation.
  * @type {{ENGLISH: number, GERMAN: number}}
@@ -62,12 +62,16 @@ OnlyMirrorMode = {
 }
 //endregion
 
-//region Other fields
+//region: Other fields
 
+//region: Audio elements
 //The Audio element used for the click sound.
-let audioElement;
+let clickAudio;
+//The Audio element used for the startup sound.
+let startupAudio;
+//endregion
 
-//region Settings Variables
+//region: Settings Variables
 //The currently active view is set here
 let activeView = Views.DEFAULT;
 //The currently active function is set here
@@ -81,8 +85,8 @@ let setUnit = Units.CELSIUS;
 //The default mode for "OFF" mirror is set here.
 let setOnlyMirror = OnlyMirrorMode.SHOW_NOTHING;
 //The default weather location is set here.
-let setWeatherLocation = "Linz";
-let backupWeatherLocation = "Linz";
+let setWeatherLocation = "Leonding";
+let backupWeatherLocation = "Leonding";
 
 let signedIn = false;
 //endregion
@@ -106,7 +110,9 @@ let locationSunsetSunrise = "./Icons/sunset_sunrise.svg";
 let currentDate;
 //endregion
 
-//region Views from HTML
+//region: Elements from HTML
+let upcomingEventsContainer;
+
 let viewTextAnimated;
 let viewDefault;
 let viewOff;
@@ -129,6 +135,7 @@ let backText;
 let onlyMirrorButton;
 let settingsButton;
 let backButton;
+let googleAccountButton;
 
 let appCalendarButton;
 let appEMailButton;
@@ -141,8 +148,6 @@ let calendarBackText;
 let calendarForwardText;
 
 let calendarCurrentMonth;
-
-let clickAudio;
 
 let textQuoteQuote;
 let textQuoteAuthor;
@@ -188,8 +193,8 @@ let calendarTable;
 let newsTable;
 //endregion
 
-//region Fields for using the smart-mirror in multiple languages
-//region The fields which are actually used in the code
+//region: Fields for using the smart-mirror in multiple languages
+//region: The fields which are actually used in the code
 let daytime_night;
 let daytime_morning;
 let daytime_noon;
@@ -274,7 +279,7 @@ let settings_holidays_label;
 let settings_location_placeholder;
 //endregion
 
-//region ENGLISH: prefix is "en"
+//region: ENGLISH: prefix is "en"
 let en_daytime_night = "In the night";
 let en_daytime_morning = "In the morning";
 let en_daytime_noon = "In the noon";
@@ -359,7 +364,7 @@ let en_settings_holidays_label = "Holidays";
 let en_settings_location_placeholder = "City / Area";
 //endregion
 
-//region GERMAN: prefix is "de"
+//region: GERMAN: prefix is "de"
 let de_daytime_night = "In der Nacht";
 let de_daytime_morning = "Am Morgen";
 let de_daytime_noon = "Zu Mittag";
@@ -445,11 +450,12 @@ let de_settings_location_placeholder = "Stadt / Gebiet";
 //endregion
 //endregion
 
-//region Startup components
+//region: Startup components
 /**
  * The very first function which is executed
  */
 $(document).ready(function() {
+  //This function loads the relevant data from the cookies.
   loadCookies();
   main();
 });
@@ -500,7 +506,7 @@ function loadCookies() {
 function setLanguages() {
 
   switch (setLanguage) {
-    case 0:
+    case Languages.ENGLISH:
       daytime_night = en_daytime_night;
       daytime_morning = en_daytime_morning;
       daytime_noon = en_daytime_noon;
@@ -584,7 +590,7 @@ function setLanguages() {
 
       settings_location_placeholder = en_settings_location_placeholder;
       break;
-    case 1:
+    case Languages.GERMAN:
       daytime_night = de_daytime_night;
       daytime_morning = de_daytime_morning;
       daytime_noon = de_daytime_noon;
@@ -678,6 +684,8 @@ function setLanguages() {
  * Here are the HTML elemets assigned to the correct variable via JQuery
  */
 function loadHTMLElements() {
+  upcomingEventsContainer = $("#upcoming_events");
+
   viewTextAnimated = $("#view_text_animation");
   viewDefault = $("#view_default");
   viewOff = $("#view_off");
@@ -699,8 +707,8 @@ function loadHTMLElements() {
 
   onlyMirrorButton = $("#button_only_mirror");
   settingsButton = $("#button_settings");
-
   backButton = $("#button_back");
+  googleAccountButton = $("#google_functions");
 
   appCalendarButton = $("#button_app_calendar");
   appEMailButton = $("#button_app_email");
@@ -800,6 +808,13 @@ function setTextToHTML() {
   inputWeatherLocation.attr("placeholder", settings_location_placeholder);
 }
 
+function loadSoundElements(){
+  startupAudio = document.createElement('audio');
+  startupAudio.setAttribute('src', './Sounds/startup.ogg');
+  clickAudio = document.createElement('audio');
+  clickAudio.setAttribute('src', './Sounds/touch.mp3');
+}
+
 /**
  * The initializing function which is called when the document is ready.
  * The function sets up the periodical function and sets events.
@@ -808,8 +823,25 @@ function main() {
   setLanguages();
   loadHTMLElements();
   setTextToHTML();
+  loadSoundElements();
 
-  //region Change HTML settings variables to correct state
+  //Elements which are not required are set to visibility:gone
+  viewTextAnimated.fadeOut(0, null);
+  viewDefault.fadeOut(0, null);
+  viewOff.fadeOut(0, null);
+  backButton.fadeOut(0, null);
+
+  //Startup procedure
+  showViewTextAnimated([greeting_startup]);
+  startupAudio.play();
+
+
+  //call periodic functions the first time
+  timerFunction();
+  weatherFunction();
+  dimensionsFunction();
+
+  //region: Change HTML settings variables to correct state
   if (setLanguage === Languages.ENGLISH) {
     radioEnglish.prop("checked", true);
   }
@@ -848,40 +880,17 @@ function main() {
   inputWeatherLocation.val(setWeatherLocation);
   //endregion
 
-  viewTextAnimated.fadeOut(0, null);
-  viewDefault.fadeOut(0, null);
-  viewOff.fadeOut(0, null);
-  backButton.fadeOut(0, null);
-
+  //start the no-google APIs
   loadNews();
   loadQuote();
-
-  switchView(Views.DEFAULT);
-
-  //call periodic functions the first time
-  timerFunction();
-  weatherFunction();
-  dimensionsFunction();
-
 
   //set regular intervals for periodic functions
   setInterval(timerFunction, delayTime);
   setInterval(weatherFunction, delayWeather);
   setInterval(dimensionsFunction, delayDimensions);
 
-  //Startup procedure
-  showViewTextAnimated([greeting_startup]);
-  let audioElement = document.createElement('audio');
-  audioElement.setAttribute('src', './Sounds/startup.ogg');
-  audioElement.play();
-
-  clickAudio = document.createElement('audio');
-  clickAudio.setAttribute('src', './Sounds/touch.mp3');
-
-
-
   //The click event when the google button is clicked.
-  $("#google_account").click(function() {
+  googleAccountButton.click(function() {
     clickAudio.play();
     if (signedIn)
       gapi.auth2.getAuthInstance().signOut();
@@ -890,6 +899,7 @@ function main() {
       prompt: "select_account"
     });
   });
+
   onlyMirrorButton.click(function() {
     clickAudio.play();
     switch (setOnlyMirror) {
@@ -921,7 +931,7 @@ function main() {
     clickAudio.play();
     switchFunction(Functions.CALENDAR);
   };
-  $("#upcoming_events").click(clickCalendarFunction);
+  upcomingEventsContainer.click(clickCalendarFunction);
   appCalendarButton.click(clickCalendarFunction);
   appEMailButton.click(function() {
     clickAudio.play();
@@ -1301,7 +1311,7 @@ function timerFunction() {
 }
 
 
-//region Switch views in HTML
+//region: Switch views in HTML
 
 /**
  * This function shows all elements in a string-array with animations on the viewTextAnimated and is recursive.
@@ -1359,7 +1369,7 @@ function getViewForViewId(id) {
 
 //endregion
 
-//region Switch functions in HTML
+//region: Switch functions in HTML
 function switchFunction(functionId) {
   getFunctionForFunctionId(activeFunction).fadeOut(200, function() {
     activeFunction = functionId;
@@ -1433,7 +1443,7 @@ let calendarEntries = [];
 let eMails = [];
 let news = [];
 
-//region Refresh HTML elements in the UI
+//region: Refresh HTML elements in the UI
 function refreshGMailData() {
 
 }
@@ -1598,9 +1608,9 @@ function refreshCalendarEntryData() {
 
 //endregion
 
-//region Load Data from APIs
+//region: Load Data from APIs
 
-//region The API calls to quotesondesign.com for quotes
+//region: The API calls to quotesondesign.com for quotes
 /**
  * Load a random quote and save it.
  */
@@ -1620,7 +1630,7 @@ function loadQuote() {
 
 //endregion
 
-//region The API calls to newsapi.org for news
+//region: The API calls to newsapi.org for news
 let NEWS_API_KEY = "7690807f99fc4759b17f8c6d404c2867";
 
 /**
@@ -1652,10 +1662,10 @@ function loadNews() {
 
 //endregion
 
-//region The API calls to google APIs for google account-data
+//region: The API calls to google APIs for google account-data
 
 /**
- * Gets called as soon as the page is ready and initializes the google api connections.
+ * Is called as soon as the page is ready and initializes the google api service connections.
  */
 function handleClientLoad() {
   gapi.load('client:auth2', initAuthentication);
@@ -1668,9 +1678,8 @@ let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/
 //Authorization scopes required by the API.
 let SCOPES = "https://www.googleapis.com/auth/calendar profile https://www.googleapis.com/auth/gmail.readonly";
 
-
 /**
- * Gets called to initialize the connection with the google CLIENT_ID.
+ * Is called to initialize the connection with the google CLIENT_ID.
  */
 function initAuthentication() {
   gapi.client.init({
@@ -1680,7 +1689,6 @@ function initAuthentication() {
   }).then(function() {
     // Listen for sign-in state changes.
     gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
 
     // Handle the initial sign-in state.
     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
@@ -1706,7 +1714,6 @@ function updateSigninStatus(isSignedIn) {
 }
 
 function loadYouTubeData() {
-
   gapi.client.youtube.channels.list({
     'part': 'snippet,contentDetails',
     'mine': true
@@ -1815,7 +1822,7 @@ function loadCalendarEntries() {
 //endregion
 //endregion
 
-//region Classes for API elements
+//region: Classes for API elements
 /**
  * One calendar entry with the needed data.
  */
