@@ -933,6 +933,7 @@ function main() {
   };
   upcomingEventsContainer.click(clickCalendarFunction);
   appCalendarButton.click(clickCalendarFunction);
+
   appEMailButton.click(function() {
     clickAudio.play();
     switchFunction(Functions.EMAIL);
