@@ -811,7 +811,7 @@ function setTextToHTML() {
 /**
  * This function is used for loading the sound elements and to make them executeable.
  */
-function loadSoundElements(){
+function loadSoundElements() {
   startupAudio = document.createElement('audio');
   startupAudio.setAttribute('src', './Sounds/startup.ogg');
   clickAudio = document.createElement('audio');
@@ -1050,7 +1050,7 @@ function weatherFunction() {
     woeid: '',
     unit: 'c',
     success: function(weather) {
-      backupWeatherLocation = weather.city + ", "+weather.country;
+      backupWeatherLocation = weather.city + ", " + weather.country;
       inputWeatherLocation.val(backupWeatherLocation);
       saveCookies();
 
@@ -1471,9 +1471,9 @@ function refreshNewsData() {
     i++;
     if (i < 12) {
       tableString += "<tr><td style='font-weight:bold'>" + item.releaseDate.toDateString() + " - " + item.title + "</td></tr>";
-      if(item.description!=null)
+      if (item.description != null)
         tableString += "<tr><td>" + item.description + "</td></tr>";
-      tableString+="<tr><td style='padding-bottom:15px'>-";
+      tableString += "<tr><td style='padding-bottom:15px'>-";
       if (item.author != null)
         tableString += item.author;
       else
@@ -1624,7 +1624,9 @@ let QUOTES_API_KEY = "o9HEfARjPmmshcGxwOx17LzowqYSp1XqLhIjsnFhQEyHbz2jGj"
 function loadQuote() {
   $.ajax({
     url: "https://andruxnet-random-famous-quotes.p.mashape.com/?cat=famous&count=1",
-    beforeSend: function(xhr){xhr.setRequestHeader('X-Mashape-Key', QUOTES_API_KEY);},
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader('X-Mashape-Key', QUOTES_API_KEY);
+    },
     success: function(data) {
       quote = new Quote(data.quote, data.author);
       textQuoteQuote.html(quote.quote);
@@ -1650,8 +1652,8 @@ function loadNews() {
   $.ajax({
     url: "https://newsapi.org/v2/top-headlines?country=at&apiKey=" + NEWS_API_KEY,
     success: function(data) {
-      data.articles.forEach(function(element){
-        news.push(new News(element.title,element.description,element.author,element.publishedAt,element.url,element.source.name));
+      data.articles.forEach(function(element) {
+        news.push(new News(element.title, element.description, element.author, element.publishedAt, element.url, element.source.name));
         refreshNewsData();
       });
     }
@@ -1700,16 +1702,20 @@ function initAuthentication() {
 function updateSigninStatus(isSignedIn) {
   if (isSignedIn) {
     signedIn = true;
+    appEMailButton.fadeIn(0,null);
+    appCalendarButton.fadeIn(0,null);
     loadGoogleData();
   } else {
     calendarEntries = [];
     eMails = [];
+    appEMailButton.fadeOut(0,null);
+    appCalendarButton.fadeOut(0,null);
     signedIn = false;
   }
 }
 
-function loadGoogleData(){
-  if(signedIn){
+function loadGoogleData() {
+  if (signedIn) {
     loadCalendarEntries();
     loadProfileData();
     loadGMailData();
@@ -1730,7 +1736,7 @@ function loadYouTubeData() {
  * Load the 15 closest emails from the active google account and add them to the eMails list.
  */
 function loadGMailData() {
-  eMails=[];
+  eMails = [];
   gapi.client.gmail.users.messages.list({
     'userId': "me",
     'maxResults': 15,
