@@ -1470,7 +1470,10 @@ function refreshNewsData() {
   news.forEach(function(item) {
     i++;
     if (i < 12) {
-      tableString += "<tr><td>" + item.releaseDate.toDateString() + " - " + item.title + "</td></tr><tr><td>" + item.description + "</td></tr><tr><td>-";
+      tableString += "<tr><td style='font-weight:bold'>" + item.releaseDate.toDateString() + " - " + item.title + "</td></tr>";
+      if(item.description!=null)
+        tableString += "<tr><td>" + item.description + "</td></tr>";
+      tableString+="<tr><td style='padding-bottom:15px'>-";
       if (item.author != null)
         tableString += item.author;
       else
@@ -1612,15 +1615,18 @@ function refreshCalendarEntryData() {
 
 //region: Load Data from APIs
 
-//region: The API calls to quotesondesign.com for quotes
+//region: The API calls for quotes. Visit https://market.mashape.com/andruxnet/random-famous-quotes for more information.
 /**
  * Load a random quote and save it.
  */
+let QUOTES_API_KEY = "o9HEfARjPmmshcGxwOx17LzowqYSp1XqLhIjsnFhQEyHbz2jGj"
+
 function loadQuote() {
   $.ajax({
-    url: "https://quotesondesign.com/wp-json/posts?filter[orderby]=rand",
+    url: "https://andruxnet-random-famous-quotes.p.mashape.com/?cat=famous&count=1",
+    beforeSend: function(xhr){xhr.setRequestHeader('X-Mashape-Key', QUOTES_API_KEY);},
     success: function(data) {
-      quote = new Quote(data[0].content, data[0].title);
+      quote = new Quote(data.quote, data.author);
       textQuoteQuote.html(quote.quote);
       textQuoteAuthor.html(quote.author);
     },
@@ -1642,21 +1648,11 @@ let NEWS_API_KEY = "7690807f99fc4759b17f8c6d404c2867";
 function loadNews() {
   news = [];
   $.ajax({
-    url: "https://newsapi.org/v1/sources?language=DE&apiKey=" + NEWS_API_KEY,
+    url: "https://newsapi.org/v2/top-headlines?country=at&apiKey=" + NEWS_API_KEY,
     success: function(data) {
-      data.sources.forEach(function(source) {
-        $.ajax({
-          url: "https://newsapi.org/v1/articles?source=" + source.id + "&sortBy=top&apiKey=" + NEWS_API_KEY,
-          success: function(data) {
-            data.articles.forEach(function(article) {
-              news.push(new News(article.title, article.description, article.author, article.publishedAt, article.url, source.id));
-              refreshNewsData();
-            });
-          },
-          error: function(data) {
-
-          }
-        });
+      data.articles.forEach(function(element){
+        news.push(new News(element.title,element.description,element.author,element.publishedAt,element.url,element.source.name));
+        refreshNewsData();
       });
     }
   });
@@ -1829,7 +1825,7 @@ function loadCalendarEntries() {
 
 //region: Classes for API elements
 /**
- * One calendar entry with the needed data.
+ * One calendar entry with the required data.
  */
 class CalendarEntry {
   constructor(title, datetime, calendarType) {
@@ -1840,7 +1836,7 @@ class CalendarEntry {
 }
 
 /**
- * One email with the needed data.
+ * One email with the required data.
  */
 class EMail {
   constructor(id, subject, utcTime) {
@@ -1854,7 +1850,7 @@ class EMail {
 }
 
 /**
- * One News with the needed data. The url is the URL to the official site.
+ * One News with the required data. The url is the URL to the official site.
  */
 class News {
   constructor(title, description, author, releaseDate, url, source) {
@@ -1868,7 +1864,7 @@ class News {
 }
 
 /**
- * The quote with the needed data.
+ * The quote with the required data.
  */
 class Quote {
   constructor(quote, author) {
