@@ -93,7 +93,7 @@ let signedIn = false;
 
 //delays for different functions
 let delayWeather = 900000; //every 15 minutes
-let delayGoogleRefresh = 900000; //every 15 minutes
+let delayLongRefresh = 900000; //every 15 minutes
 let delayTime = 1000; //every second
 let delayDimensions = 1000; //every second
 
@@ -808,6 +808,9 @@ function setTextToHTML() {
   inputWeatherLocation.attr("placeholder", settings_location_placeholder);
 }
 
+/**
+ * This function is used for loading the sound elements and to make them executeable.
+ */
 function loadSoundElements(){
   startupAudio = document.createElement('audio');
   startupAudio.setAttribute('src', './Sounds/startup.ogg');
@@ -888,6 +891,8 @@ function main() {
   setInterval(timerFunction, delayTime);
   setInterval(weatherFunction, delayWeather);
   setInterval(dimensionsFunction, delayDimensions);
+  setInterval(loadNews, delayLongRefresh);
+  setInterval(loadGoogleData, delayLongRefresh);
 
   //The click event when the google button is clicked.
   googleAccountButton.click(function() {
@@ -1045,7 +1050,6 @@ function weatherFunction() {
     woeid: '',
     unit: 'c',
     success: function(weather) {
-      //backupWeatherLocation = inputWeatherLocation.val();
       backupWeatherLocation = weather.city + ", "+weather.country;
       inputWeatherLocation.val(backupWeatherLocation);
       saveCookies();
@@ -1447,15 +1451,10 @@ let eMails = [];
 let news = [];
 
 //region: Refresh HTML elements in the UI
-function refreshGMailData() {
-
-}
-
-
 let currentMonth;
 let currentYear;
 
-function refreshEMailData() {
+function refreshGMailData() {
   let tableString = "";
   eMails.forEach(function(eMail) {
     let dateText = eMail.datetime.getDate().toString() + "." + (eMail.datetime.getMonth() + 1).toString() + "." + (eMail.datetime.getYear() + 1900).toString();
@@ -1705,14 +1704,20 @@ function initAuthentication() {
 function updateSigninStatus(isSignedIn) {
   if (isSignedIn) {
     signedIn = true;
-    loadCalendarEntries();
-    loadProfileData();
-    loadGMailData();
-    loadYouTubeData();
+    loadGoogleData();
   } else {
     calendarEntries = [];
     eMails = [];
     signedIn = false;
+  }
+}
+
+function loadGoogleData(){
+  if(signedIn){
+    loadCalendarEntries();
+    loadProfileData();
+    loadGMailData();
+    loadYouTubeData();
   }
 }
 
@@ -1729,6 +1734,7 @@ function loadYouTubeData() {
  * Load the 15 closest emails from the active google account and add them to the eMails list.
  */
 function loadGMailData() {
+  eMails=[];
   gapi.client.gmail.users.messages.list({
     'userId': "me",
     'maxResults': 15,
@@ -1741,7 +1747,7 @@ function loadGMailData() {
         'id': message.id
       }).then(function(resp) {
         eMails.push(new EMail(message.id, resp.result.snippet, resp.result.internalDate));
-        refreshEMailData();
+        refreshGMailData();
       });
     });
   });
