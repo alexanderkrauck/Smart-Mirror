@@ -1045,7 +1045,9 @@ function weatherFunction() {
     woeid: '',
     unit: 'c',
     success: function(weather) {
-      backupWeatherLocation = inputWeatherLocation.val();
+      //backupWeatherLocation = inputWeatherLocation.val();
+      backupWeatherLocation = weather.city + ", "+weather.country;
+      inputWeatherLocation.val(backupWeatherLocation);
       saveCookies();
 
       let sunrise = parseSpecialTimeToDate(weather.sunrise);
@@ -1724,7 +1726,7 @@ function loadYouTubeData() {
 }
 
 /**
- * Load the 10 closest emails from the active google account and add them to the eMails list.
+ * Load the 15 closest emails from the active google account and add them to the eMails list.
  */
 function loadGMailData() {
   gapi.client.gmail.users.messages.list({
@@ -1782,10 +1784,8 @@ function loadCalendarEntries() {
   });
   gapi.client.calendar.events.list({
     'calendarId': '#contacts@group.v.calendar.google.com',
-    //'timeMin': (new Date()).toISOString(),
     'showDeleted': false,
     'singleEvents': true,
-    //'maxResults': 10,
     'orderBy': 'startTime'
   }).then(function(response) {
     let events = response.result.items;
@@ -1801,10 +1801,8 @@ function loadCalendarEntries() {
   });
   gapi.client.calendar.events.list({
     'calendarId': 'de.austrian#holiday@group.v.calendar.google.com',
-    //'timeMin': (new Date()).toISOString(),
     'showDeleted': false,
     'singleEvents': true,
-    //'maxResults': 10,
     'orderBy': 'startTime'
   }).then(function(response) {
     let events = response.result.items;
