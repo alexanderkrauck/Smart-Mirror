@@ -144,6 +144,7 @@ let textGoogleAccountUsername;
 let textGoogleAccountHeadingPermissions;
 let textGoogleAccountPermissionGmail;
 let textGoogleAccountPermissionCalendar;
+let textGoogleAccountPermissionProfile;
 let imageGoogleAccount;
 
 
@@ -272,6 +273,7 @@ let google_account_function_heading_signed_in;
 let google_account_function_heading_permissions;
 let google_account_function_permission_gmail;
 let google_account_function_permission_calendar;
+let google_account_function_permission_profile;
 
 let settings_languages_subtitle;
 let settings_temperature_unit_subtitle;
@@ -359,6 +361,7 @@ let en_google_account_function_heading_signed_in = "Currently signed in the Goog
 let en_google_account_function_heading_permissions = "This application is allowed to";
 let en_google_account_function_permission_calendar ="Request data from the Calendar application of Google";
 let en_google_account_function_permission_gmail = "Request data from the GMail application of Google";
+let en_google_account_function_permission_profile = "Request data from the Google profile"
 
 let en_settings_system_title = "System";
 let en_settings_calendar_title = "Calendar";
@@ -449,6 +452,7 @@ let de_google_account_function_heading_signed_in = "Momenten eingeloggt in den G
 let de_google_account_function_heading_permissions = "Diese Anwendung darf";
 let de_google_account_function_permission_calendar = "Daten von der Google Kalender Anwendung abfragen";
 let de_google_account_function_permission_gmail = "Daten von der Google Mail Anwendung abfragen";
+let de_google_account_function_permission_profile = "Daten vom Google Profil abfragen"
 
 let de_settings_system_title = "System";
 let de_settings_calendar_title = "Kalender";
@@ -598,6 +602,7 @@ function setLanguages() {
       google_account_function_heading_permissions = en_google_account_function_heading_permissions;
       google_account_function_permission_calendar = en_google_account_function_permission_calendar;
       google_account_function_permission_gmail = en_google_account_function_permission_gmail;
+      google_account_function_permission_profile = en_google_account_function_permission_profile;
 
       settings_system_title = en_settings_system_title;
       settings_calendar_title = en_settings_calendar_title;
@@ -688,6 +693,7 @@ function setLanguages() {
       google_account_function_heading_permissions = de_google_account_function_heading_permissions;
       google_account_function_permission_calendar = de_google_account_function_permission_calendar;
       google_account_function_permission_gmail = de_google_account_function_permission_gmail;
+      google_account_function_permission_profile = de_google_account_function_permission_profile;
 
       settings_system_title = de_settings_system_title;
       settings_calendar_title = de_settings_calendar_title;
@@ -771,6 +777,7 @@ function loadHTMLElements() {
   textFunctionGoogleAccountTitle = $("#google_account_title");
   textGoogleAccountPermissionCalendar = $("#google_account_function_permission_calendar");
   textGoogleAccountPermissionGmail = $("#google_account_function_permission_gmail");
+  textGoogleAccountPermissionProfile = $("#google_account_function_permission_profile");
 
   textSettingsSystemTitle = $("#system_settings_title");
   textSettingsCalendarTitle = $("#calendar_settings_title");
@@ -835,6 +842,7 @@ function setTextToHTML() {
   textGoogleAccountHeadingSignedIn.html(google_account_function_heading_signed_in);
   textGoogleAccountPermissionCalendar.html(google_account_function_permission_calendar);
   textGoogleAccountPermissionGmail.html(google_account_function_permission_gmail);
+  textGoogleAccountPermissionProfile.html(google_account_function_permission_profile);
 
   textSettingsSystemTitle.html(settings_system_title);
   textSettingsCalendarTitle.html(settings_calendar_title);
