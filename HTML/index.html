@@ -77,6 +77,34 @@
     <div id="container_functions">
       <!--The container of all the functions-->
       <div id="running_function">
+        <div style="display:none" id="google_account_function">
+          <p class="function_title" id="google_account_title">Google Account</p>
+
+          <!--This is displayed if the user is signed in-->
+          <div id="google_account_function_body_signed_in">
+            <table style="width:100%">
+              <tr>
+                <td style="vertical-align:top">
+                  <div>
+                    <p id="google_account_function_heading_signed_in" class="settings_area_title"/>
+                    <p id="google_account_function_username" class="settings_area_subtitle"/>
+                    <p id="google_account_function_heading_permissions" style="font-weight:bold"/>
+                    <ul>
+                      <li id="google_account_function_permission_gmail"></li>
+                      <li id="google_account_function_permission_calendar"></li>
+                    </ul>
+                  </div>
+                </td>
+                <td style="width:300px;height:300px"><img id="google_account_function_profile_image" style="width:300px;height:300px;border-radius:100%"/></td>
+              </tr>
+            </table>
+          </div>
+          <!--This is displayed if the user is signed out-->
+          <div id="google_account_function_body_signed_out">
+
+          </div>
+        </div>
+
         <!--The Calendar-Function-->
         <div style="display: none" id="calendar_function">
           <!--The Top Title of the Calendar Function-->
@@ -438,7 +466,7 @@
           </table>
         </div>
         <div id="google_functions">
-          <p id="google_account_title" class="title_text" />
+          <p id="google_account_title_base" class="title_text" />
           <table>
             <tr id="google_account">
               <td>

@@ -92,10 +92,8 @@ let signedIn = false;
 //endregion
 
 //delays for different functions
-let delayWeather = 900000; //every 15 minutes
-let delayLongRefresh = 900000; //every 15 minutes
-let delayTime = 1000; //every second
-let delayDimensions = 1000; //every second
+let delayAPIRefresh = 900000; //every 15 minutes
+let delayCriticalRefresh = 1000; //every second
 
 //icon locations
 let locationIconSunny = "./Icons/weather_sunny.svg";
@@ -124,7 +122,7 @@ let appYoutubeText;
 let appCalendarText;
 let appNewsText;
 
-let googleAccountTitle;
+let googleAccountTitleBase;
 let googleAccountName;
 let googleAccountImage;
 
@@ -141,6 +139,14 @@ let appCalendarButton;
 let appEMailButton;
 let appNewsButton;
 
+let textGoogleAccountHeadingSignedIn;
+let textGoogleAccountUsername;
+let textGoogleAccountHeadingPermissions;
+let textGoogleAccountPermissionGmail;
+let textGoogleAccountPermissionCalendar;
+let imageGoogleAccount;
+
+
 let calendarBackButton;
 let calendarForwardButton;
 
@@ -155,6 +161,7 @@ let textQuoteAuthor;
 let textFunctionSettingsTitle;
 let textFunctionCalendarTitle;
 let textFuntionEMailTitle;
+let textFunctionGoogleAccountTitle;
 
 let textSettingsSystemTitle;
 let textSettingsCalendarTitle;
@@ -255,10 +262,16 @@ let only_mirror;
 let settings_title;
 let calendar_title;
 let email_title;
+let google_account_title;
 
 let settings_system_title;
 let settings_calendar_title;
 let settings_weather_title;
+
+let google_account_function_heading_signed_in;
+let google_account_function_heading_permissions;
+let google_account_function_permission_gmail;
+let google_account_function_permission_calendar;
 
 let settings_languages_subtitle;
 let settings_temperature_unit_subtitle;
@@ -340,6 +353,12 @@ let en_only_mirror = "Only Mirror";
 let en_settings_title = "Settings";
 let en_calendar_title = "Calendar";
 let en_email_title = "EMail";
+let en_google_account_title="Google Account"
+
+let en_google_account_function_heading_signed_in = "Currently signed in the Google Account";
+let en_google_account_function_heading_permissions = "This application is allowed to";
+let en_google_account_function_permission_calendar ="Request data from the Calendar application of Google";
+let en_google_account_function_permission_gmail = "Request data from the GMail application of Google";
 
 let en_settings_system_title = "System";
 let en_settings_calendar_title = "Calendar";
@@ -417,7 +436,7 @@ let de_app_youtube = "YouTube";
 let de_app_calendar = "Kalender";
 let de_app_news = "Nachrichten";
 
-let de_google_account = "Google Account";
+let de_google_account = "Google Konto";
 let de_settings = "Einstellungen";
 let de_back = "Zurück";
 let de_only_mirror = "Nur Spiegel";
@@ -426,9 +445,15 @@ let de_settings_title = "Einstellungen";
 let de_calendar_title = "Kalender";
 let de_email_title = "EMail";
 
+let de_google_account_function_heading_signed_in = "Momenten eingeloggt in den Google Account";
+let de_google_account_function_heading_permissions = "Diese Anwendung darf";
+let de_google_account_function_permission_calendar = "Daten von der Google Kalender Anwendung abfragen";
+let de_google_account_function_permission_gmail = "Daten von der Google Mail Anwendung abfragen";
+
 let de_settings_system_title = "System";
 let de_settings_calendar_title = "Kalender";
 let de_settings_weather_title = "Wetter";
+let de_google_account_title = "Google Konto"
 
 let de_settings_languages_subtitle = "Sprachen";
 let de_settings_temperature_unit_subtitle = "Temperatureeinheit";
@@ -567,6 +592,12 @@ function setLanguages() {
       settings_title = en_settings_title;
       calendar_title = en_calendar_title;
       email_title = en_email_title;
+      google_account_title = en_google_account_title;
+
+      google_account_function_heading_signed_in = en_google_account_function_heading_signed_in;
+      google_account_function_heading_permissions = en_google_account_function_heading_permissions;
+      google_account_function_permission_calendar = en_google_account_function_permission_calendar;
+      google_account_function_permission_gmail = en_google_account_function_permission_gmail;
 
       settings_system_title = en_settings_system_title;
       settings_calendar_title = en_settings_calendar_title;
@@ -651,6 +682,12 @@ function setLanguages() {
       settings_title = de_settings_title;
       calendar_title = de_calendar_title;
       email_title = de_email_title;
+      google_account_title_base = de_google_account_title;
+
+      google_account_function_heading_signed_in = de_google_account_function_heading_signed_in;
+      google_account_function_heading_permissions = de_google_account_function_heading_permissions;
+      google_account_function_permission_calendar = de_google_account_function_permission_calendar;
+      google_account_function_permission_gmail = de_google_account_function_permission_gmail;
 
       settings_system_title = de_settings_system_title;
       settings_calendar_title = de_settings_calendar_title;
@@ -699,7 +736,7 @@ function loadHTMLElements() {
 
   googleAccountImage = $("#google_account_image");
   googleAccountName = $("#google_account_name");
-  googleAccountTitle = $("#google_account_title");
+  googleAccountTitleBase = $("#google_account_title_base");
 
   onlyMirrorText = $("#only_mirror_text");
   settingsText = $("#settings_text");
@@ -714,6 +751,11 @@ function loadHTMLElements() {
   appEMailButton = $("#button_app_email");
   appNewsButton = $("#button_app_news");
 
+  textGoogleAccountUsername = $("#google_account_function_username");
+  textGoogleAccountHeadingSignedIn = $("#google_account_function_heading_signed_in");
+  textGoogleAccountHeadingPermissions = $("#google_account_function_heading_permissions");
+  imageGoogleAccount = $("#google_account_function_profile_image");
+
   calendarBackButton = $("#calendar_back_button");
   calendarForwardButton = $("#calendar_forward_button");
   calendarBackText = $("#calendar_back_text");
@@ -726,6 +768,9 @@ function loadHTMLElements() {
   textFunctionSettingsTitle = $("#settings_title");
   textFunctionCalendarTitle = $("#calendar_title");
   textFunctionEMailTitle = $("#email_title");
+  textFunctionGoogleAccountTitle = $("#google_account_title");
+  textGoogleAccountPermissionCalendar = $("#google_account_function_permission_calendar");
+  textGoogleAccountPermissionGmail = $("#google_account_function_permission_gmail");
 
   textSettingsSystemTitle = $("#system_settings_title");
   textSettingsCalendarTitle = $("#calendar_settings_title");
@@ -773,7 +818,7 @@ function setTextToHTML() {
   settingsText.html(settings);
   backText.html(back);
 
-  googleAccountTitle.html(google_account);
+  googleAccountTitleBase.html(google_account);
 
   appSearchText.html(app_search);
   appEmailText.html(app_email);
@@ -784,6 +829,12 @@ function setTextToHTML() {
   textFunctionSettingsTitle.html(settings_title);
   textFunctionCalendarTitle.html(calendar_title);
   textFunctionEMailTitle.html(email_title);
+  textFunctionGoogleAccountTitle.html(google_account_title);
+
+  textGoogleAccountHeadingPermissions.html(google_account_function_heading_permissions);
+  textGoogleAccountHeadingSignedIn.html(google_account_function_heading_signed_in);
+  textGoogleAccountPermissionCalendar.html(google_account_function_permission_calendar);
+  textGoogleAccountPermissionGmail.html(google_account_function_permission_gmail);
 
   textSettingsSystemTitle.html(settings_system_title);
   textSettingsCalendarTitle.html(settings_calendar_title);
@@ -888,21 +939,20 @@ function main() {
   loadQuote();
 
   //set regular intervals for periodic functions
-  setInterval(timerFunction, delayTime);
-  setInterval(weatherFunction, delayWeather);
-  setInterval(dimensionsFunction, delayDimensions);
-  setInterval(loadNews, delayLongRefresh);
-  setInterval(loadGoogleData, delayLongRefresh);
+  setInterval(periodicalAPIRefresh,delayAPIRefresh);
+  setInterval(periodicalCriticalRefresh,delayCriticalRefresh);
 
   //The click event when the google button is clicked.
   googleAccountButton.click(function() {
     clickAudio.play();
-    if (signedIn)
-      gapi.auth2.getAuthInstance().signOut();
-    gapi.auth2.getAuthInstance().signIn({
-      ux_mode: "popup",
-      prompt: "select_account"
-    });
+    switchFunction(Functions.GOOGLE_ACCOUNT);
+    //if (signedIn)
+    //  gapi.auth2.getAuthInstance().signOut();
+    //gapi.auth2.getAuthInstance().signIn({
+    //  ux_mode: "popup",
+    //  prompt: "select_account"
+    //});
+
   });
 
   onlyMirrorButton.click(function() {
@@ -1029,6 +1079,17 @@ function main() {
   });
 }
 //endregion
+
+function periodicalAPIRefresh(){
+  loadGoogleData();
+  loadNews();
+  weatherFunction();
+}
+function periodicalCriticalRefresh(){
+  dimensionsFunction();
+  timerFunction();
+}
+
 
 /**
  * This periodical function sets the dimensions of the body regulary to the width and height of the window.
@@ -1339,7 +1400,7 @@ function showViewTextAnimated(text) {
 }
 
 /**
- * Changes the active view to the give view.
+ * Changes the active view to the given view.
  * @param view
  */
 function switchView(viewId) {
@@ -1399,6 +1460,10 @@ function switchFunction(functionId) {
         $("#weather_preview").fadeOut(0, null);
         backButton.fadeIn(0, null);
       case Functions.GOOGLE_ACCOUNT:
+        $("#google_account_function").fadeIn(200,null);
+        $("#upcoming_events").fadeOut(0,null);
+        $("#weather_preview").fadeOut(0, null);
+        backButton.fadeIn(0, null);
         break;
       case Functions.WEATHER:
         break;
@@ -1431,7 +1496,7 @@ function getFunctionForFunctionId(id) {
     case Functions.EMAIL:
       return $("#email_function");
     case Functions.GOOGLE_ACCOUNT:
-      return null;
+      return $("#google_account_function");
     case Functions.WEATHER:
       return null;
     case Functions.YOUTUBE:
@@ -1632,7 +1697,7 @@ function loadQuote() {
       textQuoteQuote.html(quote.quote);
       textQuoteAuthor.html(quote.author);
     },
-    error: function(data) {
+    error: function(error) {
 
     }
   });
@@ -1765,6 +1830,8 @@ function loadProfileData() {
   }).then(function(response) {
     $("#google_account_name").html(response.result.names[0].displayName);
     $("#google_account_image").css("background-image", "URL(" + response.result.photos[0].url + ")");
+    imageGoogleAccount.attr("src",response.result.photos[0].url);
+    textGoogleAccountUsername.html(response.result.names[0].displayName);
   });
 }
 
