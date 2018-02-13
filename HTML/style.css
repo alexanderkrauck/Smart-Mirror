@@ -304,10 +304,10 @@ p {
   font-weight: 300
 }
 
-#google_account_image {
+#google_account_image{
   display: inline-block;
   border-radius: 100%;
-  background-image: url(Icons/add_outline.svg);
+  background-image: url(Icons/google_logo.svg);
   background-size: cover;
   height: 45px;
   width: 45px;

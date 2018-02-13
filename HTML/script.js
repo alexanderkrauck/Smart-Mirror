@@ -89,6 +89,7 @@ let setWeatherLocation = "Leonding";
 let backupWeatherLocation = "Leonding";
 
 let signedIn = false;
+let signedInUsername;
 //endregion
 
 //delays for different functions
@@ -123,7 +124,7 @@ let appCalendarText;
 let appNewsText;
 
 let googleAccountTitleBase;
-let googleAccountName;
+let googleAccountDesignationText;
 let googleAccountImage;
 
 let onlyMirrorText;
@@ -145,7 +146,14 @@ let textGoogleAccountHeadingPermissions;
 let textGoogleAccountPermissionGmail;
 let textGoogleAccountPermissionCalendar;
 let textGoogleAccountPermissionProfile;
+let textGoogleAccountHeadingSignedOut;
+let textGoogleAccountHeadingFeatures;
+let textGoogleAccountFeatureCalendar;
+let textGoogleAccountFeatureProfile;
+let textGoogleAccountFeatureGmail;
 let imageGoogleAccount;
+let bodyGoogleAccountSignedIn;
+let bodyGoogleAccountSignedOut;
 
 
 let calendarBackButton;
@@ -274,6 +282,11 @@ let google_account_function_heading_permissions;
 let google_account_function_permission_gmail;
 let google_account_function_permission_calendar;
 let google_account_function_permission_profile;
+let google_account_function_heading_signed_out;
+let google_account_function_heading_features;
+let google_account_function_feature_gmail;
+let google_account_function_feature_profile;
+let google_account_function_feature_calendar;
 
 let settings_languages_subtitle;
 let settings_temperature_unit_subtitle;
@@ -355,13 +368,18 @@ let en_only_mirror = "Only Mirror";
 let en_settings_title = "Settings";
 let en_calendar_title = "Calendar";
 let en_email_title = "EMail";
-let en_google_account_title="Google Account"
+let en_google_account_title = "Google Account"
 
 let en_google_account_function_heading_signed_in = "Currently signed in the Google Account";
 let en_google_account_function_heading_permissions = "This application is allowed to";
-let en_google_account_function_permission_calendar ="Request data from the Calendar application of Google";
+let en_google_account_function_permission_calendar = "Request data from the Calendar application of Google";
 let en_google_account_function_permission_gmail = "Request data from the GMail application of Google";
 let en_google_account_function_permission_profile = "Request data from the Google profile"
+let en_google_account_function_heading_signed_out = "Currently not signed in a Google Account";
+let en_google_account_function_heading_features = "When signing in, this application has the ability to";
+let en_google_account_function_feature_gmail = "show data from the Google Mail Account";
+let en_google_account_function_feature_profile = "show data from the Google profile";
+let en_google_account_function_feature_calendar = "show data from the Google Calendar";
 
 let en_settings_system_title = "System";
 let en_settings_calendar_title = "Calendar";
@@ -448,11 +466,16 @@ let de_settings_title = "Einstellungen";
 let de_calendar_title = "Kalender";
 let de_email_title = "EMail";
 
-let de_google_account_function_heading_signed_in = "Momenten eingeloggt in den Google Account";
+let de_google_account_function_heading_signed_in = "Momenten eingeloggt mit dem Google Profil";
 let de_google_account_function_heading_permissions = "Diese Anwendung darf";
 let de_google_account_function_permission_calendar = "Daten von der Google Kalender Anwendung abfragen";
 let de_google_account_function_permission_gmail = "Daten von der Google Mail Anwendung abfragen";
 let de_google_account_function_permission_profile = "Daten vom Google Profil abfragen"
+let de_google_account_function_heading_signed_out = "Momentan mit keinem Google Profil angemeldet";
+let de_google_account_function_heading_features = "Wenn angemeldet, hat diese Anwendung die Fähigkeit";
+let de_google_account_function_feature_gmail = "Daten von Google Mail anzuzeigen";
+let de_google_account_function_feature_profile = "Daten vom Google Profil anzuzeigen";
+let de_google_account_function_feature_calendar = "Daten vom Google Kalender anzuzeigen";
 
 let de_settings_system_title = "System";
 let de_settings_calendar_title = "Kalender";
@@ -603,6 +626,11 @@ function setLanguages() {
       google_account_function_permission_calendar = en_google_account_function_permission_calendar;
       google_account_function_permission_gmail = en_google_account_function_permission_gmail;
       google_account_function_permission_profile = en_google_account_function_permission_profile;
+      google_account_function_heading_signed_out = en_google_account_function_heading_signed_out;
+      google_account_function_heading_features = en_google_account_function_heading_features;
+      google_account_function_feature_gmail = en_google_account_function_feature_gmail;
+      google_account_function_feature_profile = en_google_account_function_feature_profile;
+      google_account_function_feature_calendar = en_google_account_function_feature_calendar;
 
       settings_system_title = en_settings_system_title;
       settings_calendar_title = en_settings_calendar_title;
@@ -694,6 +722,11 @@ function setLanguages() {
       google_account_function_permission_calendar = de_google_account_function_permission_calendar;
       google_account_function_permission_gmail = de_google_account_function_permission_gmail;
       google_account_function_permission_profile = de_google_account_function_permission_profile;
+      google_account_function_heading_signed_out = de_google_account_function_heading_signed_out;
+      google_account_function_heading_features = de_google_account_function_heading_features;
+      google_account_function_feature_gmail = de_google_account_function_feature_gmail;
+      google_account_function_feature_profile = de_google_account_function_feature_profile;
+      google_account_function_feature_calendar = de_google_account_function_feature_calendar;
 
       settings_system_title = de_settings_system_title;
       settings_calendar_title = de_settings_calendar_title;
@@ -741,7 +774,7 @@ function loadHTMLElements() {
   appNewsText = $("#app_news_text");
 
   googleAccountImage = $("#google_account_image");
-  googleAccountName = $("#google_account_name");
+  googleAccountDesignationText = $("#google_account_designation_text");
   googleAccountTitleBase = $("#google_account_title_base");
 
   onlyMirrorText = $("#only_mirror_text");
@@ -778,6 +811,13 @@ function loadHTMLElements() {
   textGoogleAccountPermissionCalendar = $("#google_account_function_permission_calendar");
   textGoogleAccountPermissionGmail = $("#google_account_function_permission_gmail");
   textGoogleAccountPermissionProfile = $("#google_account_function_permission_profile");
+  textGoogleAccountHeadingSignedOut = $("#google_account_function_heading_signed_out");
+  textGoogleAccountHeadingFeatures = $("#google_account_function_heading_features");
+  textGoogleAccountFeatureGmail = $("#google_account_function_feature_gmail");
+  textGoogleAccountFeatureCalendar = $("#google_account_function_feature_calendar");
+  textGoogleAccountFeatureProfile = $("#google_account_function_feature_profile");
+  bodyGoogleAccountSignedIn = $("#google_account_function_body_signed_in");
+  bodyGoogleAccountSignedOut=$("#google_account_function_body_signed_out");
 
   textSettingsSystemTitle = $("#system_settings_title");
   textSettingsCalendarTitle = $("#calendar_settings_title");
@@ -843,6 +883,11 @@ function setTextToHTML() {
   textGoogleAccountPermissionCalendar.html(google_account_function_permission_calendar);
   textGoogleAccountPermissionGmail.html(google_account_function_permission_gmail);
   textGoogleAccountPermissionProfile.html(google_account_function_permission_profile);
+  textGoogleAccountHeadingFeatures.html(google_account_function_heading_features);
+  textGoogleAccountHeadingSignedOut.html(google_account_function_heading_signed_out);
+  textGoogleAccountFeatureCalendar.html(google_account_function_feature_calendar);
+  textGoogleAccountFeatureGmail.html(google_account_function_feature_gmail);
+  textGoogleAccountFeatureProfile.html(google_account_function_feature_profile);
 
   textSettingsSystemTitle.html(settings_system_title);
   textSettingsCalendarTitle.html(settings_calendar_title);
@@ -947,20 +992,27 @@ function main() {
   loadQuote();
 
   //set regular intervals for periodic functions
-  setInterval(periodicalAPIRefresh,delayAPIRefresh);
-  setInterval(periodicalCriticalRefresh,delayCriticalRefresh);
+  setInterval(periodicalAPIRefresh, delayAPIRefresh);
+  setInterval(periodicalCriticalRefresh, delayCriticalRefresh);
 
   //The click event when the google button is clicked.
   googleAccountButton.click(function() {
     clickAudio.play();
-    switchFunction(Functions.GOOGLE_ACCOUNT);
-    //if (signedIn)
-    //  gapi.auth2.getAuthInstance().signOut();
-    //gapi.auth2.getAuthInstance().signIn({
-    //  ux_mode: "popup",
-    //  prompt: "select_account"
-    //});
+    if (activeFunction == Functions.GOOGLE_ACCOUNT) {
+      if (signedIn) {
+        gapi.auth2.getAuthInstance().signOut();
+        googleAccountDesignationText.html("Sign in");
+        $("#google_account_image").css("background-image", "URL(Icons/google_logo.svg)");
+        updateSigninStatus(false);
 
+      } else {
+        gapi.auth2.getAuthInstance().signIn({
+            ux_mode: "popup",
+            prompt: "select_account"
+        });
+      }
+    }
+    switchFunction(Functions.GOOGLE_ACCOUNT);
   });
 
   onlyMirrorButton.click(function() {
@@ -1088,12 +1140,13 @@ function main() {
 }
 //endregion
 
-function periodicalAPIRefresh(){
+function periodicalAPIRefresh() {
   loadGoogleData();
   loadNews();
   weatherFunction();
 }
-function periodicalCriticalRefresh(){
+
+function periodicalCriticalRefresh() {
   dimensionsFunction();
   timerFunction();
 }
@@ -1449,6 +1502,9 @@ function getViewForViewId(id) {
 function switchFunction(functionId) {
   getFunctionForFunctionId(activeFunction).fadeOut(200, function() {
     activeFunction = functionId;
+    if (activeFunction != Functions.GOOGLE_ACCOUNT)
+      if (signedIn)
+        googleAccountDesignationText.html(signedInUsername);
     switch (activeFunction) {
       case Functions.DEFAULT:
         $("#apps_table").fadeIn(0, null);
@@ -1468,9 +1524,17 @@ function switchFunction(functionId) {
         $("#weather_preview").fadeOut(0, null);
         backButton.fadeIn(0, null);
       case Functions.GOOGLE_ACCOUNT:
-        $("#google_account_function").fadeIn(200,null);
-        $("#upcoming_events").fadeOut(0,null);
+        $("#google_account_function").fadeIn(200, null);
+        $("#upcoming_events").fadeOut(0, null);
         $("#weather_preview").fadeOut(0, null);
+        if (signedIn) {
+          googleAccountDesignationText.html("Sign Out");
+          bodyGoogleAccountSignedIn.fadeIn(0,null);
+          bodyGoogleAccountSignedOut.fadeOut(0,null);
+        }else{
+          bodyGoogleAccountSignedIn.fadeOut(0,null);
+          bodyGoogleAccountSignedOut.fadeIn(0,null)
+        }
         backButton.fadeIn(0, null);
         break;
       case Functions.WEATHER:
@@ -1563,6 +1627,10 @@ function refreshNewsData() {
  * The string contains the last 10 calendar entries.
  */
 function refreshCalendarEntryData() {
+  if(calendarEntries.length==0){
+    $("#upcoming_events").html("");
+    return;
+  }
   calendarEntries.sort(function(a, b) {
     return a.datetime.getTime() - b.datetime.getTime();
   });
@@ -1775,14 +1843,19 @@ function initAuthentication() {
 function updateSigninStatus(isSignedIn) {
   if (isSignedIn) {
     signedIn = true;
-    appEMailButton.fadeIn(0,null);
-    appCalendarButton.fadeIn(0,null);
+    appEMailButton.fadeIn(0, null);
+    appCalendarButton.fadeIn(0, null);
     loadGoogleData();
+    if(activeFunction == Functions.GOOGLE_ACCOUNT){
+      googleAccountDesignationText.html("Sign Out");
+    }
   } else {
     calendarEntries = [];
     eMails = [];
-    appEMailButton.fadeOut(0,null);
-    appCalendarButton.fadeOut(0,null);
+    appEMailButton.fadeOut(0, null);
+    appCalendarButton.fadeOut(0, null);
+    refreshGMailData();
+    refreshCalendarEntryData();
     signedIn = false;
   }
 }
@@ -1836,10 +1909,15 @@ function loadProfileData() {
     'resourceName': 'people/me',
     'requestMask.includeField': ['person.names', 'person.photos']
   }).then(function(response) {
-    $("#google_account_name").html(response.result.names[0].displayName);
+    signedInUsername = response.result.names[0].displayName;
+    if(activeFunction == Functions.GOOGLE_ACCOUNT){
+      googleAccountDesignationText.html("Sign Out");
+    }else{
+      googleAccountDesignationText.html(signedInUsername);
+    }
     $("#google_account_image").css("background-image", "URL(" + response.result.photos[0].url + ")");
-    imageGoogleAccount.attr("src",response.result.photos[0].url);
-    textGoogleAccountUsername.html(response.result.names[0].displayName);
+    imageGoogleAccount.attr("src", response.result.photos[0].url);
+    textGoogleAccountUsername.html(signedInUsername);
   });
 }
 
