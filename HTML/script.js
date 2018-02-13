@@ -466,12 +466,12 @@ let de_settings_title = "Einstellungen";
 let de_calendar_title = "Kalender";
 let de_email_title = "EMail";
 
-let de_google_account_function_heading_signed_in = "Momenten eingeloggt mit dem Google Profil";
+let de_google_account_function_heading_signed_in = "Momenten eingeloggt mit dem Google Konto";
 let de_google_account_function_heading_permissions = "Diese Anwendung darf";
 let de_google_account_function_permission_calendar = "Daten von der Google Kalender Anwendung abfragen";
 let de_google_account_function_permission_gmail = "Daten von der Google Mail Anwendung abfragen";
 let de_google_account_function_permission_profile = "Daten vom Google Profil abfragen"
-let de_google_account_function_heading_signed_out = "Momentan mit keinem Google Profil angemeldet";
+let de_google_account_function_heading_signed_out = "Momentan mit keinem Google Konto angemeldet";
 let de_google_account_function_heading_features = "Wenn angemeldet, hat diese Anwendung die Fähigkeit";
 let de_google_account_function_feature_gmail = "Daten von Google Mail anzuzeigen";
 let de_google_account_function_feature_profile = "Daten vom Google Profil anzuzeigen";
