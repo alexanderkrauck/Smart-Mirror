@@ -931,6 +931,7 @@ function main() {
   loadHTMLElements();
   setTextToHTML();
   loadSoundElements();
+  $('html').clickBubble();
 
   //Elements which are not required are set to visibility:gone
   viewTextAnimated.fadeOut(0, null);
