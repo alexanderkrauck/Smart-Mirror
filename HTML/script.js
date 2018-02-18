@@ -1823,7 +1823,7 @@ let SCOPES = "https://www.googleapis.com/auth/calendar profile https://www.googl
  * Is called to initialize the connection with the google CLIENT_ID.
  */
 function initAuthentication() {
-  gapi.client.init({Internationalisation
+  gapi.client.init({
     discoveryDocs: DISCOVERY_DOCS,
     clientId: CLIENT_ID,
     scope: SCOPES
