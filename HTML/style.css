@@ -17,6 +17,9 @@ p {
   margin: 0;
 }
 
+body,p,html,table,tr,td,img{
+  cursor: none;
+}
 /*endregion*/
 
 /*region: Other formatting*/

@@ -817,7 +817,7 @@ function loadHTMLElements() {
   textGoogleAccountFeatureCalendar = $("#google_account_function_feature_calendar");
   textGoogleAccountFeatureProfile = $("#google_account_function_feature_profile");
   bodyGoogleAccountSignedIn = $("#google_account_function_body_signed_in");
-  bodyGoogleAccountSignedOut=$("#google_account_function_body_signed_out");
+  bodyGoogleAccountSignedOut = $("#google_account_function_body_signed_out");
 
   textSettingsSystemTitle = $("#system_settings_title");
   textSettingsCalendarTitle = $("#calendar_settings_title");
@@ -1007,8 +1007,8 @@ function main() {
 
       } else {
         gapi.auth2.getAuthInstance().signIn({
-            ux_mode: "popup",
-            prompt: "select_account"
+          ux_mode: "popup",
+          prompt: "select_account"
         });
       }
     }
@@ -1529,11 +1529,11 @@ function switchFunction(functionId) {
         $("#weather_preview").fadeOut(0, null);
         if (signedIn) {
           googleAccountDesignationText.html("Sign Out");
-          bodyGoogleAccountSignedIn.fadeIn(0,null);
-          bodyGoogleAccountSignedOut.fadeOut(0,null);
-        }else{
-          bodyGoogleAccountSignedIn.fadeOut(0,null);
-          bodyGoogleAccountSignedOut.fadeIn(0,null)
+          bodyGoogleAccountSignedIn.fadeIn(0, null);
+          bodyGoogleAccountSignedOut.fadeOut(0, null);
+        } else {
+          bodyGoogleAccountSignedIn.fadeOut(0, null);
+          bodyGoogleAccountSignedOut.fadeIn(0, null)
         }
         backButton.fadeIn(0, null);
         break;
@@ -1627,7 +1627,7 @@ function refreshNewsData() {
  * The string contains the last 10 calendar entries.
  */
 function refreshCalendarEntryData() {
-  if(calendarEntries.length==0){
+  if (calendarEntries.length == 0) {
     $("#upcoming_events").html("");
     return;
   }
@@ -1823,7 +1823,7 @@ let SCOPES = "https://www.googleapis.com/auth/calendar profile https://www.googl
  * Is called to initialize the connection with the google CLIENT_ID.
  */
 function initAuthentication() {
-  gapi.client.init({
+  gapi.client.init({Internationalisation
     discoveryDocs: DISCOVERY_DOCS,
     clientId: CLIENT_ID,
     scope: SCOPES
@@ -1846,7 +1846,7 @@ function updateSigninStatus(isSignedIn) {
     appEMailButton.fadeIn(0, null);
     appCalendarButton.fadeIn(0, null);
     loadGoogleData();
-    if(activeFunction == Functions.GOOGLE_ACCOUNT){
+    if (activeFunction == Functions.GOOGLE_ACCOUNT) {
       googleAccountDesignationText.html("Sign Out");
     }
   } else {
@@ -1910,9 +1910,9 @@ function loadProfileData() {
     'requestMask.includeField': ['person.names', 'person.photos']
   }).then(function(response) {
     signedInUsername = response.result.names[0].displayName;
-    if(activeFunction == Functions.GOOGLE_ACCOUNT){
+    if (activeFunction == Functions.GOOGLE_ACCOUNT) {
       googleAccountDesignationText.html("Sign Out");
-    }else{
+    } else {
       googleAccountDesignationText.html(signedInUsername);
     }
     $("#google_account_image").css("background-image", "URL(" + response.result.photos[0].url + ")");
