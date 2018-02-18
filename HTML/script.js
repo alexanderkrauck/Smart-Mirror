@@ -1523,6 +1523,7 @@ function switchFunction(functionId) {
         $("#upcoming_events").fadeOut(0, null);
         $("#weather_preview").fadeOut(0, null);
         backButton.fadeIn(0, null);
+        break;
       case Functions.GOOGLE_ACCOUNT:
         $("#google_account_function").fadeIn(200, null);
         $("#upcoming_events").fadeOut(0, null);
