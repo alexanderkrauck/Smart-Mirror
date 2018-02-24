@@ -162,7 +162,7 @@ body,p,html,table,tr,td,img{
 #running_function {
   margin: 0px 0px 20px 50px;
   width: calc( 100% - 100px);
-  height: 1200px;
+  height: 1330px;
 }
 
 .function_title {
@@ -173,7 +173,7 @@ body,p,html,table,tr,td,img{
 /*region: The formatting of the calendar function*/
 
 #calendar {
-  height: 1080px;
+  height: 1180px;
   width: 100%;
   border-color: white;
   margin-bottom: 10px;
