@@ -760,6 +760,9 @@ function setLanguages() {
 
   weatherFunction();
   timerFunction();
+  if(signedIn){
+    refreshCalendarEntryData();
+  }
 }
 
 /**
